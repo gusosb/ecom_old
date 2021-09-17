@@ -1,0 +1,1 @@
+npm i react-redux redux react-router-dom redux-thunk redux-devtools-extension
