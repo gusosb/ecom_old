@@ -5,10 +5,10 @@ export const initContent = (id) => {
       const content = await contentService.initContent(id)
       dispatch({
         type: 'INIT_CONT',
-        data: content.data,
+        data: content,
       })
     }
-  }
+}
 
 
 const contentReducer = (state=[], action) => {

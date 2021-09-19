@@ -20,7 +20,7 @@
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
 
-/backend/backend2/__pycache__
+/backend/backend/__pycache__
 /backend/accounts/__pycache__
 /backend/core/__pycache__
 
