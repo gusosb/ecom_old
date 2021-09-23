@@ -23,4 +23,4 @@ class SiteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Site
-        fields = '__all__'
+        fields = ('name', 'categories', 'id')

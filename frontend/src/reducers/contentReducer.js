@@ -15,8 +15,6 @@ const contentReducer = (state=[], action) => {
     switch(action.type) {
         case 'INIT_CONT':
           return action.data
-        case 'NEW_ORDER':
-            return state
         default:
           return state
       }

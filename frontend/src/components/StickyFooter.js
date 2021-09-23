@@ -3,8 +3,10 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
+import './Styles.css'
 
-function Copyright() {
+
+const Copyright= () => {
   return (
     <Typography variant="body2" color="text.secondary">
       {'Copyright © '}
@@ -17,12 +19,13 @@ function Copyright() {
   )
 }
 
-export default function StickyFooter() {
+const StickyFooter = () => {
   return (
       <>
       <CssBaseline />
 
       <Box
+        className="footer"
         component="footer"
         sx={{
           py: 3,
@@ -35,7 +38,7 @@ export default function StickyFooter() {
               
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" >
           <Typography variant="body1">
             My sticky footer can be found here.
           </Typography>
@@ -45,3 +48,5 @@ export default function StickyFooter() {
     </>
   )
 }
+
+export default StickyFooter

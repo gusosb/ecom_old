@@ -7,17 +7,22 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 
-import { Router, Switch, Route, Redirect, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 
 
 const ProductList = ({ category }) => {
     const products = category.products
     return (
-        <div>
-        <Grid container spacing={2}>
+        <Grid container className="tabb" sx={{ mx: "auto" }}>
+
+        <Grid item xs={12}>
+        <Box sx={{ display: 'flex', flexDirection: 'row'}}       height="100%"
+      display="flex"
+      justifyContent="center"
+      flexDirection="column">
         {products.map(product => 
-        <Card sx={{ maxWidth: 345, m: 2 }}>
+        <Card sx={{ maxWidth: 345, m: 2 }} key={product.id}>
         <CardActionArea
         component={Link}
         to={{
@@ -28,19 +33,17 @@ const ProductList = ({ category }) => {
           }}
         >
             <CardMedia
-            sx={{ maxHeight: 400 }}
+            sx={{ maxHeight: 350 }}
             component="img"
             height="140"
             image={product.prodImg}
             alt="green iguana"
             />
             <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-            {product.prodName}
-            </Typography>
             <Typography variant="body2" color="text.secondary">
-            {product.prodDescription}
+            {product.prodName} - {product.prodDescription}
             </Typography>
+            
             </CardContent>
         </CardActionArea>
         <CardActions sx={{ justifyContent: 'center' }}>
@@ -50,8 +53,10 @@ const ProductList = ({ category }) => {
         </CardActions>
         </Card>
         )}
+        </Box>
         </Grid>
-        </div>
+        </Grid>
+        
     )
 }
 
