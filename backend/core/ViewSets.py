@@ -12,3 +12,5 @@ class SiteViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return Site.objects.all()
+
+

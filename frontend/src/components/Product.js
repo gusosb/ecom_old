@@ -1,5 +1,7 @@
 import { useLocation } from "react-router-dom"
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addItem, removeItem } from '../reducers/cartReducer'
 
 import Typography from '@mui/material/Typography'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
@@ -9,54 +11,69 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import IconButton from '@mui/material/IconButton'
-import Badge from '@mui/material/Badge'
-import { styled } from '@mui/material/styles'
+import Tab from '@mui/material/Tab'
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import Button from '@mui/material/Button'
 import './Styles.css'
 
 
 const Product = () => {
 
     const location = useLocation()
+    const dispatch = useDispatch()
 
+    // Getting the clicked product from the react-router-dom location store
     const product = location.state.product
 
     const [ image, setImage ] = useState(product.prodImg)
     const [ variant, setVariant ] = useState('')
+    const [ tabvalue, setTabvalue ] = useState('1')
 
-
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-      '& .MuiBadge-badge': {
-        right: -3,
-        top: 13,
-        border: `2px solid ${theme.palette.background.paper}`,
-        padding: '0 4px',
-      },
-    }))
-
+    const addtoCart = (e) => {
+      const item = {
+        id: e.id,
+        prodName: e.prodName,
+        prodPrice: e.prodPrice,
+        prodImg: e.prodImg,
+        quantity: 1,
+      }
+      dispatch(addItem(item))
+    }
+    
     
     return (
         <>
-        <Grid container className="tabb">
-        <Grid item xs={2}>
+       
+        <Grid container className="tabb" sx={{ mx: "auto" }}>
 
-        </Grid>
 
-        <Grid item xs={5} sx={{ maxWidth: '85%' }} className="tableft">
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Grid item xs={12}>
+        <Box sx={{ display: 'flex', flexDirection: 'row'}}       height="100%"
+      display="flex"
+      justifyContent="center"
+      flexDirection="column">
         
         <Box>
-        <img className="img" src={product.prodImg} onMouseEnter={() => setImage(product.prodImg)} />
+         
+        <img alt='' className={image===product.prodImg ? 'img2' : 'img'} src={product.prodImg} onMouseEnter={() => setImage(product.prodImg)} />
+        
 
-        {product.twoImg && <img className="img pad" src={product.twoImg} onMouseEnter={() => setImage(product.twoImg)} />}
-        {product.threeImg && <img className="img pad" src={product.threeImg} onMouseEnter={() => setImage(product.threeImg)} />}
+        {product.twoImg && 
+        <div className="pad">
+          <img alt='' className={image===product.twoImg ? 'img2' : 'img'} src={product.twoImg} onMouseEnter={() => setImage(product.twoImg)} />
+          </div>}
+        {product.threeImg &&
+        <div className="pad">
+          <img alt='' className={image===product.threeImg ? 'img2' : 'img'} src={product.threeImg} onMouseEnter={() => setImage(product.threeImg)} />
+          </div>}
         </Box>
-        <img src={image} alt="fireSpot" className="my-class1" />
-        </Box>
-        </Grid>
+        <img alt='' src={image} className="my-class1" />
+        
 
-        <Grid item xs={3}>
-        <Box>
+
+        <Grid className="tab1">
         <Typography variant="h3" gutterBottom component="div">
         {product.prodName}
         </Typography>
@@ -65,7 +82,7 @@ const Product = () => {
          </Typography>
 
          <Typography variant="h6" gutterBottom component="div">
-        {product.prodPrice},00 kr <Typography display="inline" variant="caption">inkl moms</Typography>
+        {product.prodPrice},00 kr. <Typography display="inline" variant="caption">inkl moms</Typography>
           </Typography>
 
         {product.prodVal1 &&
@@ -85,28 +102,37 @@ const Product = () => {
         </Select>
       </FormControl>
       }
-        </Box>
 
+        {product.prodQty ?
         <Box>
-        Köp 
-        <IconButton color="primary" aria-label="add to shopping cart" size="large">
-        
-       <AddShoppingCartIcon />
-        
-       </IconButton>
+        <Button variant="contained" disableElevation endIcon={<AddShoppingCartIcon />} onClick={() => addtoCart(product)}>
+        Lägg till
+        </Button>
         </Box>
-        </Grid>
+        : 'Saknas kvantitet!'
+        }
+
+      {product.tabNamn1 &&
+      <Box sx={{ width: '100%', typography: 'body1' }}>
+      <TabContext value={tabvalue}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <TabList onChange={(e, newValue) => setTabvalue(newValue)} aria-label="lab API tabs example">
+        <Tab label={product.tabNamn1} value='1' />
+        {product.tabNamn2 && <Tab label="Material och skötsel" value='2' />}
+        {product.tabNamn3 && <Tab label="passform" value='3' />}
+      </TabList>
+      </Box>
+      <TabPanel value="1">{product.tabDesc1}</TabPanel>
+      {product.tabNamn2 && <TabPanel value="2">{product.tabDesc2}</TabPanel>}
+      {product.tabNamn3 && <TabPanel value="3">{product.tabDesc3}</TabPanel>}
+    </TabContext>
+    </Box>
+    }
+
+      </Grid>
 
 
-
-        <Grid item xs={2}>
-        </Grid>
-
-        <Grid item xs={4}>
-        </Grid>
-        <Grid item xs={4}>
-        </Grid>
-        <Grid item xs={4}>
+      </Box>
         </Grid>
 
         </Grid>

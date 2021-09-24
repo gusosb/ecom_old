@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { initContent } from "../reducers/contentReducer"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -10,24 +9,24 @@ const Home = () => {
 
     const dispatch = useDispatch()
     const content = useSelector(state => state.content)
-    const categories = useSelector(state => state.content.categories)
+    const categories = content.categories
 
   
     useEffect(() => {
-      if (content.length === 0) {
+      if (!content) {
         dispatch(initContent(1))
       }
-    }, [dispatch])
+    }, [dispatch, content])
 
 
 
-    return (
-        <div>
-          {categories &&
-          <ProductList category={categories[0]} />
-          }
-        </div>
-    )
+  return (
+    <>
+    {categories &&
+    <ProductList category={categories[0]} />
+    }
+    </>
+  )
 }
 
 export default Home
