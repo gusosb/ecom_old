@@ -13,4 +13,6 @@ router.register(r'content', SiteViewSet)
 
 urlpatterns = [
     path('create-checkout-session/', views.create_checkout_session, name='checkoutsession'),
+    path('get-success-session/', views.order_success, name='getsuccess'),
 ] + router.urls
+

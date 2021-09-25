@@ -32,17 +32,22 @@ def create_checkout_session(request):
         'quantity': item['quantity'],
         })
 
-    print(cartitems)
-
-    
-
-
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=cartitems,
         mode='payment',
-        success_url='http://127.0.0.1:3000/success',
+        success_url='http://127.0.0.1:3000/success?session_id={CHECKOUT_SESSION_ID}',
         cancel_url='http://127.0.0.1:3000/cancel',
     )
+
+    return Response(status=status.HTTP_200_OK, data=session)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny,])
+def order_success(request):
+    site = Site.objects.get(id=request.data['siteid'])
+    stripe.api_key = site.stripekey
+    session = stripe.checkout.Session.retrieve(request.data['sessionid'])
 
     return Response(status=status.HTTP_200_OK, data=session)

@@ -11,11 +11,23 @@ export const checkoutSession = (content) => {
     }
 }
 
+export const getSession = (content) => {
+    return async dispatch => {
+        const res = await checkoutService.getSESSION(content)
+        dispatch({
+            type: 'GET_SESS',
+            data: res,
+        })
+    }
+}
+
 
 const sessionReducer = (state=[], action) => {
     switch(action.type) {
         case 'INIT_CHECK':
           return action.data
+        case 'GET_SESS':
+            return action.data
         default:
           return state
       }
