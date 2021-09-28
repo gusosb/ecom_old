@@ -26,9 +26,12 @@ admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ['user']
+    save_as = True
+    
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user
+        
         super().save_model(request, obj, form, change)
 
     def get_queryset(self, request):

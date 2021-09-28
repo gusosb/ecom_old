@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom"
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addItem, removeItem } from '../reducers/cartReducer'
+import { addItem } from '../reducers/cartReducer'
 
 import Typography from '@mui/material/Typography'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
@@ -37,6 +37,7 @@ const Product = () => {
         prodName: e.prodName,
         prodPrice: e.prodPrice,
         prodImg: e.prodImg,
+        prodVal: variant,
         quantity: 1,
       }
       dispatch(addItem(item))
@@ -57,7 +58,7 @@ const Product = () => {
         
         <Box>
          
-        <img alt='' className={image===product.prodImg ? 'img2' : 'img'} src={product.prodImg} onMouseEnter={() => setImage(product.prodImg)} />
+        <img alt='' className={image===product.prodImg ? 'img2 pad1' : 'img pad1'} src={product.prodImg} onMouseEnter={() => setImage(product.prodImg)} />
         
 
         {product.twoImg && 
@@ -78,7 +79,7 @@ const Product = () => {
         {product.prodName}
         </Typography>
         <Typography variant="h5" gutterBottom component="div">
-        {product.prodMark}
+        {product.prodDescription}
          </Typography>
 
          <Typography variant="h6" gutterBottom component="div">
@@ -86,6 +87,7 @@ const Product = () => {
           </Typography>
 
         {product.prodVal1 &&
+        
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-standard-label">{product.prodValnamn}</InputLabel>
         <Select
@@ -101,27 +103,29 @@ const Product = () => {
           {product.prodVal3 && <MenuItem value={product.prodVal3}>{product.prodVal3}</MenuItem>}
         </Select>
       </FormControl>
+      
       }
 
-        {product.prodQty ?
-        <Box>
-        <Button variant="contained" disableElevation endIcon={<AddShoppingCartIcon />} onClick={() => addtoCart(product)}>
-        Lägg till
-        </Button>
-        </Box>
-        : 'Saknas kvantitet!'
-        }
+      {product.prodQty ?
+      <Box>
+      <Button variant="contained" disableElevation endIcon={<AddShoppingCartIcon />} onClick={() => addtoCart(product)}>
+      Lägg till
+      </Button>
+      </Box>
+      : 'Saknas kvantitet!'
+      }
 
       {product.tabNamn1 &&
-      <Box sx={{ width: '100%', typography: 'body1' }}>
+      <Box sx={{ typography: 'body1', width: 450 }}>
       <TabContext value={tabvalue}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-      <TabList onChange={(e, newValue) => setTabvalue(newValue)} aria-label="lab API tabs example">
+      <TabList centered onChange={(e, newValue) => setTabvalue(newValue)} aria-label="lab API tabs example">
         <Tab label={product.tabNamn1} value='1' />
-        {product.tabNamn2 && <Tab label="Material och skötsel" value='2' />}
-        {product.tabNamn3 && <Tab label="passform" value='3' />}
+        {product.tabNamn2 && <Tab label={product.tabNamn2} value='2' />}
+        {product.tabNamn3 && <Tab label={product.tabNamn3} value='3' />}
       </TabList>
       </Box>
+      
       <TabPanel value="1">{product.tabDesc1}</TabPanel>
       {product.tabNamn2 && <TabPanel value="2">{product.tabDesc2}</TabPanel>}
       {product.tabNamn3 && <TabPanel value="3">{product.tabDesc3}</TabPanel>}

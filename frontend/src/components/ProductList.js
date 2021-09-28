@@ -2,7 +2,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import { Button, CardActionArea, CardActions } from '@mui/material'
+import { IconButton, CardActionArea, CardActions } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -47,9 +47,9 @@ const ProductList = ({ category }) => {
             </CardContent>
         </CardActionArea>
         <CardActions sx={{ justifyContent: 'center' }}>
-            <Button size="small" color="primary">
-            <FavoriteIcon />
-            </Button>
+            <IconButton size="small" color="primary">
+            <FavoriteIcon className="col2" />
+            </IconButton>
         </CardActions>
         </Card>
         )}

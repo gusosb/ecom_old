@@ -1,5 +1,6 @@
 import { history } from "./helpers/history"
 import Home from './components/Home'
+import Category from './components/Category'
 import { Router, Switch, Route } from "react-router-dom"
 import Product from './components/Product'
 import "tailwindcss/dist/base.css"
@@ -37,6 +38,7 @@ const App= () => {
     <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/produkt" component={Product} />
+    <Route exact path="/kategori" component={Category} />
     <Route path="/success" component={Success} />
     </Switch>
 
