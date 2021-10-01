@@ -1,6 +1,6 @@
-import { useLocation } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../reducers/cartReducer'
 
 import Typography from '@mui/material/Typography'
@@ -18,19 +18,19 @@ import TabPanel from '@mui/lab/TabPanel'
 import Button from '@mui/material/Button'
 import './Styles.css'
 
-
-const Product = () => {
+const Prod = () => {
 
     const dispatch = useDispatch()
-    const location = useLocation()
 
- 
+    const categories = useSelector(state => state.content.categories)
 
-    const product = location.state.product
+    const { catid, prodid } = useParams()
+    const cat = categories.find(e => e.id === parseInt(catid))
+    const product = cat.products.find(e => e.id === parseInt(prodid))
   
 
     const [ image, setImage ] = useState(product.prodImg)
-    const [ variant, setVariant ] = useState('')
+    const [ variant, setVariant ] = useState(product.prodVal1)
     const [ tabvalue, setTabvalue ] = useState('1')
 
 
@@ -39,20 +39,23 @@ const Product = () => {
     }, [product])
 
     const addtoCart = (e) => {
-      const cartitem = {
+    const item = {
+        category: e.category,
+        id: e.id,
         prodName: e.prodName,
         prodPrice: e.prodPrice,
+        prodImg: e.prodImg,
         prodDescription: e.prodDescription,
         prodVal: variant,
         quantity: 1,
-      }
-
-      dispatch(addItem(cartitem))
+        }
+      dispatch(addItem(item))
     }
-    
-    
+
+
+
     return (
-      <>
+    <>
       <Grid container className="tabb" sx={{ mx: "auto" }}>
 
 
@@ -92,8 +95,9 @@ const Product = () => {
       {product.prodPrice},00 kr. <Typography display="inline" variant="caption">inkl moms</Typography>
         </Typography>
 
+        
       {product.prodVal1 &&
-
+        
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
       <InputLabel id="demo-simple-select-standard-label">{product.prodValnamn}</InputLabel>
       <Select
@@ -114,18 +118,18 @@ const Product = () => {
 
       {product.prodQty ?
       <Box>
-      <Button variant="contained" disableElevation endIcon={<AddShoppingCartIcon />} onClick={() => addtoCart(product)}>
+      <Button variant="contained" color="secondary" disableElevation onClick={() => addtoCart(product)} endIcon={<AddShoppingCartIcon />} >
       Lägg till
       </Button>
       </Box>
       : 'Saknas kvantitet!'
       }
-
+        
       {product.tabNamn1 &&
       <Box sx={{ typography: 'body1', width: 450 }}>
       <TabContext value={tabvalue}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-      <TabList centered onChange={(e, newValue) => setTabvalue(newValue)} aria-label="lab API tabs example">
+      <TabList indicatorColor="secondary" textColor="primary" centered onChange={(e, newValue) => setTabvalue(newValue)} aria-label="lab API tabs example">
       <Tab label={product.tabNamn1} value='1' />
       {product.tabNamn2 && <Tab label={product.tabNamn2} value='2' />}
       {product.tabNamn3 && <Tab label={product.tabNamn3} value='3' />}
@@ -150,4 +154,4 @@ const Product = () => {
     )
 }
 
-export default Product
+export default Prod

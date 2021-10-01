@@ -1,14 +1,12 @@
-import { useLocation } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { useSelector } from 'react-redux'
 import ProductList from './ProductList'
-
-import Grid from '@mui/material/Grid'
 
 const Category = () => {
 
-    const location = useLocation()
-    const category = location.state.e
-    console.log(category)
-
+    const { catid } = useParams()
+    const cats = useSelector(state => state.content.categories)
+    const category = cats.find(e => e.id === parseInt(catid))
 
     return (
         <>

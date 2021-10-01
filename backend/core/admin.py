@@ -1,7 +1,25 @@
 from django.contrib import admin
+from django.http import request
 from .models import Product, Site, Category, User
 
-admin.site.register(Site)
+
+class SiteAdmin(admin.ModelAdmin):
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(user=request.user)
+
+    def get_fieldsets(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [(None, {'fields': ('name', 'stripekey', 'siteimg')}),]
+        else:
+            return [(None, {'fields': self.get_fields(request, obj)})]
+
+admin.site.register(Site, SiteAdmin)
+
+
 
 
 class CategoryAdmin(admin.ModelAdmin):

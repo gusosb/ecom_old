@@ -25,7 +25,9 @@ def create_checkout_session(request):
         cartitems.append({'price_data': {
             'currency': 'sek',
             'product_data': {
-                'name': item['prodName'],
+                'name': item['prodName'] + ' (' + item['prodVal'] + ')',
+                'images': [item['prodImg']],
+                'description': item['prodDescription'],
             },
             'unit_amount': (item['prodPrice'] * 100),
         },

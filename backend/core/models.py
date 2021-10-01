@@ -5,9 +5,13 @@ from accounts.models import NewUser
 User = get_user_model()
 
 class Site(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=CASCADE, related_name='siteuser')
+    siteimg = models.FileField(upload_to='images/', null=True, blank=True)
     stripekey = models.CharField(max_length=150, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 class Category(models.Model):
     catName = models.CharField(max_length=150)
@@ -16,9 +20,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.catName
-
-
-
 
 class Product(models.Model):
     prodName = models.CharField(max_length=150)
