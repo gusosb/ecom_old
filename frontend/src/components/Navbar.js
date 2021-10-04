@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom"
+
 import { unheartItem } from '../reducers/heartReducer'
+import { checkoutSession } from '../reducers/sessionReducer'
 
 import './Styles.css'
 import Grid from '@mui/material/Grid'
@@ -35,6 +37,9 @@ const Navbar = () => {
   const cart = useSelector(state => state.cart)
   const categories = useSelector(state => state.content.categories)
   const heartContent = useSelector(state => state.heart)
+  const user = useSelector(state => state.auth)
+  const session = useSelector(state => state.session)
+  const content = useSelector(state => state.content)
 
   const [ heart, setHeart ] = useState(false)
   const [ anchor, setAnchor ] = useState()
@@ -88,6 +93,34 @@ const Navbar = () => {
         return
       }
       setOpen(false)
+    }
+
+    if(session.url) {
+      window.location.assign(session.url)
+  }
+
+
+
+  const handleSubmit = (e) => {
+      const readyCart = {
+          siteid: content.id,
+          cart,
+      }
+      dispatch(checkoutSession(readyCart))
+  }
+
+    const CheckoutForm3 = () => {
+      return (
+        <Grid container>
+
+        <Link to="/login" onClick={() => setOpen(false)} >Logga in eller</Link>
+
+       
+        <Button type="submit" variant="outlined" onClick={handleSubmit}>Checkout som Gäst</Button>
+
+        Inget konto? <Link to="/register">Skapa ett konto här.</Link>
+        </Grid>
+      )
     }
 
 
@@ -308,7 +341,10 @@ const Navbar = () => {
         justifyContent="center"
         className="ptop"
         >
-          <CheckoutForm2 />
+        {user.isLoggedIn
+        ? <CheckoutForm2 />
+        : <CheckoutForm3 /> }
+        
         </Box>
         }
         

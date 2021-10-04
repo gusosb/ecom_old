@@ -13,7 +13,7 @@ class SiteAdmin(admin.ModelAdmin):
 
     def get_fieldsets(self, request, obj=None):
         if not request.user.is_superuser:
-            return [(None, {'fields': ('name', 'stripekey', 'siteimg')}),]
+            return [(None, {'fields': ('name', 'stripekey', 'siteimg', 'url')}),]
         else:
             return [(None, {'fields': self.get_fields(request, obj)})]
 
