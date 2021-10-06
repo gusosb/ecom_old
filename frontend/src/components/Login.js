@@ -9,20 +9,18 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 
-import { login } from "../actions/auth"
+import { login } from "../reducers/auth"
 
 
 const Login = (props) => {
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const { isLoggedIn } = useSelector(state => state.auth)
 
@@ -40,24 +38,21 @@ const Login = (props) => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-
-
-    //form.current.validateAll();
-
     dispatch(login(email, password))
       .then(() => {
-        props.history.push("/dash")
-        window.location.reload()
+        if (isLoggedIn) {
+          props.history.push("/")
+        }
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(() => {
       })
   }
-  const theme = createTheme();
+  
+  const theme = createTheme()
 
 
   if (isLoggedIn) {
-    return <Redirect to="/cart" />
+    return <Redirect to="/" />
   }
 
 
@@ -79,7 +74,7 @@ const Login = (props) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Logga in
           </Typography>
           <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -89,7 +84,7 @@ const Login = (props) => {
               id="email"
               value={email}
               onChange={onChangeEmail}
-              label="Email Address"
+              label="Epostadress"
               name="email"
               autoComplete="email"
               autoFocus
@@ -101,15 +96,12 @@ const Login = (props) => {
               value={password}
               name="password"
               onChange={onChangePassword}
-              label="Password"
+              label="Lösenord"
               type="password"
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -120,7 +112,7 @@ const Login = (props) => {
             </Button>
             <Grid container>
               <Grid item xs>
-              <Link to={"/register"}>
+              <Link to={"/passreset"}>
                 Glömt lösenordet?
               </Link>
               </Grid>

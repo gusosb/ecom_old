@@ -111,14 +111,19 @@ const Navbar = () => {
 
     const CheckoutForm3 = () => {
       return (
-        <Grid container>
+        <Grid container sx={{ flexDirection: 'column', mt: 1 }} >
 
+        <Box           display="flex"
+          justifyContent="center" sx={{ mt: 2 }}>
         <Link to="/login" onClick={() => setOpen(false)} >Logga in eller</Link>
+        </Box>
+     
 
-       
+       <Box           display="flex"
+          justifyContent="center" sx={{ mt: 2 }}>
         <Button type="submit" variant="outlined" onClick={handleSubmit}>Checkout som Gäst</Button>
-
-        Inget konto? <Link to="/register">Skapa ett konto här.</Link>
+        </Box>
+       
         </Grid>
       )
     }
@@ -328,6 +333,7 @@ const Navbar = () => {
           justifyContent="center"
           className="ptop"
           style={{ fontWeight: 600 }}
+          sx={{ mt: 3 }}
          >
           Totalt (inkl. moms): {totalsum + ',00 kr'}
         </Box>

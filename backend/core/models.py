@@ -46,3 +46,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.prodName
+
+
+class Order(models.Model):
+    site = models.ForeignKey(Site, on_delete=CASCADE, related_name='orders')
+    customeruser = models.ForeignKey(User, on_delete=CASCADE, related_name='cuser', blank=True, null=True)

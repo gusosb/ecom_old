@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import Site
+from .models import Site, Order
 
 import stripe
 
@@ -51,5 +51,12 @@ def order_success(request):
     site = Site.objects.get(id=request.data['siteid'])
     stripe.api_key = site.stripekey
     session = stripe.checkout.Session.retrieve(request.data['sessionid'])
+    if request.user != 'AnonymousUser':
+        o1 = Order.objects.create(site=site, customeruser=request.user)
+    else:
+        pass
+    
+
+
 
     return Response(status=status.HTTP_200_OK, data=session)

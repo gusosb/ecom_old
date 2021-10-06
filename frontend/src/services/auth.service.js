@@ -2,10 +2,12 @@ import api from './api'
 import TokenService from './token.service'
 
 
-const register = async (email, password) => {
+const register = async (email, password, firstname, lastname) => {
   return api.post('create/', {
     email,
     password,
+    firstname,
+    lastname,
   })
 }
 

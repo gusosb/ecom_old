@@ -37,12 +37,13 @@ class NewUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=150, unique=True, blank=True, null=True)
-    first_name = models.CharField(max_length=150, blank=True, null=True)
+    firstname = models.CharField(max_length=150, blank=True, null=True)
+    lastname = models.CharField(max_length=150, blank=True, null=True)
     start_date = models.DateTimeField(default=timezone.now)
     about = models.TextField(_(
         'about'), max_length=500, blank=True)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     objects = CustomAccountManager()
 

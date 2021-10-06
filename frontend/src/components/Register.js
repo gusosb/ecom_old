@@ -1,7 +1,7 @@
-import { useState, useRef } from "react"
-import { register } from "../actions/auth"
+import { useState } from "react"
+import { register } from "../reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
@@ -16,42 +16,67 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-const Register = () => {
+const Register = (props) => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [password2, setPassword2] = useState("")
-    const [successful, setSuccessful] = useState(false)
+  let htext =[]
+
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+
+    const [ firstname, setFirstname ] = useState('')
+    const [ lastname, setLastname ] = useState('')
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ password2, setPassword2 ] = useState('')
+
+    const handleFirstname = (e) => {
+      setFirstname(e.target.value)
+    }
+    const handleLastname = (e) => {
+      setLastname(e.target.value)
+    }
+    const handleEmail = (e) => {
+      setEmail(e.target.value)
+    }
+    const handlePassword = (e) => {
+      setPassword(e.target.value)
+    }
+    const handlePassword2 = (e) => {
+      setPassword2(e.target.value)
+    }
 
     const dispatch = useDispatch()
     const theme = createTheme()
 
-    const onChangeEmail = (e) => {
-        const email = e.target.value
-        setEmail(email)
-      }
-    
-      const onChangePassword = (e) => {
-        const password = e.target.value
-        setPassword(password)
-      }
-    
-      const onChangePassword2 = (e) => {
-        const password2 = e.target.value
-        setPassword2(password2)
-      }
-
       const handleRegister = (e) => {
         e.preventDefault()
-        setSuccessful(false)
-        dispatch(register(email, password))
+        dispatch(register(email, password, firstname, lastname))
           .then(() => {
-            setSuccessful(true)
+            if (isLoggedIn) {
+              props.history.push("/")
+            }
           })
-          .catch(() => {
-            setSuccessful(false)
+          .catch((e) => {
           })
       }
+
+      const checkIsValidEmail = () => {
+        let re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          if (re.test(email) || !email) {
+              return true
+          } else {
+            return false
+          }
+      }
+
+      const checkIsValidPassword = () => {
+        if (password === password2) {
+            htext = ""
+            return true
+        } else {
+            htext = "lösenorden matchar inte"
+            return false
+        }
+    }
 
 
 
@@ -73,28 +98,32 @@ const Register = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Registrering
           </Typography>
-          <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleRegister} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
-                  name="firstName"
+                  name="firstname"
+                  value={firstname}
+                  onChange={handleFirstname}
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Förnamn"
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
+                  value={lastname}
+                  onChange={handleLastname}
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
+                  id="lastname"
+                  label="Efternamn"
+                  name="lastname"
                   autoComplete="lname"
                 />
               </Grid>
@@ -102,8 +131,11 @@ const Register = () => {
                 <TextField
                   required
                   fullWidth
+                  error={!checkIsValidEmail()}
+                  value={email}
+                  onChange={handleEmail}
                   id="email"
-                  label="Email Address"
+                  label="Epostadress"
                   name="email"
                   autoComplete="email"
                 />
@@ -113,10 +145,27 @@ const Register = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  value={password}
+                  onChange={handlePassword}
+                  label="Lösenord"
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  helperText={htext}
+                  error={!checkIsValidPassword()}
+                  value={password2}
+                  onChange={handlePassword2}
+                  name="password2"
+                  label="Bekräfta lösenord"
+                  type="password"
+                  id="password2"
+                  autoComplete="off"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -137,7 +186,7 @@ const Register = () => {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/login" variant="body2">
-                  Already have an account? Sign in
+                  Har du redan ett konto? Logga in
                 </Link>
               </Grid>
             </Grid>
