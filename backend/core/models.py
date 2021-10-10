@@ -51,3 +51,8 @@ class Product(models.Model):
 class Order(models.Model):
     site = models.ForeignKey(Site, on_delete=CASCADE, related_name='orders')
     customeruser = models.ForeignKey(User, on_delete=CASCADE, related_name='cuser', blank=True, null=True)
+    class stat(models.IntegerChoices):
+        FR = 1, 'Mottagen'
+        SN = 2, 'Skickad'
+    status = models.PositiveSmallIntegerField(choices=stat.choices)
+    is_handled = models.BooleanField('Hanterad', default=False)

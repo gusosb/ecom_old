@@ -20,7 +20,7 @@ const Header = () => {
         <a href='#' className="nav-link" onClick={logOut}>
         Logga ut
         </a>
-        <Link to="/ordrar" variant="body2">
+        <Link to="/bestallningar" variant="body2">
         Mina beställningar
         </Link>
         </>

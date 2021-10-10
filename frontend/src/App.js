@@ -47,7 +47,7 @@ const App= () => {
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <Route path="/passreset" component={Passreset} />
-    <Route path="/ordrar" component={Orders} />
+    <Route path="/bestallningar" component={Orders} />
 
     <Route exact path="/" component={Home} />
     </Switch>
