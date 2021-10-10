@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux"
 import { initContent } from "./reducers/contentReducer"
 import { useEffect } from "react"
 
+import Orders from './components/Orders'
 import Passreset from "./components/Passreset"
 import Register from "./components/Register"
 import Login from './components/Login'
@@ -46,6 +47,7 @@ const App= () => {
     <Route path="/login" component={Login} />
     <Route path="/register" component={Register} />
     <Route path="/passreset" component={Passreset} />
+    <Route path="/ordrar" component={Orders} />
 
     <Route exact path="/" component={Home} />
     </Switch>

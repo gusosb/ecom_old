@@ -44,9 +44,6 @@ export const login = (email, password) => {
 }
   
   
-  
-  
-  
 export const logout = () => (dispatch) => {
   AuthService.logout()
   dispatch({
@@ -60,9 +57,6 @@ export const refreshToken = (access) => (dispatch) => {
     data: access,
   })
 }
-
-
-
 
 
 const authReducer = (state=initialState, action) => {

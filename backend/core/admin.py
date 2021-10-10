@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.http import request
-from .models import Product, Site, Category, User
+from .models import Order, Product, Site, Category, User
 
 
 class SiteAdmin(admin.ModelAdmin):
@@ -72,3 +72,15 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
+
+class OrderAdmin(admin.ModelAdmin):
+    readonly_fields = ['site', 'customeruser']
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        site1 = Site.objects.get(user=request.user)
+        return qs.filter(site=site1)
+
+admin.site.register(Order, OrderAdmin)

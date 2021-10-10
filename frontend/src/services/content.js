@@ -10,7 +10,7 @@ const initContent = async (id) => {
 }
 
 const getOrders = async () => {
-    return api.get('/orders/')
+    return api.get(`/orders/`)
 }
 
 export default {

@@ -2,6 +2,7 @@ import './Styles.css'
 import Grid from '@mui/material/Grid'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../reducers/auth"
+import { Link } from 'react-router-dom'
 
 const Header = () => {
 
@@ -11,6 +12,19 @@ const Header = () => {
 
     const logOut = () => {
         dispatch(logout())
+    }
+
+    const LoggedIN = () => {
+        return (
+        <>
+        <a href='#' className="nav-link" onClick={logOut}>
+        Logga ut
+        </a>
+        <Link to="/ordrar" variant="body2">
+        Mina beställningar
+        </Link>
+        </>
+        )
     }
 
     return (
@@ -26,9 +40,7 @@ const Header = () => {
         </Grid>
         <Grid item xs={4}>
         {currentUser &&
-        <a href='#' className="nav-link" onClick={logOut}>
-        Logga ut
-         </a>
+        <LoggedIN />
         }
         </Grid>
         </Grid>
