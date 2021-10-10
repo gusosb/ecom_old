@@ -8,6 +8,10 @@ import { useDispatch } from "react-redux"
 import { initContent } from "./reducers/contentReducer"
 import { useEffect } from "react"
 
+import Orders from './components/Orders'
+import Passreset from "./components/Passreset"
+import Register from "./components/Register"
+import Login from './components/Login'
 import Header from "./components/Header"
 import Navbar from "./components/Navbar"
 import Success from './components/Success'
@@ -40,6 +44,11 @@ const App= () => {
     <Route path="/prod/:catid/:prodid" component={Prod} />
     <Route path="/kategori/:catid" component={Category} />
     <Route path="/success" component={Success} />
+    <Route path="/login" component={Login} />
+    <Route path="/register" component={Register} />
+    <Route path="/passreset" component={Passreset} />
+    <Route path="/ordrar" component={Orders} />
+
     <Route exact path="/" component={Home} />
     </Switch>
 

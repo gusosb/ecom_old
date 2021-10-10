@@ -1,6 +1,6 @@
 from os import read
 from django.utils import tree
-from .models import Category, Product, Site
+from .models import Category, Order, Product, Site
 from rest_framework import serializers
 
 
@@ -24,3 +24,9 @@ class SiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Site
         fields = ('name', 'categories', 'id', 'siteimg')
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'

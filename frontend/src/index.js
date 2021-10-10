@@ -4,6 +4,7 @@ import App from './App'
 import store from './store'
 import { Provider } from 'react-redux'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import interceptors from "./services/interceptors"
 
 
 const theme = createTheme({
@@ -33,4 +34,4 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-//interceptors(store)
+interceptors(store)

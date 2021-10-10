@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom"
+
 import { unheartItem } from '../reducers/heartReducer'
+import { checkoutSession } from '../reducers/sessionReducer'
 
 import './Styles.css'
 import Grid from '@mui/material/Grid'
@@ -35,6 +37,9 @@ const Navbar = () => {
   const cart = useSelector(state => state.cart)
   const categories = useSelector(state => state.content.categories)
   const heartContent = useSelector(state => state.heart)
+  const user = useSelector(state => state.auth)
+  const session = useSelector(state => state.session)
+  const content = useSelector(state => state.content)
 
   const [ heart, setHeart ] = useState(false)
   const [ anchor, setAnchor ] = useState()
@@ -88,6 +93,39 @@ const Navbar = () => {
         return
       }
       setOpen(false)
+    }
+
+    if(session.url) {
+      window.location.assign(session.url)
+  }
+
+
+
+  const handleSubmit = (e) => {
+      const readyCart = {
+          siteid: content.id,
+          cart,
+      }
+      dispatch(checkoutSession(readyCart))
+  }
+
+    const CheckoutForm3 = () => {
+      return (
+        <Grid container sx={{ flexDirection: 'column', mt: 1 }} >
+
+        <Box           display="flex"
+          justifyContent="center" sx={{ mt: 2 }}>
+        <Link to="/login" onClick={() => setOpen(false)} >Logga in eller</Link>
+        </Box>
+     
+
+       <Box           display="flex"
+          justifyContent="center" sx={{ mt: 2 }}>
+        <Button type="submit" variant="outlined" onClick={handleSubmit}>Checkout som Gäst</Button>
+        </Box>
+       
+        </Grid>
+      )
     }
 
 
@@ -295,6 +333,7 @@ const Navbar = () => {
           justifyContent="center"
           className="ptop"
           style={{ fontWeight: 600 }}
+          sx={{ mt: 3 }}
          >
           Totalt (inkl. moms): {totalsum + ',00 kr'}
         </Box>
@@ -308,7 +347,10 @@ const Navbar = () => {
         justifyContent="center"
         className="ptop"
         >
-          <CheckoutForm2 />
+        {user.isLoggedIn
+        ? <CheckoutForm2 />
+        : <CheckoutForm3 /> }
+        
         </Box>
         }
         
