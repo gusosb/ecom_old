@@ -1,6 +1,6 @@
-import axiosInstance from "./api";
-import TokenService from "./token.service";
-import { refreshToken } from "../reducers/auth";
+import axiosInstance from "./api"
+import TokenService from "./token.service"
+import { refreshToken } from "../reducers/auth"
 
 const setup = (store) => {
   axiosInstance.interceptors.request.use(
@@ -42,10 +42,11 @@ const setup = (store) => {
 
             return axiosInstance(originalConfig)
           } catch (_error) {
-            
             return Promise.reject(_error)
           }
         }
+      } else {
+        TokenService.removeUser()
       }
       return Promise.reject(err)
     }

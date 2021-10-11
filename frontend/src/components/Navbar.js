@@ -62,11 +62,16 @@ const Navbar = () => {
   
 
   const handleRemove = (e) => {
-    dispatch(removeItem(e))
+    const item = {
+      id: e.id,
+      prodVal: e.prodVal,
+    }
+    dispatch(removeItem(item))
   }
 
   const addtoCart = (e) => {
     const item = {
+      prodVal: e.prodVal,
       id: e.id,
       quantity: 1,
     }
@@ -252,7 +257,7 @@ const Navbar = () => {
           {cart && cart.map(product =>
           
           
-          <Grid key={product.id} container className="ptop" sx={{ flexDirection: 'row', overflow: 'hidden'}}>
+          <Grid key={product.prodVal} container className="ptop" sx={{ flexDirection: 'row', overflow: 'hidden'}}>
           <Grid item xs={5}>
 
           
@@ -309,7 +314,7 @@ const Navbar = () => {
           <Box sx={{ justifyContent: 'center' }}
           style={{textAlign: "center"}}
           >
-          <IconButton sx={{ mr: 1 }} aria-label="remove" size="large" onClick={() => handleRemove(product.id)} ><RemoveIcon /></IconButton>
+          <IconButton sx={{ mr: 1 }} aria-label="remove" size="large" onClick={() => handleRemove(product)} ><RemoveIcon /></IconButton>
         
          {product.quantity} st
           <IconButton sx={{ ml: 1 }} aria-label="add" size="large" onClick={() => addtoCart(product)} ><AddIcon /></IconButton>
