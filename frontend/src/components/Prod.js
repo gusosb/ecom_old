@@ -60,11 +60,13 @@ const Prod = () => {
 
 
       <Grid item xs={12}>
-      <Box sx={{ display: 'flex', flexDirection: 'row'}}       height="100%"
+      <Box sx={{ display: 'flex', flexDirection: 'row'}}       
       display="flex"
       justifyContent="center"
       flexDirection="column">
 
+
+      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
       <Box>
       
       <img alt='' className={image===product.prodImg ? 'img2 pad1' : 'img pad1'} src={product.prodImg} onMouseEnter={() => setImage(product.prodImg)} />
@@ -79,7 +81,10 @@ const Prod = () => {
         <img alt='' className={image===product.threeImg ? 'img2' : 'img'} src={product.threeImg} onMouseEnter={() => setImage(product.threeImg)} />
         </div>}
       </Box>
+      
       <img alt='' src={image} className="my-class1" />
+      
+      </Box>
 
 
 

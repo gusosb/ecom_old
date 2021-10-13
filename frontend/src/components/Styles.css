@@ -9,7 +9,7 @@
 }
 .my-class1 {
     width: 530px;
-    height: 650px;
+    max-height: 696px;
     object-position: 5px 1%;
     object-fit: cover;
 }
