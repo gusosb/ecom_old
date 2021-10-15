@@ -230,7 +230,7 @@ const Navbar = () => {
 
         <IconButton aria-label="showcart" size="large" onClick={() => setOpen(true)}>
         <StyledBadge badgeContent={total} color="info" >
-        <ShoppingCartIcon color="secondary" />
+        <ShoppingCartIcon color="white" />
         </StyledBadge>
         </IconButton>
 

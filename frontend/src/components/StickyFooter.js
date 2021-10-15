@@ -2,7 +2,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import Link from '@mui/material/Link'
+import { Link } from 'react-router-dom'
 import './Styles.css'
 
 
@@ -10,8 +10,8 @@ const Copyright= () => {
   return (
     <Typography variant="body2" color="text.secondary">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" to="/">
+        Demosidan
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -40,7 +40,7 @@ const StickyFooter = () => {
       >
         <Container maxWidth="sm" >
           <Typography variant="body1">
-            My sticky footer can be found here.
+            Klistrig footer
           </Typography>
           <Copyright />
         </Container>

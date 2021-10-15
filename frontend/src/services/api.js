@@ -1,8 +1,8 @@
 import axios from "axios"
+import baseURL from "./baseURL"
 
 const instance = axios.create({
-  baseURL: "http://localhost:8000/api",
-  //baseURL: "https://api.kanindev.se/api",
+  baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
   },

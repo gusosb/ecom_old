@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import Site, Order
+from .serializers import OrderSerializer, OSerializer
 
 import stripe
 
@@ -54,11 +55,15 @@ def order_success(request):
     user = request.user
     if user.id == None:
         # AnonymousUser - guest checkout
-        o1 = Order.objects.create(site=site)
+        order = Order.objects.create(site=site)
     else:
-        o1 = Order.objects.create(site=site, customeruser=request.user)
+        order = Order.objects.create(site=site, customeruser=request.user)
 
+    serializers = OrderSerializer(order)
 
+    data = [{
+        'session': session,
+        'order': serializers.data,
+    }]
 
-
-    return Response(status=status.HTTP_200_OK, data=session)
+    return Response(status=status.HTTP_200_OK, data=data)

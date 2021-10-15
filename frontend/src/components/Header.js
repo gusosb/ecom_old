@@ -34,7 +34,7 @@ const Header = () => {
         <Grid item xs={4}>
         </Grid>
         <Grid item xs={2} sx={{ p: 2 }}>
-        <img src={content.siteimg} alt="fireSpot" className="himg" />
+        <img src={content.siteimg} alt='' className="himg" />
         </Grid>
         <Grid item xs={2}>
         </Grid>

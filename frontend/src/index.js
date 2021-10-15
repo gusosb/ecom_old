@@ -18,6 +18,9 @@ const theme = createTheme({
     own: {
       main: '#e6ceff',
     },
+    white: {
+      main: '#FFFFFF',
+    },
   },
 })
 

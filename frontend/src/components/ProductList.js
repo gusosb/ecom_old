@@ -58,7 +58,15 @@ const ProductList = ({ category }) => {
            
             <Grid item xs={10}>
             <Typography variant="body2" color="text.secondary">
-            {product.prodName} - {product.prodDescription}
+            <Box sx={{ display: 'flex', flexDirection: 'row'}} justifyContent="center"
+            flexDirection="column">
+            {product.prodName}
+            </Box>
+            
+            <Box sx={{ display: 'flex', flexDirection: 'row'}} justifyContent="center"
+            flexDirection="column">
+            {product.prodDescription}
+            </Box>
             </Typography>
             </Grid>
 

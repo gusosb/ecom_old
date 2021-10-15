@@ -30,3 +30,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'site', 'get_status_display', 'customeruser')
+
+class OSerializer(serializers.Serializer):
+    site = serializers.CharField(max_length=200)
+    customeruser = serializers.EmailField()
