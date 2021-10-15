@@ -74,7 +74,7 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields = ['site', 'customeruser']
+    readonly_fields = ['site']
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)

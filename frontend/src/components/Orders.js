@@ -15,7 +15,7 @@ const Orders = () => {
         if (isLoggedIn) {
             dispatch(initOrders())
         }
-    }, [content])
+    }, [content, dispatch, isLoggedIn])
 
     if (!isLoggedIn) {
         return <Redirect to="/login" />

@@ -7,6 +7,7 @@ import { checkoutSession } from '../reducers/sessionReducer'
 
 import './Styles.css'
 import Grid from '@mui/material/Grid'
+import CloseIcon from '@mui/icons-material/Close'
 import Button from '@mui/material/Button'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import IconButton from '@mui/material/IconButton'
@@ -244,14 +245,18 @@ const Navbar = () => {
           onClose={toggleDrawer()}
         >
 
-          
-        <Box
-          display="flex"
-          justifyContent="center"
-          sx={{ mt: 2, mb: 1 }}
-         >
-          Din kundvagn
+          <Box>
+          <IconButton aria-label="close" sx={{ ml: 1, mt: 1 }} onClick={() => setOpen(false)} >
+          <CloseIcon />
+          </IconButton>
           </Box>
+           
+           <Box display="flex"
+          justifyContent="center"
+          sx={{ mb: 1 }}>
+           Din kundvagn
+             </Box>
+
 
 
           {cart && cart.map(product =>

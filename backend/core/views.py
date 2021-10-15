@@ -51,11 +51,13 @@ def order_success(request):
     site = Site.objects.get(id=request.data['siteid'])
     stripe.api_key = site.stripekey
     session = stripe.checkout.Session.retrieve(request.data['sessionid'])
-    if request.user != 'AnonymousUser':
-        o1 = Order.objects.create(site=site, customeruser=request.user)
+    user = request.user
+    if user.id == None:
+        # AnonymousUser - guest checkout
+        o1 = Order.objects.create(site=site)
     else:
-        pass
-    
+        o1 = Order.objects.create(site=site, customeruser=request.user)
+
 
 
 

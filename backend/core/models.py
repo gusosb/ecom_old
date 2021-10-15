@@ -54,5 +54,5 @@ class Order(models.Model):
     class stat(models.IntegerChoices):
         FR = 1, 'Mottagen'
         SN = 2, 'Skickad'
-    status = models.PositiveSmallIntegerField(choices=stat.choices)
+    status = models.PositiveSmallIntegerField(choices=stat.choices, default=1)
     is_handled = models.BooleanField('Hanterad', default=False)
