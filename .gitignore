@@ -23,6 +23,7 @@
 /backend/backend/__pycache__
 /backend/accounts/__pycache__
 /backend/core/__pycache__
+/backend/media
 
 /backend2/*.py[cod]
 /backend2/*.log
