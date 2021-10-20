@@ -33,12 +33,13 @@ const Checkout = () => {
     const cart = useSelector(state => state.cart)
     const session = useSelector(state => state.session)
     const content = useSelector(state => state.content.categories)
+    const auth = useSelector(state => state.auth)
 
 
 
 
   
-    if (!content.length) {
+    if (!content) {
         dispatch(initContent())
     }
  
@@ -70,24 +71,49 @@ const Checkout = () => {
         window.location.assign(session.url)
     }
 
+
+    const LoggedIn = () => {
+      return (
+        <>
+        <Button type="submit" variant="outlined" onClick={handleSubmit}>Gå till betalning</Button>
+        </>
+      )
+    }
+
+    const GuestCheck = () => {
+      return (
+        <>
+        Logga in eller <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
+        </>
+      )
+    }
+
     return (
         <>
-        <Box
+       
+
+        
+        
+        
+       
+        
+
+        <Grid container
         sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        '& > :not(style)': {
-        m: 2,
-        width: 500,
-        },
-        }}
-        >
+          
+          '& > :not(style)': {
+          m: 2,
+          
+          },
+          }}>
+        <Grid item sx={{ flex: 1 }}>
+          
+        </Grid>
+
+        <Grid item sx={{ width: 600 }}>
+
         
-        
-        <Grid container>
-        
-        <Paper variant="outlined" sx={{ justifyContent: 'center', display: 'flex' }}>
+        <Paper variant="outlined">
         <Grid container sx={{ m: 2 }}>
 
         <Grid item xs={5}>
@@ -124,38 +150,57 @@ const Checkout = () => {
         <Typography variant="caption" display="block" gutterBottom>
         ({product.prodVal})
        </Typography>
-          </Box>
+        </Box>
           
 
         </Grid>
         </Grid>
         </Paper>
-
+        </Grid>
+        <Grid item sx={{ flex: 1 }}>
+          
+        </Grid>
         </Grid>
         
-       
-        </Box>
 
-        <Box
+       
+            
+          
+     
+   
+        
+        
+
+ 
+        
+        <Grid container
         sx={{
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
         '& > :not(style)': {
         m: 2,
-        width: 500,
+        width: 600,
         },
-        }}
-        >
+        }}>
         <Paper variant="outlined" sx={{ justifyContent: 'center', display: 'flex' }}>
-        
         <Grid container sx={{ m: 2 }}>
+
+        <Grid item xs={12}>
         <Typography variant="h5" display="block" gutterBottom>
         Leveransinformation
        </Typography>
+       </Grid>
+       </Grid>
+       </Paper>
         </Grid>
-        </Paper>
-        </Box>
+        
+
+
+
+
+
+        
 
         </>
     )

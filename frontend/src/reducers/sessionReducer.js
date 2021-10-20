@@ -1,9 +1,15 @@
 import checkoutService from '../services/checkout'
-
+import { logout } from './auth'
 
 export const checkoutSession = (content) => {
     return async dispatch => {
-        const res = await checkoutService.initCheckout(content)
+        let res
+        try {
+            res = await checkoutService.initCheckout(content)
+        } catch (error) {
+            dispatch(logout())
+            return
+        }
         dispatch({
             type: 'INIT_CHECK',
             data: res.data,
