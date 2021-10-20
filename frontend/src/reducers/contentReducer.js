@@ -1,8 +1,8 @@
 import contentService from '../services/content'
 
-export const initContent = (id) => {
+export const initContent = () => {
     return async dispatch => {
-      const content = await contentService.initContent(id)
+      const content = await contentService.initContent(1)
       dispatch({
         type: 'INIT_CONT',
         data: content,

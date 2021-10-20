@@ -6,11 +6,17 @@ const Category = () => {
 
     const { catid } = useParams()
     const cats = useSelector(state => state.content.categories)
-    const category = cats.find(e => e.id === parseInt(catid))
+    let category = []
+
+    if (cats) {
+        category = cats.find(e => e.id === parseInt(catid))
+    }
+    
+
 
     return (
         <>
-        {category &&
+        {category.products &&
         <ProductList category={category} />
         }
         </>

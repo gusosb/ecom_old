@@ -6,7 +6,7 @@ export const checkoutSession = (content) => {
         const res = await checkoutService.initCheckout(content)
         dispatch({
             type: 'INIT_CHECK',
-            data: res,
+            data: res.data,
         })
     }
 }

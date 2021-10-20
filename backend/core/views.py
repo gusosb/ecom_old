@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import Site, Order
-from .serializers import OrderSerializer, OSerializer
+from .models import OrderItem, Site, Order
+from .serializers import OrderSerializer
 
 import stripe
 
@@ -21,6 +21,8 @@ def create_checkout_session(request):
 
     cartitems = []
 
+    order = Order.objects.create(site=site)
+    
     data = request.data['cart']
     for item in data:
         cartitems.append({'price_data': {
@@ -34,6 +36,16 @@ def create_checkout_session(request):
         },
         'quantity': item['quantity'],
         })
+        OrderItem.objects.create(prodName=item['prodName'],
+        prodPrice=item['prodPrice'],
+        prodQty=item['quantity'],
+        prodImg=item['prodImg'],
+        prodid=item['id'],
+        prodcat=item['category'],
+        prodVal=item['prodVal'],
+        site=site,
+        order=order,
+        )
 
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
@@ -42,6 +54,16 @@ def create_checkout_session(request):
         success_url=site.url + '/success?session_id={CHECKOUT_SESSION_ID}',
         cancel_url=site.url + '/cancel',
     )
+
+    if request.user.id != None:
+        order.customeruser=request.user
+        order.customeremail=request.user.email
+        
+
+    order.sessionid=session['id']
+    order.save()
+
+
 
     return Response(status=status.HTTP_200_OK, data=session)
 
@@ -52,12 +74,11 @@ def order_success(request):
     site = Site.objects.get(id=request.data['siteid'])
     stripe.api_key = site.stripekey
     session = stripe.checkout.Session.retrieve(request.data['sessionid'])
-    user = request.user
-    if user.id == None:
-        # AnonymousUser - guest checkout
-        order = Order.objects.create(site=site)
-    else:
-        order = Order.objects.create(site=site, customeruser=request.user)
+    order = Order.objects.get(sessionid=request.data['sessionid'])
+    if order.customeremail == None:
+        order.customeremail=session.customer_details['email']
+    order.is_paid=True
+    order.save()
 
     serializers = OrderSerializer(order)
 

@@ -1,15 +1,10 @@
-import axios from 'axios'
 import api from './api'
-import baseURL from './baseURL'
-
-
-
 
 
 const initCheckout = async (content) => {
-    const response = await axios.post(`${baseURL}/create-checkout-session/`, content)
-    return response.data
+    return api.post('/create-checkout-session/', content)
 }
+
 
 const getSESSION = async (content) => {
     return api.post('/get-success-session/', content)

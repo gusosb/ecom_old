@@ -1,6 +1,6 @@
 from os import read
 from django.utils import tree
-from .models import Category, Order, Product, Site
+from .models import Category, Order, OrderItem, Product, Site
 from rest_framework import serializers
 
 
@@ -26,11 +26,14 @@ class SiteSerializer(serializers.ModelSerializer):
         fields = ('name', 'categories', 'id', 'siteimg')
 
 
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+
 class OrderSerializer(serializers.ModelSerializer):
+    orderitem = OrderItemSerializer(many=True, read_only=True)
+
     class Meta:
         model = Order
-        fields = ('id', 'site', 'get_status_display', 'customeruser')
-
-class OSerializer(serializers.Serializer):
-    site = serializers.CharField(max_length=200)
-    customeruser = serializers.EmailField()
+        fields = ('id', 'site', 'get_status_display', 'customeruser', 'customeremail', 'orderitem')

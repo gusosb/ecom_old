@@ -18,6 +18,7 @@ import Success from './components/Success'
 import StickyFooter from "./components/StickyFooter"
 import Prod from "./components/Prod"
 import './components/Styles.css'
+import Checkout from "./components/Checkout"
 
 
 
@@ -45,6 +46,7 @@ const App= () => {
     <Route path="/kategori/:catid" component={Category} />
     <Route path="/success" component={Success} />
     <Route path="/login" component={Login} />
+    <Route path="/checkout" component={Checkout} />
     <Route path="/register" component={Register} />
     <Route path="/passreset" component={Passreset} />
     <Route path="/bestallningar" component={Orders} />

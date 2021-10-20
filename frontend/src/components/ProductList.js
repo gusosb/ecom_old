@@ -15,6 +15,7 @@ import { Link } from "react-router-dom"
 
 
 const ProductList = ({ category }) => {
+
     const products = category.products
     const dispatch = useDispatch()
 
@@ -57,7 +58,7 @@ const ProductList = ({ category }) => {
             <CardContent sx={{ display: 'flex', flexDirection: 'row'}}>
            
             <Grid item xs={10}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography component={'span'} variant="body2" color="text.secondary">
             <Box sx={{ display: 'flex', flexDirection: 'row'}} justifyContent="center"
             flexDirection="column">
             {product.prodName}

@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { register } from "../reducers/auth"
+import { useState, useEffect } from "react"
+import { register, clearError } from "../reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from 'react-router-dom'
 
@@ -21,6 +21,7 @@ const Register = (props) => {
   let htext =[]
 
     const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+    const auth = useSelector(state => state.auth)
 
     const [ firstname, setFirstname ] = useState('')
     const [ lastname, setLastname ] = useState('')
@@ -50,14 +51,8 @@ const Register = (props) => {
       const handleRegister = (e) => {
         e.preventDefault()
         dispatch(register(email, password, firstname, lastname))
-          .then(() => {
-            if (isLoggedIn) {
-              props.history.push("/")
-            }
-          })
-          .catch((e) => {
-          })
       }
+    
 
       const checkIsValidEmail = () => {
         let re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -78,10 +73,22 @@ const Register = (props) => {
         }
     }
 
+    useEffect(() => {
+      if (auth.error) {
+        setTimeout(() => {
+          dispatch(clearError())
+        }, 6000)
+      }
+    }, [auth.error])
+
+    if (isLoggedIn) {
+      props.history.push("/")
+    }
+
 
 
     return (
-        <div>
+        <>
 
 <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -94,6 +101,10 @@ const Register = (props) => {
             alignItems: 'center',
           }}
         >
+          {auth.error &&
+          <Typography variant="h6" color="red">
+          Det finns redan en användare registrerad med den epostadressen.
+          </Typography>}
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -195,7 +206,7 @@ const Register = (props) => {
       </Container>
     </ThemeProvider>
             
-        </div>
+        </>
     )
 }
 

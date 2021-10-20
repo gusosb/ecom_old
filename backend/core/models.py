@@ -51,8 +51,28 @@ class Product(models.Model):
 class Order(models.Model):
     site = models.ForeignKey(Site, on_delete=CASCADE, related_name='orders')
     customeruser = models.ForeignKey(User, on_delete=CASCADE, related_name='cuser', blank=True, null=True)
+    customeremail = models.CharField(max_length=250, null=True, blank=True)
+    cuname = models.CharField(max_length=300)
+    custreet = models.CharField(max_length=300)
+    cuzip = models.CharField(max_length=6)
+    cuarea = models.CharField(max_length=50)
     class stat(models.IntegerChoices):
         FR = 1, 'Mottagen'
         SN = 2, 'Skickad'
     status = models.PositiveSmallIntegerField(choices=stat.choices, default=1)
     is_handled = models.BooleanField('Hanterad', default=False)
+    is_paid = models.BooleanField('Betald genom Checkout', default=False)
+    sessionid = models.CharField(max_length=250, unique=True, blank=True, null=True)
+    created_at = models.DateField(auto_now_add=True, blank=True, null=True)
+
+
+class OrderItem(models.Model):
+    site = models.ForeignKey(Site, on_delete=CASCADE, related_name='orderitems')
+    prodName = models.CharField('Produktnamn', max_length=150)
+    prodPrice = models.FloatField('Pris', blank=True, null=True)
+    prodQty = models.PositiveSmallIntegerField('Antal')
+    prodImg = models.CharField(max_length=500, blank=True, null=True)
+    prodid = models.PositiveSmallIntegerField(blank=True, null=True)
+    prodcat = models.PositiveSmallIntegerField(blank=True, null=True)
+    prodVal = models.CharField(max_length=150, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=CASCADE, related_name='orderitem')

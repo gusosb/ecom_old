@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect, Link } from 'react-router-dom'
 
@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 
-import { login } from "../reducers/auth"
+import { login, clearError } from "../reducers/auth"
 
 
 const Login = (props) => {
@@ -25,6 +25,7 @@ const Login = (props) => {
   const { isLoggedIn } = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
+  const auth = useSelector(state => state.auth)
 
   const onChangeEmail = (e) => {
     const email = e.target.value
@@ -51,6 +52,18 @@ const Login = (props) => {
   const theme = createTheme()
 
 
+
+  useEffect(() => {
+    if (auth.error) {
+      setTimeout(() => {
+        dispatch(clearError())
+      }, 6000)
+    }
+  }, [auth.error])
+
+
+
+
   if (isLoggedIn) {
     return <Redirect to="/" />
   }
@@ -70,6 +83,10 @@ const Login = (props) => {
             alignItems: 'center',
           }}
         >
+          {auth.error &&
+          <Typography variant="h6" color="red">
+          Felaktigt användarnamn eller lösenord.
+          </Typography>}
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>

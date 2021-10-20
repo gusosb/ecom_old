@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { checkoutSession } from '../reducers/sessionReducer'
-import './Styles.css'
 
+import './Styles.css'
 import Button from '@mui/material/Button'
 
 
@@ -16,6 +16,8 @@ const CheckoutForm2 = () => {
     if(session.url) {
         window.location.assign(session.url)
     }
+
+
 
 
 

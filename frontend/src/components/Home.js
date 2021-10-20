@@ -9,21 +9,22 @@ const Home = () => {
 
     const dispatch = useDispatch()
     const content = useSelector(state => state.content)
-    const categories = content.categories
 
-  
+
     useEffect(() => {
       if (!content) {
-        dispatch(initContent(1))
+        dispatch(initContent())
       }
     }, [dispatch, content])
+
+    
 
 
 
   return (
     <>
-    {categories &&
-    <ProductList category={categories[0]} />
+    {content.categories &&
+    <ProductList category={content.categories[0]} />
     }
     </>
   )

@@ -58,6 +58,12 @@ export const refreshToken = (access) => (dispatch) => {
   })
 }
 
+export const clearError = () => {
+  return {
+    type: 'CLEAR_ERR',
+  }
+}
+
 
 const authReducer = (state=initialState, action) => {
   switch (action.type) {
@@ -66,10 +72,11 @@ const authReducer = (state=initialState, action) => {
         ...state,
         isLoggedIn: false,
       }
-    case 'REGISTER_FAIL':
+    case 'REG_ERROR':
       return {
         ...state,
         isLoggedIn: false,
+        error: action.data,
       }
     case 'LOGIN_SUCCESS':
       return {
@@ -84,6 +91,11 @@ const authReducer = (state=initialState, action) => {
         isLoggedIn: false,
         user: null,
         error: action.data,
+      }
+    case 'CLEAR_ERR':
+      return {
+        ...state,
+        error: null,
       }
     case 'LOGOUT':
       return {

@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from "react"
 import { getSession } from '../reducers/sessionReducer'
+
 import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -31,11 +30,11 @@ const Success = () => {
             >
             <Card sx={{ minWidth: 275 }} variant="outlined">
             <CardContent>
-            <Typography variant="h5" compone    nt="div"             display="flex"
+            <Typography variant="h5" component="div" display="flex"
             justifyContent="center">
                 Beställning mottagen
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary"             display="flex"
+            <Typography sx={{ mb: 1.5 }} color="text.secondary" display="flex"
             justifyContent="center">
                 Tack för din beställning
             </Typography>

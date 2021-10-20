@@ -3,6 +3,8 @@ import Grid from '@mui/material/Grid'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from "../reducers/auth"
 import { Link } from 'react-router-dom'
+import { styled } from '@mui/material/styles'
+import Box from '@mui/material/Box'
 
 const Header = () => {
 
@@ -14,16 +16,23 @@ const Header = () => {
         dispatch(logout())
     }
 
+    const DivLink = styled('div')(({ theme }) => ({
+        ...theme.typography.button,
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing(1),
+      }))
+
     const LoggedIN = () => {
         return (
-        <>
-        <a href='#' className="nav-link" onClick={logOut}>
-        Logga ut
-        </a>
+        <Box
+        sx={{ display: 'flex', flexDirection: 'row' }}>
         <Link to="/bestallningar" variant="body2">
-        Mina beställningar
+        <DivLink>Mina beställningar</DivLink>
         </Link>
-        </>
+        <button onClick={logOut}>
+        <DivLink>Logga ut</DivLink>
+        </button>
+        </Box>
         )
     }
 
@@ -39,8 +48,11 @@ const Header = () => {
         <Grid item xs={2}>
         </Grid>
         <Grid item xs={4}>
-        {currentUser &&
-        <LoggedIN />
+        {currentUser
+        ? <LoggedIN />
+        : <Link to="/login" variant="body2">
+        <DivLink>Logga in</DivLink>
+        </Link>
         }
         </Grid>
         </Grid>
