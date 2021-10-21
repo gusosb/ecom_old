@@ -18,7 +18,6 @@ import Drawer from '@mui/material/Drawer'
 import AddIcon from '@mui/icons-material/Add'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import RemoveIcon from '@mui/icons-material/Remove'
-import CheckoutForm2 from './CheckoutForm2'
 import { removeItem, addItem } from '../reducers/cartReducer'
 import Typography from '@mui/material/Typography'
 import CardMedia from '@mui/material/CardMedia'
@@ -29,33 +28,30 @@ import Popover from '@mui/material/Popover'
 
 const Navbar = () => {
 
-  const removeHeart = (id) => {
-    dispatch(unheartItem(id))
-  }
 
   const dispatch = useDispatch()
 
   const cart = useSelector(state => state.cart)
   const categories = useSelector(state => state.content.categories)
   const heartContent = useSelector(state => state.heart)
-  const user = useSelector(state => state.auth)
   const session = useSelector(state => state.session)
-  const content = useSelector(state => state.content)
 
   const [ heart, setHeart ] = useState(false)
   const [ anchor, setAnchor ] = useState()
+  const [ open, setOpen ] = useState(false)
 
   const handleClickHeart = (e) => {
     setAnchor(e.currentTarget)
     setHeart(true)
   }
-
+  const removeHeart = (id) => {
+    dispatch(unheartItem(id))
+  }
 
   const total = cart.map(e => e.quantity).reduce(
     ( previousValue, currentValue ) => previousValue + currentValue,
     0
   )
-
   const totalsum = cart.map(e => e.quantity * e.prodPrice).reduce(
     ( previousValue, currentValue ) => previousValue + currentValue,
     0
@@ -80,18 +76,18 @@ const Navbar = () => {
   }
   
 
-  const [ open, setOpen ] = useState(false)
+  
 
 
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
-      '& .MuiBadge-badge': {
-        background: '#f44336',
-        right: -4,
-        top: 15,
-        border: `0px solid ${theme.palette.background.paper}`,
-        padding: '1 3px',
-      },
+  '& .MuiBadge-badge': {
+    background: '#f44336',
+    right: -4,
+    top: 15,
+    border: `0px solid ${theme.palette.background.paper}`,
+    padding: '1 3px',
+  },
   }))
 
 
@@ -105,39 +101,7 @@ const Navbar = () => {
 
     if(session.url) {
       window.location.assign(session.url)
-  }
-
-
-
-  const handleSubmit = (e) => {
-      const readyCart = {
-          siteid: content.id,
-          cart,
-      }
-      dispatch(checkoutSession(readyCart))
-  }
-
-    const CheckoutForm3 = () => {
-      return (
-        <Grid container sx={{ flexDirection: 'column', mt: 1 }} >
-
-        <Box           display="flex"
-          justifyContent="center" sx={{ mt: 2 }}>
-        <Link to="/login" onClick={() => setOpen(false)} >Logga in eller</Link>
-        </Box>
-     
-
-       <Box           display="flex"
-          justifyContent="center" sx={{ mt: 2 }}>
-        <Button type="submit" variant="outlined" onClick={handleSubmit}>Checkout som Gäst</Button>
-        </Box>
-       
-        </Grid>
-      )
     }
-
-
-    
 
     return (
         <>
@@ -179,7 +143,7 @@ const Navbar = () => {
           vertical: 'top',
           horizontal: 'center',
         }}
-      >
+        >
         <Typography component={'div'} sx={{ pb: 2, pr: 2, pl: 2, pt: 0 }}>
 
           {heartContent.map(product =>
@@ -242,9 +206,9 @@ const Navbar = () => {
              
         {cart[0] &&
         <Drawer
-          anchor='right'
-          open={open}
-          onClose={toggleDrawer()}
+        anchor='right'
+        open={open}
+        onClose={toggleDrawer()}
         >
 
           <Box>
@@ -253,11 +217,11 @@ const Navbar = () => {
           </IconButton>
           </Box>
            
-           <Box display="flex"
+          <Box display="flex"
           justifyContent="center"
           sx={{ mb: 1 }}>
            Din kundvagn
-             </Box>
+          </Box>
 
 
 
@@ -275,14 +239,13 @@ const Navbar = () => {
           onClick={() => setOpen(false)}
           >
           <CardMedia
-            component="img"
-            height="120"
-            image={product.prodImg}
-            alt="no image"
-            className="cartimg"
-            variant="outlined"
-            
-            />
+          component="img"
+          height="120"
+          image={product.prodImg}
+          alt="no image"
+          className="cartimg"
+          variant="outlined"
+          />
           </CardActionArea>
             
 
@@ -292,7 +255,7 @@ const Navbar = () => {
           <Box
           display="flex"
           justifyContent="center"
-         >
+          >
           {product.prodName}
          
           </Box>
@@ -304,7 +267,7 @@ const Navbar = () => {
          >
         <Typography variant="caption" display="block" gutterBottom>
         ({product.prodVal})
-       </Typography>
+        </Typography>
           </Box>
           : <br></br>
           }
@@ -313,7 +276,7 @@ const Navbar = () => {
           <Box
           display="flex"
           justifyContent="center"
-         >
+          >
           
           {product.prodPrice},00 kr.
           </Box>
@@ -341,13 +304,13 @@ const Navbar = () => {
         
 
         <Box
-          display="flex"
-          justifyContent="center"
-          className="ptop"
-          style={{ fontWeight: 600 }}
-          sx={{ mt: 3 }}
-         >
-          Totalt (inkl. moms): {totalsum + ',00 kr'}
+        display="flex"
+        justifyContent="center"
+        className="ptop"
+        style={{ fontWeight: 600 }}
+        sx={{ mt: 3 }}
+        >
+        Totalt (inkl. moms): {totalsum + ',00 kr'}
         </Box>
 
         
@@ -359,9 +322,8 @@ const Navbar = () => {
         justifyContent="center"
         className="ptop"
         >
-        {user.isLoggedIn
-        ? <CheckoutForm2 />
-        : <CheckoutForm3 /> }
+
+        <Button onClick={() => setOpen(false)} component={Link} to="/checkout" type="submit" variant="outlined">Gå till Kassan</Button>
         
         </Box>
         }

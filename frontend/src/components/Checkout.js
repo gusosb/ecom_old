@@ -20,7 +20,6 @@ import Drawer from '@mui/material/Drawer'
 import AddIcon from '@mui/icons-material/Add'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import RemoveIcon from '@mui/icons-material/Remove'
-import CheckoutForm2 from './CheckoutForm2'
 import Typography from '@mui/material/Typography'
 import CardMedia from '@mui/material/CardMedia'
 import { CardActionArea } from '@mui/material'
@@ -47,23 +46,20 @@ const Checkout = () => {
     
     const product = content ? content.categories[0].products[0] : ''
 
-
-
-
     const handleRemove = (e) => {
-        const item = {
-          id: e.id,
-          prodVal: e.prodVal,
-        }
-        dispatch(removeItem(item))
+      const item = {
+        id: e.id,
+        prodVal: e.prodVal,
       }
+      dispatch(removeItem(item))
+    }
 
     const handleSubmit = (e) => {
-        const readyCart = {
-            siteid: content.id,
-            cart,
-        }
-        dispatch(checkoutSession(readyCart))
+      const readyCart = {
+        siteid: content.id,
+        cart,
+      }
+      dispatch(checkoutSession(readyCart))
     }
 
 
@@ -76,7 +72,12 @@ const Checkout = () => {
     const LoggedIn = () => {
       return (
         <>
+        <Box
+        display="flex"
+        justifyContent="center"
+        >
         <Button type="submit" variant="outlined" onClick={handleSubmit}>Gå till betalning</Button>
+        </Box>
         </>
       )
     }
@@ -84,18 +85,17 @@ const Checkout = () => {
     const GuestCheck = () => {
       return (
         <>
-               <Box
-          display="flex"
-          justifyContent="center"
-         >
+        <Box
+        display="flex"
+        justifyContent="center"
+        >
         <Link to="/login">Logga in eller</Link>
         </Box>
         <br />
-        
         <Box
-          display="flex"
-          justifyContent="center"
-         >
+        display="flex"
+        justifyContent="center"
+        >
         <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
         </Box>
         </>
@@ -103,143 +103,138 @@ const Checkout = () => {
     }
 
     return (
-        <>
-       
-
+      <>
+      <Grid container
+      sx={{
         
-        
-        
-       
-        
-
-        <Grid container
-        sx={{
-          
-          '& > :not(style)': {
-          m: 2,
-          
-          },
-          }}>
-        <Grid item sx={{ flex: 1 }}>
-          
-        </Grid>
-
-        <Grid item sx={{ width: 600 }}>
-
-        
-        <Paper variant="outlined">
-        <Grid container sx={{ m: 2 }}>
-
-        <Grid item xs={5}>
-        <CardActionArea
-          
-          component={Link}
-          to={`/prod/${product.category}/${product.id}`}
-          >
-          <CardMedia
-            component="img"
-            height="120"
-            image={product.prodImg}
-            alt="no image"
-            className=""
-            sx={{ maxHeight: 500 }}
-            variant="outlined"
-            
-            />
-          </CardActionArea>
-        </Grid>
-        <Grid item xs={7}>
-        <Box
-          display="flex"
-          justifyContent="center"
-         >
-          {product.prodName}
-          
-         
-          </Box>
-          <Box
-          display="flex"
-          justifyContent="center"
-         >
-        <Typography variant="caption" display="block" gutterBottom>
-        ({product.prodVal})
-       </Typography>
-        </Box>
-
-
-          
-
-        </Grid>
-        </Grid>
-        </Paper>
-        </Grid>
-        <Grid item sx={{ flex: 1 }}>
-          
-        </Grid>
-        </Grid>
-        
-
-       
-            
-          
-     
-   
-        
-        
-
- 
-        
-        <Grid container
-        sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
         '& > :not(style)': {
         m: 2,
-        width: 600,
+        
         },
         }}>
-        <Paper variant="outlined" sx={{ justifyContent: 'center', display: 'flex' }}>
-        <Grid container sx={{ m: 2 }}>
-
-        <Grid item xs={12}>
-        <Typography variant="h5" display="block" gutterBottom>
-        Leveransinformation
-       </Typography>
-
-       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
-       <TextField fullWidth label='Namn' />
-       <TextField fullWidth label='Efternamn' />
-        </Box>
-
-        <Box sx={{ m: 1 }}>
-       <TextField fullWidth label='Adress' />
-       </Box>
-
-       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
-       <TextField fullWidth label='Postnummer' />
-       <TextField fullWidth label='Ort' />
-        </Box>
-
-
-       {auth.isLoggedIn
-       ? <LoggedIn />
-       : <GuestCheck />
-       }
-       
-       </Grid>
-       </Grid>
-       </Paper>
-        </Grid>
+      <Grid item sx={{ flex: 1 }}>
         
+      </Grid>
 
+      <Grid item sx={{ width: 600 }}>
 
+      
+      <Paper variant="outlined">
+      <Grid container sx={{ p: 3 }}>
 
-
-
+      {cart && cart.map(product =>
+      <>
+      <Grid item xs={5}>
+      
+      <CardActionArea
+      
+      component={Link}
+      to={`/prod/${product.category}/${product.id}`}
+      >
+      <CardMedia
+      component="img"
+      height="120"
+      image={product.prodImg}
+      alt="no image"
+      variant="outlined"
+      />
+      </CardActionArea>
+      
+      </Grid>
+      <Grid item xs={7}>
+      <Box
+      display="flex"
+      justifyContent="center"
+      >
+      {product.prodName}
+      
+      
+      </Box>
+      <Box
+      display="flex"
+      justifyContent="center"
+      >
+      <Typography variant="caption" display="block" gutterBottom>
+      ({product.prodVal})
+      </Typography>
+      </Box>
+      </Grid>
+      </>
+      )}
+      
+      </Grid>
+      </Paper>
+      
+      </Grid>
+      <Grid item sx={{ flex: 1 }}>
         
+      </Grid>
+      </Grid>
+      
 
-        </>
+      
+          
+        
+    
+  
+      
+      
+
+
+      
+      <Grid container
+      sx={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      '& > :not(style)': {
+      p: 2,
+      width: 600,
+      },
+      }}>
+      <Paper variant="outlined" sx={{ justifyContent: 'center', display: 'flex' }}>
+      <Grid container sx={{ m: 2 }}>
+
+
+      
+      <Grid item xs={12}>
+      <Typography variant="h5" display="block" gutterBottom>
+      Leveransinformation
+      </Typography>
+
+      <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
+      <TextField fullWidth label='Namn' />
+      <TextField fullWidth label='Efternamn' />
+      </Box>
+
+      <Box sx={{ m: 1 }}>
+      <TextField fullWidth label='Adress' />
+      </Box>
+
+      <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
+      <TextField fullWidth label='Postnummer' />
+      <TextField fullWidth label='Ort' />
+      </Box>
+
+
+      {auth.isLoggedIn
+      ? <LoggedIn />
+      : <GuestCheck />
+      }
+      
+      </Grid>
+      </Grid>
+      </Paper>
+      </Grid>
+      
+
+
+
+
+
+      
+
+      </>
     )
 }
 

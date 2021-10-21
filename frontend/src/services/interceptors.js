@@ -42,6 +42,7 @@ const setup = (store) => {
 
             return axiosInstance(originalConfig)
           } catch (_error) {
+            TokenService.removeUser()
             return Promise.reject(_error)
           }
         }
