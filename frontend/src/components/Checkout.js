@@ -14,6 +14,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import IconButton from '@mui/material/IconButton'
 import Badge from '@mui/material/Badge'
 import { styled } from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import AddIcon from '@mui/icons-material/Add'
@@ -32,7 +33,7 @@ const Checkout = () => {
 
     const cart = useSelector(state => state.cart)
     const session = useSelector(state => state.session)
-    const content = useSelector(state => state.content.categories)
+    const content = useSelector(state => state.content)
     const auth = useSelector(state => state.auth)
 
 
@@ -40,11 +41,11 @@ const Checkout = () => {
 
   
     if (!content) {
-        dispatch(initContent())
+      dispatch(initContent())
     }
  
     
-    const product = content[0].products[0]
+    const product = content ? content.categories[0].products[0] : ''
 
 
 
@@ -83,7 +84,20 @@ const Checkout = () => {
     const GuestCheck = () => {
       return (
         <>
-        Logga in eller <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
+               <Box
+          display="flex"
+          justifyContent="center"
+         >
+        <Link to="/login">Logga in eller</Link>
+        </Box>
+        <br />
+        
+        <Box
+          display="flex"
+          justifyContent="center"
+         >
+        <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
+        </Box>
         </>
       )
     }
@@ -151,6 +165,8 @@ const Checkout = () => {
         ({product.prodVal})
        </Typography>
         </Box>
+
+
           
 
         </Grid>
@@ -190,6 +206,27 @@ const Checkout = () => {
         <Typography variant="h5" display="block" gutterBottom>
         Leveransinformation
        </Typography>
+
+       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
+       <TextField fullWidth label='Namn' />
+       <TextField fullWidth label='Efternamn' />
+        </Box>
+
+        <Box sx={{ m: 1 }}>
+       <TextField fullWidth label='Adress' />
+       </Box>
+
+       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
+       <TextField fullWidth label='Postnummer' />
+       <TextField fullWidth label='Ort' />
+        </Box>
+
+
+       {auth.isLoggedIn
+       ? <LoggedIn />
+       : <GuestCheck />
+       }
+       
        </Grid>
        </Grid>
        </Paper>

@@ -25,8 +25,8 @@ const Prod = () => {
     const categories = useSelector(state => state.content.categories)
 
     const { catid, prodid } = useParams()
-    const cat = categories.find(e => e.id === parseInt(catid))
-    const product = cat.products.find(e => e.id === parseInt(prodid))
+    const cat = categories && categories.find(e => e.id === parseInt(catid))
+    const product = cat ? cat.products.find(e => e.id === parseInt(prodid)) : ''
   
 
     const [ image, setImage ] = useState(product.prodImg)
