@@ -6,11 +6,9 @@ const Category = () => {
 
     const { catid } = useParams()
     const cats = useSelector(state => state.content.categories)
-    let category = []
 
-    if (cats) {
-        category = cats.find(e => e.id === parseInt(catid))
-    }
+    const category = cats ? cats.find(e => e.id === parseInt(catid)) : ''
+
     
 
 
