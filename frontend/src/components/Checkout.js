@@ -9,6 +9,7 @@ import { removeItem, addItem } from '../reducers/cartReducer'
 import './Styles.css'
 import Grid from '@mui/material/Grid'
 import CloseIcon from '@mui/icons-material/Close'
+import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import IconButton from '@mui/material/IconButton'
@@ -35,6 +36,12 @@ const Checkout = () => {
     const content = useSelector(state => state.content)
     const auth = useSelector(state => state.auth)
 
+    const [ firstname, setFirstname ] = useState('')
+    const [ lastname, setLastname ] = useState('')
+    const [ adress, setAdress ] = useState('')
+    const [ zipcode, setZipcode ] = useState('')
+    const [ area, setArea ] = useState('')
+
 
 
 
@@ -42,9 +49,15 @@ const Checkout = () => {
     if (!content) {
       dispatch(initContent())
     }
+
+
+  const totalsum = cart.map(e => e.quantity * e.prodPrice).reduce(
+    ( previousValue, currentValue ) => previousValue + currentValue,
+    0
+  )
  
     
-    const product = content ? content.categories[0].products[0] : ''
+    
 
     const handleRemove = (e) => {
       const item = {
@@ -120,11 +133,12 @@ const Checkout = () => {
 
       
       <Paper variant="outlined">
-      <Grid container sx={{ p: 3 }}>
+      <Grid container sx={{ pb: 3, pr: 3, pl: 3 }}>
 
       {cart && cart.map(product =>
       <>
-      <Grid item xs={5}>
+      <Grid container sx={{ pt: 3 }}>
+      <Grid item xs={3}>
       
       <CardActionArea
       
@@ -133,7 +147,7 @@ const Checkout = () => {
       >
       <CardMedia
       component="img"
-      height="120"
+      sx={{ maxHeight: 200 }}
       image={product.prodImg}
       alt="no image"
       variant="outlined"
@@ -143,21 +157,33 @@ const Checkout = () => {
       </Grid>
       <Grid item xs={7}>
       <Box
-      display="flex"
-      justifyContent="center"
+      sx={{ ml: 2 }}
       >
       {product.prodName}
       
       
       </Box>
       <Box
-      display="flex"
-      justifyContent="center"
+      sx={{ ml: 2 }}
       >
       <Typography variant="caption" display="block" gutterBottom>
       ({product.prodVal})
       </Typography>
       </Box>
+
+      <Box
+      sx={{ ml: 2 }}
+      >
+      <Typography display="block" gutterBottom>
+      ({product.prodVal})
+      </Typography>
+      </Box>
+
+      
+
+
+
+      </Grid>
       </Grid>
       </>
       )}
@@ -166,7 +192,60 @@ const Checkout = () => {
       </Paper>
       
       </Grid>
+
+
+
+
       <Grid item sx={{ flex: 1 }}>
+
+      <Grid item sx={{ width: 350 }}>
+
+      
+      <Paper variant="outlined">
+      <Grid container sx={{ p: 3 }}>
+
+      
+    
+      <Grid item xs={5}>
+      
+      här1
+      
+      </Grid>
+      <Grid item xs={7}>
+      <Box
+      display="flex"
+      justifyContent="center"
+      >
+      här2
+      
+      
+      </Box>
+      </Grid>
+
+      
+
+      <Grid item xs={5}>
+      
+      här3
+      
+      </Grid>
+      <Grid item xs={7}>
+      <Box
+      display="flex"
+      justifyContent="center"
+      >
+      {totalsum},00 kr
+      
+      
+      </Box>
+      </Grid>
+    
+      
+      
+      </Grid>
+      </Paper>
+      
+      </Grid>
         
       </Grid>
       </Grid>
@@ -203,17 +282,17 @@ const Checkout = () => {
       </Typography>
 
       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
-      <TextField fullWidth label='Namn' />
-      <TextField fullWidth label='Efternamn' />
+      <TextField fullWidth label='Namn' value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+      <TextField fullWidth label='Efternamn' value={lastname} onChange={(e) => setLastname(e.target.value)} />
       </Box>
 
       <Box sx={{ m: 1 }}>
-      <TextField fullWidth label='Adress' />
+      <TextField fullWidth label='Adress' value={adress} onChange={(e) => setAdress(e.target.value)} />
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
-      <TextField fullWidth label='Postnummer' />
-      <TextField fullWidth label='Ort' />
+      <TextField fullWidth label='Postnummer' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
+      <TextField fullWidth label='Ort' value={area} onChange={(e) => setArea(e.target.value)} />
       </Box>
 
 
