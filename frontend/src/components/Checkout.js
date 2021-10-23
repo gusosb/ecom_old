@@ -63,6 +63,11 @@ const Checkout = () => {
       const item = {
         id: e.id,
         prodVal: e.prodVal,
+        firstname,
+        lastname,
+        adress,
+        zipcode,
+        area,
       }
       dispatch(removeItem(item))
     }
