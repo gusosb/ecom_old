@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom"
 
 import { unheartItem } from '../reducers/heartReducer'
-import { checkoutSession } from '../reducers/sessionReducer'
 
 import './Styles.css'
 import Grid from '@mui/material/Grid'

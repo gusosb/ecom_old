@@ -59,7 +59,7 @@ const Login = (props) => {
         dispatch(clearError())
       }, 6000)
     }
-  }, [auth.error])
+  }, [auth.error, dispatch])
 
 
 

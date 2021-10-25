@@ -41,6 +41,7 @@ const Checkout = () => {
     const [ adress, setAdress ] = useState('')
     const [ zipcode, setZipcode ] = useState('')
     const [ area, setArea ] = useState('')
+    const [ phone, setPhone ] = useState('')
 
 
 
@@ -66,11 +67,25 @@ const Checkout = () => {
       }
       dispatch(removeItem(item))
     }
+    const addtoCart = (e) => {
+      const item = {
+        prodVal: e.prodVal,
+        id: e.id,
+        quantity: 1,
+      }
+      dispatch(addItem(item))
+    }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = () => {
       const readyCart = {
         siteid: content.id,
         cart,
+        firstname,
+        lastname,
+        adress,
+        zipcode,
+        area,
+        phone,
       }
       dispatch(checkoutSession(readyCart))
     }
@@ -88,8 +103,13 @@ const Checkout = () => {
         <Box
         display="flex"
         justifyContent="center"
+        sx={{ mt: 5 }}
         >
-        <Button type="submit" variant="outlined" onClick={handleSubmit}>Gå till betalning</Button>
+        {!firstname || !lastname || !adress || !zipcode || !area
+        ? <Button type="submit" variant="disabled">Gå till betalning</Button>
+        : <Button type="submit" variant="outlined" onClick={handleSubmit}>Gå till betalning</Button>
+        }
+        
         </Box>
         </>
       )
@@ -101,6 +121,7 @@ const Checkout = () => {
         <Box
         display="flex"
         justifyContent="center"
+        sx={{ mt: 5 }}
         >
         <Link to="/login">Logga in eller</Link>
         </Box>
@@ -109,7 +130,10 @@ const Checkout = () => {
         display="flex"
         justifyContent="center"
         >
-        <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
+        {!firstname || !lastname || !adress || !zipcode || !area
+        ? <Button type="submit" variant="disabled">betala som gäst</Button>
+        : <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
+        }
         </Box>
         </>
       )
@@ -117,6 +141,12 @@ const Checkout = () => {
 
     return (
       <>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+      <Typography variant="h5" display="block" gutterBottom>
+      Kassa
+      </Typography>
+      </Box>
       <Grid container
       sx={{
         
@@ -125,6 +155,8 @@ const Checkout = () => {
         
         },
         }}>
+
+
       <Grid item sx={{ flex: 1 }}>
         
       </Grid>
@@ -157,27 +189,60 @@ const Checkout = () => {
       </Grid>
       <Grid item xs={7}>
       <Box
-      sx={{ ml: 2 }}
+      sx={{ ml: 2, display: 'flex', flexDirection: 'row' }}
       >
       {product.prodName}
+
+
       
       
       </Box>
       <Box
       sx={{ ml: 2 }}
       >
-      <Typography variant="caption" display="block" gutterBottom>
-      ({product.prodVal})
-      </Typography>
+      {product.prodPrice},00 kr.
       </Box>
 
       <Box
       sx={{ ml: 2 }}
       >
       <Typography display="block" gutterBottom>
-      ({product.prodVal})
+      {product.prodDescription}
       </Typography>
+
+
       </Box>
+
+      <Box
+      sx={{ ml: 2 }}
+      >
+      <Typography display="block" gutterBottom>
+      {product.prodValnamn}: {product.prodVal} 
+      </Typography>
+
+
+      </Box>
+
+
+      <Box
+      >
+      <IconButton sx={{ mr: 1 }} aria-label="remove" size="large" onClick={() => handleRemove(product)} ><RemoveIcon /></IconButton>
+    
+      {product.quantity} st
+      <IconButton sx={{ ml: 1 }} aria-label="add" size="large" onClick={() => addtoCart(product)} ><AddIcon /></IconButton>
+      </Box>
+
+
+      <Box
+      sx={{ ml: 2 }}
+      >
+      <Typography display="block" gutterBottom>
+      Totalsumma: {product.prodPrice * product.quantity + ',00 kr.'}
+      </Typography>
+
+
+      </Box>
+      
 
       
 
@@ -198,7 +263,7 @@ const Checkout = () => {
 
       <Grid item sx={{ flex: 1 }}>
 
-      <Grid item sx={{ width: 350 }}>
+      <Grid item sx={{ width: 200 }}>
 
       
       <Paper variant="outlined">
@@ -226,10 +291,12 @@ const Checkout = () => {
 
       <Grid item xs={5}>
       
-      här3
       
+      <Divider />
       </Grid>
+      
       <Grid item xs={7}>
+      <Divider />
       <Box
       display="flex"
       justifyContent="center"
@@ -263,11 +330,11 @@ const Checkout = () => {
       
       <Grid container
       sx={{
+      mb: 5,
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
       '& > :not(style)': {
-      p: 2,
       width: 600,
       },
       }}>
@@ -293,6 +360,10 @@ const Checkout = () => {
       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
       <TextField fullWidth label='Postnummer' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
       <TextField fullWidth label='Ort' value={area} onChange={(e) => setArea(e.target.value)} />
+      </Box>
+
+      <Box sx={{ m: 1 }}>
+      <TextField fullWidth label='Mobilnummer' value={phone} onChange={(e) => setPhone(e.target.value)} />
       </Box>
 
 

@@ -36,12 +36,14 @@ const Prod = () => {
 
     useEffect(() => {
       setImage(product.prodImg)
+      setVariant(product.prodVal1)
     }, [product])
 
     const addtoCart = (e) => {
     const item = {
         category: e.category,
         id: e.id,
+        prodValnamn: e.prodValnamn,
         prodName: e.prodName,
         prodPrice: e.prodPrice,
         prodImg: e.prodImg,

@@ -1,4 +1,6 @@
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string , get_template
+from django.core.mail import EmailMessage
 from stripe.api_resources import payment_method
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -59,7 +61,11 @@ def create_checkout_session(request):
         order.customeruser=request.user
         order.customeremail=request.user.email
         
-
+    order.cuname=request.data['firstname'] + ' ' + request.data['lastname']
+    order.custreet=request.data['adress']
+    order.cuzip=request.data['zipcode']
+    order.cuarea=request.data['area']
+    order.cuphone=request.data['phone']
     order.sessionid=session['id']
     order.save()
 
@@ -86,5 +92,10 @@ def order_success(request):
         'session': session,
         'order': serializers.data,
     }]
+
+    html_message = get_template('ordermessage.html').render({'order': order})
+    email = EmailMessage('Orderbekräftelse', html_message, from_email=site.siteemail, to=[order.customeremail])
+    email.content_subtype = "html"
+    email.send()
 
     return Response(status=status.HTTP_200_OK, data=data)

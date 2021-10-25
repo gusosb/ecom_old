@@ -40,22 +40,23 @@ const ProductList = ({ category }) => {
       flexDirection="column">
         {products.map(product => 
         
-        <Card sx={{ maxWidth: 345, m: 2 }} key={product.id} variant="outlined">
+        <Card sx={{ maxWidth: 345 }} key={product.id} variant="outlined">
             
         <CardActionArea
         component={Link}
         to={`/prod/${product.category}/${product.id}`}
         >
-            <CardMedia
-            sx={{ maxHeight: 350 }}
-            component="img"
-            height="140"
-            image={product.prodImg}
-            alt="bild saknas"
-            />
+        <CardMedia
+        sx={{ maxHeight: 350 }}
+        component="img"
+        height="140"
+        image={product.prodImg}
+        alt="bild saknas"
+        />
         </CardActionArea>
         
-            <CardContent sx={{ display: 'flex', flexDirection: 'row'}}>
+            <CardContent sx={{ display: 'flex', flexDirection: 'row', p: 1, "&:last-child": {
+      paddingBottom: 1} }}>
            
             <Grid item xs={10}>
             <Typography component={'span'} variant="body2" color="text.secondary">
@@ -68,6 +69,12 @@ const ProductList = ({ category }) => {
             flexDirection="column">
             {product.prodDescription}
             </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }} justifyContent="center"
+            flexDirection="column">
+            {product.prodPrice},00 kr
+            </Box>
+
+
             </Typography>
             </Grid>
 

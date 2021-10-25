@@ -73,8 +73,20 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    exclude = ['site']
+
+    def get_extra(self, request, obj=None, **kwargs):
+        extra = 0
+        return extra
+
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields = ['site']
+    list_display = ('id', 'is_handled', 'status', 'customeremail', 'created_at')
+    readonly_fields = ['site', 'created_at', 'sessionid']
+    inlines = [
+        OrderItemInline,
+    ]
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)

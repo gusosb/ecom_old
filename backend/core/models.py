@@ -10,6 +10,7 @@ class Site(models.Model):
     siteimg = models.FileField(upload_to='images/', null=True, blank=True)
     stripekey = models.CharField(max_length=150, blank=True, null=True)
     url = models.CharField(max_length=100, blank=True, null=True)
+    siteemail = models.CharField('from_email', max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -50,12 +51,13 @@ class Product(models.Model):
 
 class Order(models.Model):
     site = models.ForeignKey(Site, on_delete=CASCADE, related_name='orders')
-    customeruser = models.ForeignKey(User, on_delete=CASCADE, related_name='cuser', blank=True, null=True)
-    customeremail = models.CharField(max_length=250, null=True, blank=True)
-    cuname = models.CharField(max_length=300)
-    custreet = models.CharField(max_length=300)
-    cuzip = models.CharField(max_length=6)
-    cuarea = models.CharField(max_length=50)
+    customeruser = models.ForeignKey(User, on_delete=CASCADE, related_name='cuser', blank=True, null=True, verbose_name='Kundanvändare')
+    customeremail = models.CharField('Epostadress', max_length=250, null=True, blank=True)
+    cuname = models.CharField('Namn', max_length=300)
+    custreet = models.CharField('Adress', max_length=300)
+    cuzip = models.CharField('Postkod', max_length=6)
+    cuarea = models.CharField('Ort', max_length=50)
+    cuphone = models.CharField('Mobilnummer', max_length=20)
     class stat(models.IntegerChoices):
         FR = 1, 'Mottagen'
         SN = 2, 'Skickad'
@@ -63,7 +65,7 @@ class Order(models.Model):
     is_handled = models.BooleanField('Hanterad', default=False)
     is_paid = models.BooleanField('Betald genom Checkout', default=False)
     sessionid = models.CharField(max_length=250, unique=True, blank=True, null=True)
-    created_at = models.DateField(auto_now_add=True, blank=True, null=True)
+    created_at = models.DateField('Skapad', auto_now_add=True)
 
 
 class OrderItem(models.Model):
