@@ -135,7 +135,7 @@ const Checkout = () => {
         display="flex"
         justifyContent="center"
         >
-        {!firstname || !lastname || !adress || !zipcode || !area
+        {!firstname || !lastname || !adress || !zipcode || !area || !phone
         ? <Button type="submit" variant="disabled">betala som gäst</Button>
         : <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
         }
@@ -241,9 +241,14 @@ const Checkout = () => {
       <Box
       sx={{ ml: 2 }}
       >
+      
+
       <Typography display="block" gutterBottom>
       Totalsumma: {product.prodPrice * product.quantity + ',00 kr.'}
       </Typography>
+      
+
+
 
 
       </Box>
@@ -290,26 +295,29 @@ const Checkout = () => {
       
       
       </Box>
+     
       </Grid>
+      <Divider />
 
       
 
       <Grid item xs={5}>
       
+      här
       
-      <Divider />
       </Grid>
       
       <Grid item xs={7}>
       <Divider />
-      <Box
-      display="flex"
-      justifyContent="center"
-      >
+
+      <Grid item sx={8}>
+      
+      </Grid>
+      <Grid item sx={4}>
       {totalsum},00 kr
+      </Grid>
       
-      
-      </Box>
+  
       </Grid>
     
       
