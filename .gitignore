@@ -24,7 +24,6 @@
 /backend/accounts/__pycache__
 /backend/core/__pycache__
 /backend/accounts/migrations/__pycache__
-/backend/media
 /backend/db.sqlite3
 
 /backend2/*.py[cod]
