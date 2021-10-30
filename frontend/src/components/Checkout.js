@@ -277,16 +277,19 @@ const Checkout = () => {
 
       
       <Paper variant="outlined">
-      <Grid container sx={{ p: 3 }}>
+        
+      <Grid container sx={{ p: 1 }}>
+        
 
       
     
-      <Grid item xs={5}>
+      <Grid item xs={7}>
       
       här1
       
       </Grid>
-      <Grid item xs={7}>
+      
+      <Grid item xs={5}>
       <Box
       display="flex"
       justifyContent="center"
@@ -294,31 +297,33 @@ const Checkout = () => {
       här2
       
       
+      
       </Box>
+      
      
       </Grid>
-      <Divider />
-
+      
+        
       
 
-      <Grid item xs={5}>
-      
-      här
-      
-      </Grid>
-      
       <Grid item xs={7}>
       <Divider />
-
-      <Grid item sx={8}>
+      
+      Summa
       
       </Grid>
-      <Grid item sx={4}>
+      
+      
+      <Grid item xs={5}>
+      <Divider />
+      
+
       {totalsum},00 kr
-      </Grid>
+    
       
   
       </Grid>
+      
     
       
       

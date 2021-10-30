@@ -43,6 +43,7 @@ const Prod = () => {
     const item = {
         category: e.category,
         id: e.id,
+        artno: e.artno,
         prodValnamn: e.prodValnamn,
         prodName: e.prodName,
         prodPrice: e.prodPrice,

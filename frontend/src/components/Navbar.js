@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom"
 
@@ -73,6 +73,12 @@ const Navbar = () => {
     }
     dispatch(addItem(item))
   }
+
+  useEffect(() => {
+    if (!window.location.href.includes('checkout')) {
+      setOpen(true)
+    }
+  }, [cart])
   
 
   

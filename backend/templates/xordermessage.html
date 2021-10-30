@@ -1,0 +1,34 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order mottagen</title>
+</head>
+<body>
+  
+
+
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="320" style="border: none; border-collapse: collapse; font-family:  Arial, sans-serif; font-size: 14px; line-height: 1.5;">
+
+<img src="{{ site.url }}/{{ site.siteimg.url }}" alt='' >
+
+
+
+
+
+{% for item in order.orderitem.all %}
+{{ item.prodName }}
+<br>
+{{ item.prodQty }} x {{ item.prodPrice }},00 kr
+<img src="{{ item.prodImg.url }}" alt='' >
+
+
+{% endfor %}
+</table>
+
+
+</body>
+</html>

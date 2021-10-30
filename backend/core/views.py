@@ -45,6 +45,8 @@ def create_checkout_session(request):
         prodid=item['id'],
         prodcat=item['category'],
         prodVal=item['prodVal'],
+        prodValnamn=item['prodValnamn'],
+        artno=item['artno'],
         site=site,
         order=order,
         )
@@ -93,8 +95,8 @@ def order_success(request):
         'order': serializers.data,
     }]
 
-    html_message = get_template('ordermessage.html').render({'order': order})
-    email = EmailMessage('Orderbekräftelse', html_message, from_email=site.siteemail, to=[order.customeremail])
+    html_message = get_template('ordermessage.html').render({'order': order, 'site': site})
+    email = EmailMessage('Orderbekräftelse # ' + str(order.id), html_message, from_email=site.siteemail, to=[order.customeremail])
     email.content_subtype = "html"
     email.send()
 
