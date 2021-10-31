@@ -22,12 +22,10 @@
 }
 .img {
     width: 150px;
-    object-fit: cover;
     
 }
 .img2 {
     width: 150px;
-    object-fit: cover;
     outline: solid 1px rgba(148, 148, 148, 0.63);
     
 }
