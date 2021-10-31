@@ -43,7 +43,7 @@ admin.site.register(Category, CategoryAdmin)
 
 
 class ProductAdmin(admin.ModelAdmin):
-    readonly_fields = ['user']
+    readonly_fields = ['user', 'prodImgList']
     save_as = True
     
 

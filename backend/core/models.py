@@ -1,7 +1,12 @@
 from django.db import models
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 from django.db.models.deletion import CASCADE
 from django.contrib.auth import get_user_model
+import sys
+from PIL import Image
 from accounts.models import NewUser
+
 User = get_user_model()
 
 class Site(models.Model):
@@ -32,6 +37,7 @@ class Product(models.Model):
     prodVal2 = models.CharField('Val två', max_length=150, blank=True, null=True)
     prodVal3 = models.CharField('Val tre', max_length=150, blank=True, null=True)
     prodImg = models.ImageField('Första produktbilden', upload_to='images/', null=True, blank=True)
+    prodImgList = ImageSpecField(source='prodImg', processors=[ResizeToFill(240, 350)], format='JPEG', options={'quality': 90})
     twoImg = models.ImageField('Andra produktbilden', upload_to='images/', null=True, blank=True)
     threeImg = models.ImageField('Tredje produktbilden', upload_to='images/', null=True, blank=True)
     tabNamn1 = models.CharField('Namn för flik ett', max_length=150, blank=True, null=True)
