@@ -122,6 +122,42 @@
 				/*@editable*/ text-align:left;
 			}
 
+			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
+
+			/**
+			* @tab Header
+			* @section preheader style
+			* @tip Set the background color for your email's preheader area.
+			* @theme page
+			*/
+			#templatePreheader{
+				/*@editable*/ background-color:#FAFAFA;
+			}
+
+			/**
+			* @tab Header
+			* @section preheader text
+			* @tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+			*/
+			.preheaderContent div{
+				/*@editable*/ color:#505050;
+				/*@editable*/ font-family:Arial;
+				/*@editable*/ font-size:10px;
+				/*@editable*/ line-height:100%;
+				/*@editable*/ text-align:left;
+			}
+
+			/**
+			* @tab Header
+			* @section preheader link
+			* @tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
+			*/
+			.preheaderContent div a:link, .preheaderContent div a:visited, /* Yahoo! Mail Override */ .preheaderContent div a .yshortcuts /* Yahoo! Mail Override */{
+				/*@editable*/ color:#336699;
+				/*@editable*/ font-weight:normal;
+				/*@editable*/ text-decoration:underline;
+			}
+
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: HEADER /\/\/\/\/\/\/\/\/\/\ */
 
 			/**
@@ -203,99 +239,6 @@
 				/*@editable*/ text-decoration:underline;
 			}
 
-			/**
-			* @tab Body
-			* @section data table style
-			* @tip Set the background color and border for your email's data table.
-			*/
-			.templateDataTable{
-				/*@editable*/ background-color:#FFFFFF;
-				/*@editable*/ border:1px solid #DDDDDD;
-			}
-			
-			/**
-			* @tab Body
-			* @section data table heading text
-			* @tip Set the styling for your email's data table text. Choose a size and color that is easy to read.
-			*/
-			.dataTableHeading{
-				/*@editable*/ background-color:#D8E2EA;
-				/*@editable*/ color:#336699;
-				/*@editable*/ font-family:Helvetica;
-				/*@editable*/ font-size:14px;
-				/*@editable*/ font-weight:bold;
-				/*@editable*/ line-height:150%;
-				/*@editable*/ text-align:left;
-			}
-		
-			/**
-			* @tab Body
-			* @section data table heading link
-			* @tip Set the styling for your email's data table links. Choose a color that helps them stand out from your text.
-			*/
-			.dataTableHeading a:link, .dataTableHeading a:visited, /* Yahoo! Mail Override */ .dataTableHeading a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#FFFFFF;
-				/*@editable*/ font-weight:bold;
-				/*@editable*/ text-decoration:underline;
-			}
-			
-			/**
-			* @tab Body
-			* @section data table text
-			* @tip Set the styling for your email's data table text. Choose a size and color that is easy to read.
-			*/
-			.dataTableContent{
-				/*@editable*/ border-top:1px solid #DDDDDD;
-				/*@editable*/ border-bottom:0;
-				/*@editable*/ color:#202020;
-				/*@editable*/ font-family:Helvetica;
-				/*@editable*/ font-size:12px;
-				/*@editable*/ font-weight:bold;
-				/*@editable*/ line-height:150%;
-				/*@editable*/ text-align:left;
-			}
-		
-			/**
-			* @tab Body
-			* @section data table link
-			* @tip Set the styling for your email's data table links. Choose a color that helps them stand out from your text.
-			*/
-			.dataTableContent a:link, .dataTableContent a:visited, /* Yahoo! Mail Override */ .dataTableContent a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#202020;
-				/*@editable*/ font-weight:bold;
-				/*@editable*/ text-decoration:underline;
-			}
-
-			/**
-			* @tab Body
-			* @section button style
-			* @tip Set the styling for your email's button. Choose a style that draws attention.
-			*/
-			.templateButton{
-				-moz-border-radius:3px;
-				-webkit-border-radius:3px;
-				/*@editable*/ background-color:#336699;
-				/*@editable*/ border:0;
-				border-collapse:separate !important;
-				border-radius:3px;
-			}
-
-			/**
-			* @tab Body
-			* @section button style
-			* @tip Set the styling for your email's button. Choose a style that draws attention.
-			*/
-			.templateButton, .templateButton a:link, .templateButton a:visited, /* Yahoo! Mail Override */ .templateButton a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#FFFFFF;
-				/*@editable*/ font-family:Arial;
-				/*@editable*/ font-size:15px;
-				/*@editable*/ font-weight:bold;
-				/*@editable*/ letter-spacing:-.5px;
-				/*@editable*/ line-height:100%;
-				text-align:center;
-				text-decoration:none;
-			}
-
 			.bodyContent img{
 				display:inline;
 				height:auto;
@@ -325,7 +268,7 @@
 				/*@editable*/ font-family:Arial;
 				/*@editable*/ font-size:12px;
 				/*@editable*/ line-height:125%;
-				/*@editable*/ text-align:center;
+				/*@editable*/ text-align:left;
 			}
 
 			/**
@@ -341,6 +284,26 @@
 
 			.footerContent img{
 				display:inline;
+			}
+
+			/**
+			* @tab Footer
+			* @section social bar style
+			* @tip Set the background color and border for your email's footer social bar.
+			* @theme footer
+			*/
+			#social{
+				/*@editable*/ background-color:#FAFAFA;
+				/*@editable*/ border:0;
+			}
+
+			/**
+			* @tab Footer
+			* @section social bar style
+			* @tip Set the background color and border for your email's footer social bar.
+			*/
+			#social div{
+				/*@editable*/ text-align:center;
 			}
 
 			/**
@@ -372,7 +335,35 @@
     	<center>
         	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
             	<tr>
-                	<td align="center" valign="top" style="padding-top:20px;">
+                	<td align="center" valign="top">
+                        <!-- // Begin Template Preheader \\ -->
+                        <table border="0" cellpadding="10" cellspacing="0" width="600" id="templatePreheader">
+                            <tr>
+                                <td valign="top" class="preheaderContent">
+                                
+                                	<!-- // Begin Module: Standard Preheader \ -->
+                                    <table border="0" cellpadding="10" cellspacing="0" width="100%">
+                                    	<tr>
+                                        	<td valign="top">
+                                            	<div mc:edit="std_preheader_content">
+                                                	 Use this area to offer a short teaser of your email's content. Text here will show in the preview area of some email clients.
+                                                </div>
+                                            </td>
+                                            <!-- *|IFNOT:ARCHIVE_PAGE|* -->
+											<td valign="top" width="190">
+                                            	<div mc:edit="std_preheader_links">
+                                                	Is this email not displaying correctly?<br /><a href="*|ARCHIVE|*" target="_blank">View it in your browser</a>.
+                                                </div>
+                                            </td>
+											<!-- *|END:IF|* -->
+                                        </tr>
+                                    </table>
+                                	<!-- // End Module: Standard Preheader \ -->
+                                
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- // End Template Preheader \\ -->
                     	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer">
                         	<tr>
                             	<td align="center" valign="top">
@@ -382,7 +373,7 @@
                                             <td class="headerContent">
                                             
                                             	<!-- // Begin Module: Standard Header Image \\ -->
-                                            	<img src="http://gallery.mailchimp.com/653153ae841fd11de66ad181a/images/placeholder_600.gif" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+                                            	<img src="{{ site.url }}/{{ site.siteimg.url }}" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
                                             	<!-- // End Module: Standard Header Image \\ -->
                                             
                                             </td>
@@ -396,27 +387,34 @@
                                     <!-- // Begin Template Body \\ -->
                                 	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
                                     	<tr>
-                                            <td valign="top">
+                                            <td valign="top" class="bodyContent">
                                 
                                                 <!-- // Begin Module: Standard Content \\ -->
                                                 <table border="0" cellpadding="20" cellspacing="0" width="100%">
                                                     <tr>
-                                                        <td valign="top" class="bodyContent">
+                                                        <td valign="top">
                                                             <div mc:edit="std_content00">
                                                                 <h1 class="h1">Heading 1</h1>
                                                                 <h2 class="h2">Heading 2</h2>
                                                                 <h3 class="h3">Heading 3</h3>
                                                                 <h4 class="h4">Heading 4</h4>
-                                                                <strong>Getting started:</strong> Transactional emails serve a defined and simple purpose. They differ from traditional mass-emails because they're generally sent on a user-by-user basis, instead of large list of users, and are generally used to deliver purchase receipts, account updates, security notifications, and more.
+                                                                <strong>Getting started:</strong> Customize your template by clicking on the style editor tabs up above. Set your fonts, colors, and styles. After setting your styling is all done you can click here in this area, delete the text, and start adding your own awesome content!
+                                                                <br />
+                                                                <br />
+                                                                After you enter your content, highlight the text you want to style and select the options you set in the style editor in the "styles" drop down box. Want to <a href="http://www.mailchimp.com/kb/article/im-using-the-style-designer-and-i-cant-get-my-formatting-to-change" target="_blank">get rid of styling on a bit of text</a>, but having trouble doing it? Just use the "remove formatting" button to strip the text of any formatting and reset your style.
                                                             </div>
 														</td>
                                                     </tr>
+                                                </table>
+                                                <!-- // End Module: Standard Content \\ -->
+
+												<table border="0" cellpadding="20" cellspacing="0" width="100%">
                                                     <tr>
                                                     	<td valign="top" style="padding-top:0; padding-bottom:0;">
                                                           <table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
                                                               <tr>
                                                                   <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading00">
-                                                                    DATE
+                                                                    BILD
                                                                   </th>
                                                                   <th scope="col" valign="top" width="25%" class="dataTableHeading" mc:edit="data_table_heading01">
                                                                     EMAILS SENT
@@ -426,6 +424,18 @@
                                                                   </th>
                                                               </tr>
                                                               <tr mc:repeatable>
+																{% for item in order.orderitem.all %}
+																<td valign="top" class="dataTableContent" mc:edit="data_table_content00">
+																	<img src="{{ item.prodImg.url }}" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+                                                                </td>
+																<td valign="top" class="dataTableContent" mc:edit="data_table_content01">
+																	{{ item.prodName }}
+																</td>
+																<td valign="top" class="dataTableContent" mc:edit="data_table_content02">
+																	{{ item.prodPrice }}
+																</td>
+																<td>{{ item.prodPrice }}</td>
+																{% endfor %}
                                                                   <td valign="top" class="dataTableContent" mc:edit="data_table_content00">
                                                                     SEP 29, 2012
                                                                   </td>
@@ -439,28 +449,27 @@
                                                           </table>
                                                         </td>
                                                     </tr>
+                                                </table>
+
+
+												<!-- // Start Module: OrderItems \\ -->
+												<table border="0.5" cellpadding="20" cellspacing="0" width="100%">
+													<tr>
+														<th>bild</th>
+														<th>Beskrivning</th>
+														<th>Antal</th>
+														<th>Pris</th>
+													</tr>
                                                     <tr>
-                                                        <td valign="top" class="bodyContent">
-                                                            <div mc:edit="std_content01">
-                                                                Where <a href="http://www.mailchimp.com/" target="_blank">MailChimp</a> can be used to send newsletters to several subscribers in one large blast, <a href="http://www.mandrill.com/" target="_blank">Mandrill</a> is specifically positioned to send transactional emails, and offers relevant tracking and metrics that isn't necessarily available through a traditional email platform.
-                                                            </div>
-														</td>
-                                                    </tr>
-                                                    <tr>
-                                                    	<td align="center" valign="top" style="padding-top:0;">
-                                                        	<table border="0" cellpadding="15" cellspacing="0" class="templateButton">
-                                                            	<tr>
-                                                                	<td valign="middle" class="templateButtonContent">
-                                                                    	<div mc:edit="std_content02">
-                                                                        	<a href="http://www.mandrill.com/" target="_blank">See What Mandrill Can Do</a>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
+														{% for item in order.orderitem.all %}
+                                                        <td><img src="{{ item.prodImg.url }}" style="max-width:600px;" /></td>
+														<td>{{ item.prodName }}</td>
+														<td>{{ item.prodQty }}</td>
+														<td>{{ item.prodPrice }}</td>
+														{% endfor %}
                                                     </tr>
                                                 </table>
-                                                <!-- // End Module: Standard Content \\ -->
+												<!-- // End Module: OrderItems \\ -->
                                                 
                                             </td>
                                         </tr>
@@ -475,10 +484,17 @@
                                     	<tr>
                                         	<td valign="top" class="footerContent">
                                             
-                                                <!-- // Begin Module: Transactional Footer \\ -->
+                                                <!-- // Begin Module: Standard Footer \\ -->
                                                 <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                                     <tr>
-                                                        <td valign="top">
+                                                        <td colspan="2" valign="middle" id="social">
+                                                            <div mc:edit="std_social">
+                                                                &nbsp;<a href="*|TWITTER:PROFILEURL|*">follow on Twitter</a> | <a href="*|FACEBOOK:PROFILEURL|*">friend on Facebook</a> | <a href="*|FORWARD|*">forward to a friend</a>&nbsp;
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td valign="top" width="350">
                                                             <div mc:edit="std_footer">
 																<em>Copyright &copy; *|CURRENT_YEAR|* *|LIST:COMPANY|*, All rights reserved.</em>
 																<br />
@@ -489,16 +505,21 @@
 																*|HTML:LIST_ADDRESS_HTML|**|END:IF|* 
                                                             </div>
                                                         </td>
+                                                        <td valign="top" width="190" id="monkeyRewards">
+                                                            <div mc:edit="monkeyrewards">
+                                                                *|IF:REWARDS|* *|HTML:REWARDS|* *|END:IF|*
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <td valign="middle" id="utility">
+                                                        <td colspan="2" valign="middle" id="utility">
                                                             <div mc:edit="std_utility">
-                                                                &nbsp;<a href="*|ARCHIVE|*" target="_blank">view this in your browser</a> | <a href="*|UNSUB|*">unsubscribe from this list</a> | <a href="*|UPDATE_PROFILE|*">update subscription preferences</a>&nbsp;
+                                                                &nbsp;<a href="*|UNSUB|*">unsubscribe from this list</a> | <a href="*|UPDATE_PROFILE|*">update subscription preferences</a>&nbsp;
                                                             </div>
                                                         </td>
                                                     </tr>
                                                 </table>
-                                                <!-- // End Module: Transactional Footer \\ -->
+                                                <!-- // End Module: Standard Footer \\ -->
                                             
                                             </td>
                                         </tr>
