@@ -1,10 +1,12 @@
 from os import read
 from django.utils import tree
+from rest_framework.serializers import ImageField
 from .models import Category, Order, OrderItem, Product, Site
 from rest_framework import serializers
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    prodImgList = ImageField(read_only=True)
     class Meta:
         model = Product
         fields = '__all__'

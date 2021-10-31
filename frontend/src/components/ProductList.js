@@ -34,13 +34,13 @@ const ProductList = ({ category }) => {
         <Grid container className="tabb">
 
         <Grid item xs={12}>
-        <Box sx={{ display: 'flex', flexDirection: 'row'}}       
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}       
      
       justifyContent="center"
       flexDirection="column">
         {products.map(product => 
         
-        <Card sx={{ maxWidth: 345 }} key={product.id} variant="outlined">
+        <Card sx={{ maxWidth: 345, m: 2 }} key={product.id} variant="outlined">
             
         <CardActionArea
         component={Link}
@@ -50,7 +50,7 @@ const ProductList = ({ category }) => {
         sx={{ maxHeight: 350 }}
         component="img"
         height="140"
-        image={product.prodImg}
+        image={product.prodImgList}
         alt="bild saknas"
         />
         </CardActionArea>
