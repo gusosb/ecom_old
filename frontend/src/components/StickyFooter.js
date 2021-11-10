@@ -1,8 +1,10 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { useSelector } from 'react-redux'
 import Container from '@mui/material/Container'
 import { Link } from 'react-router-dom'
+import Grid from '@mui/material/Grid'
 import './Styles.css'
 
 
@@ -20,6 +22,11 @@ const Copyright= () => {
 }
 
 const StickyFooter = () => {
+
+
+  const content = useSelector(state => state.content)
+
+
   return (
       <>
       <CssBaseline />
@@ -38,12 +45,34 @@ const StickyFooter = () => {
               
         }}
       >
-        <Container maxWidth="sm" >
-          <Typography variant="body1">
-            Klistrig footer
-          </Typography>
-          <Copyright />
-        </Container>
+     
+      
+        <Grid container>
+
+      <Grid item xs>
+        </Grid>
+
+        <Grid item xs={7}>
+        <Grid container sx={{ flexDirection: 'column', alignContent: 'flex-start' }}>
+        <Grid item>
+        <img alt='ingen bild' src={content.siteimgsm} />
+        
+        </Grid>
+        <Grid item>
+        {content.footerdesc && content.footerdesc}
+        </Grid>
+        </Grid>
+        </Grid>
+
+        <Grid item xs>
+        </Grid>
+
+       
+        
+
+        </Grid>
+        
+
       </Box>
     </>
   )

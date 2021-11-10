@@ -5,6 +5,8 @@ from .models import Order, OrderItem, Product, Site, Category, User
 
 class SiteAdmin(admin.ModelAdmin):
 
+    readonly_fields = ['siteimgsm']
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -13,7 +15,7 @@ class SiteAdmin(admin.ModelAdmin):
 
     def get_fieldsets(self, request, obj=None):
         if not request.user.is_superuser:
-            return [(None, {'fields': ('name', 'stripekey', 'siteimg', 'url')}),]
+            return [(None, {'fields': ('name', 'stripekey', 'siteimg', 'url', 'footerdesc', 'from_email')}),]
         else:
             return [(None, {'fields': self.get_fields(request, obj)})]
 
