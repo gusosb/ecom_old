@@ -5,9 +5,7 @@ import { Link } from "react-router-dom"
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
-import Divider from '@mui/material/Divider'
 import ListItem from '@mui/material/ListItem'
-import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Box from '@mui/material/Box'
 import CardMedia from '@mui/material/CardMedia'
@@ -68,12 +66,12 @@ const Success = () => {
 
             
 
-            <Grid container>
+            <Grid container sx={{ maxWidth: 350 }}>
             
             {session.data && session.data[0].order.orderitem.map((e, i, {length}) =>
             <>
             
-            <Grid key={e.id} sx={{ display: 'flex', flexDirection: 'row', mt: 2 }} >
+            <Grid key={'a' + e.id} sx={{ display: 'flex', flexDirection: 'row', mt: 2 }} >
 
 
             <Grid item xs={5}>

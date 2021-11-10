@@ -14,7 +14,11 @@ export const initOrders = () => {
 const orderReducer = (state=[], action) => {
     switch(action.type) {
         case 'INIT_ORDERS':
-          return action.data
+          if (action.data) {
+            return action.data
+          } else {
+            return state
+          }
         default:
           return state
       }

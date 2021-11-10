@@ -1,6 +1,9 @@
 import axiosInstance from "./api"
 import TokenService from "./token.service"
-import { refreshToken } from "../reducers/auth"
+import { refreshToken, logout } from "../reducers/auth"
+
+
+let isAlreadyFetchingAccessToken = false
 
 const setup = (store) => {
   axiosInstance.interceptors.request.use(
@@ -19,37 +22,36 @@ const setup = (store) => {
 
   const { dispatch } = store
   axiosInstance.interceptors.response.use(
-    (res) => {
+    res => {
       return res
     },
-    async (err) => {
-      const originalConfig = err.config
+    async error => {
+      const originalConfig = error.config
 
-      if (originalConfig.url !== "/token/" && err.response) {
+      if (error.response) {
         // Access Token was expired
-        if (err.response.status === 401 && !originalConfig._retry) {
-          originalConfig._retry = true
-
+        if ((error.response.status === 401) && !isAlreadyFetchingAccessToken) {
+          isAlreadyFetchingAccessToken = true
+          let rs
           try {
-            const rs = await axiosInstance.post("/token/refresh/", {
+            rs = await axiosInstance.post("/token/refresh/", {
               refresh: TokenService.getLocalRefreshToken(),
             })
-
             const { access } = rs.data
-
             dispatch(refreshToken(access))
             TokenService.updateLocalAccessToken(access)
-
             return axiosInstance(originalConfig)
           } catch (_error) {
-            TokenService.removeUser()
+            dispatch(logout())
+            window.location.href = "/login"
+            if (_error.response && _error.response.data) {
+              return Promise.reject(_error.response.data)
+            }
             return Promise.reject(_error)
           }
         }
-      } else {
-        TokenService.removeUser()
       }
-      return Promise.reject(err)
+      return Promise.reject(error)
     }
   )
 }

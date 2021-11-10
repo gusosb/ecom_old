@@ -25,6 +25,7 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-slick": "^0.28.1",
+    "react-swipeable-views": "^0.14.0",
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.8.6",
+    "compression-webpack-plugin": "^9.0.0",
     "postcss": "^7.0.36",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14"
   }

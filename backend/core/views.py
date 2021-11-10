@@ -43,6 +43,7 @@ def create_checkout_session(request):
         prodQty=item['quantity'],
         prodImg=item['prodImg'],
         prodid=item['id'],
+        prodImgList=item['prodImgList'],
         prodcat=item['category'],
         prodVal=item['prodVal'],
         prodValnamn=item['prodValnamn'],

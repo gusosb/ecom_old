@@ -1,12 +1,22 @@
 from os import read
+from django.db.models import fields
+from django.db.models.fields import related
 from django.utils import tree
 from rest_framework.serializers import ImageField
 from .models import Category, Order, OrderItem, Product, Site
 from rest_framework import serializers
 
 
+class RelatedSerializer(serializers.ModelSerializer):
+    prodImgList = ImageField(read_only=True)
+    class Meta:
+        model = Product
+        fields = '__all__'
+
 class ProductSerializer(serializers.ModelSerializer):
     prodImgList = ImageField(read_only=True)
+    related = RelatedSerializer(many=True, read_only=True)
+
     class Meta:
         model = Product
         fields = '__all__'

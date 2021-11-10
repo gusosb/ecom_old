@@ -113,7 +113,7 @@ const Navbar = () => {
         <Grid container style={{ color: 'white', backgroundColor: '#607d8b' }}>
         <Grid item xs={4}>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} sx={{ display:'flex', justifyContent: 'center' }}>
 
         {categories && categories.map(e =>
         <Button
