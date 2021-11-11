@@ -35,7 +35,7 @@ class SiteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Site
-        fields = ('name', 'categories', 'id', 'siteimg', 'footerdesc', 'siteimgsm')
+        fields = ('name', 'categories', 'id', 'siteimg', 'footerdesc')
 
 
 class OrderItemSerializer(serializers.ModelSerializer):

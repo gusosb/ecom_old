@@ -14,7 +14,6 @@ class Site(models.Model):
     user = models.ForeignKey(User, on_delete=CASCADE, related_name='siteuser')
     footerdesc = models.CharField(max_length=400, null=True, blank=True)
     siteimg = models.FileField(upload_to='images/', null=True, blank=True)
-    siteimgsm = ImageSpecField(source='siteimg', processors=[ResizeToFill(240, 350)], format='webp', options={'quality': 100})
     stripekey = models.CharField(max_length=150, blank=True, null=True)
     url = models.CharField(max_length=100, blank=True, null=True)
     siteemail = models.CharField('from_email', max_length=200, null=True, blank=True)

@@ -5,7 +5,6 @@ from .models import Order, OrderItem, Product, Site, Category, User
 
 class SiteAdmin(admin.ModelAdmin):
 
-    readonly_fields = ['siteimgsm']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
