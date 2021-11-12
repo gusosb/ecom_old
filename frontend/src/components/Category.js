@@ -1,20 +1,26 @@
 import { useParams } from "react-router-dom"
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from "react"
+import { initContent } from "../reducers/contentReducer"
 import ProductList from './ProductList'
 
 const Category = () => {
 
+
+
     const { catid } = useParams()
-    const cats = useSelector(state => state.content.categories)
+    const content = useSelector(state => state.content)
 
-    const category = cats ? cats.find(e => e.id === parseInt(catid)) : ''
+    const category = content.categories ? content.categories.find(e => e.id === parseInt(catid)) : ''
 
-    
+
+
+
 
 
     return (
         <>
-        {category.products &&
+        {category &&
         <ProductList category={category} />
         }
         </>
