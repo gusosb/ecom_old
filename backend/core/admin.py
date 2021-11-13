@@ -5,7 +5,6 @@ from .models import Order, OrderItem, Product, Site, Category, User
 
 class SiteAdmin(admin.ModelAdmin):
 
-    readonly_fields = ['siteimgsm']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -26,6 +25,7 @@ admin.site.register(Site, SiteAdmin)
 
 class CategoryAdmin(admin.ModelAdmin):
     readonly_fields = ['site', 'user']
+    save_as = True
 
     def save_model(self, request, obj, form, change):
         site1 = Site.objects.get(user=request.user)
@@ -77,7 +77,7 @@ admin.site.register(Product, ProductAdmin)
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
-    exclude = ['site']
+    exclude = ['site', 'prodimglist']
 
     def get_extra(self, request, obj=None, **kwargs):
         extra = 0
