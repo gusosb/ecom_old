@@ -15,6 +15,7 @@ import Login from './components/Login'
 import Header from "./components/Header"
 import Navbar from "./components/Navbar"
 import Success from './components/Success'
+import PasswordReset from './components/PasswordReset'
 import StickyFooter from "./components/StickyFooter"
 import Prod from "./components/Prod"
 import './components/Styles.css'
@@ -50,6 +51,7 @@ const App= () => {
     <Route path="/register" component={Register} />
     <Route path="/passreset" component={Passreset} />
     <Route path="/bestallningar" component={Orders} />
+    <Route path="/resetpassword/:resetid" component={PasswordReset} />
 
     <Route exact path="/" component={Home} />
     </Switch>

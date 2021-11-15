@@ -92,11 +92,13 @@ const StickyFooter = () => {
         <Grid item xs={1} sx={{ flexDirection: 'column', display: 'flex' }}>
         
         <Typography component='span'>
-        <Box sx={{ fontWeight: 'bold' }}>Produkter</Box>
+        <Box sx={{ fontWeight: 'bold', pb: 1 }}>Produkter</Box>
         </Typography>
 
         {content.categories && content.categories.slice(0, 4).map(e =>
+        <Box sx={{ pt: 1 }}>
           <Link to={`/kategori/${e.id}`}>{e.catName}</Link>
+          </Box>
           )}
 
         

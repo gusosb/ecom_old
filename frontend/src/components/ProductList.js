@@ -31,16 +31,19 @@ const ProductList = ({ category }) => {
 
 
     return (
-        <Grid container className="tabb">
+        <Grid container className="tabb" sx={{ pr: 20, pl: 20 }}>
 
         <Grid item xs={12}>
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}       
+        <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+            
      
       justifyContent="center"
       flexDirection="column">
         {products.map(product => 
+
+        <Grid item>
         
-        <Card sx={{ maxWidth: 345, m: 2 }} key={product.id} variant="outlined">
+        <Card sx={{  m: 2 }} key={product.id} variant="outlined">
             
         <CardActionArea
         component={Link}
@@ -95,6 +98,7 @@ const ProductList = ({ category }) => {
             </CardContent>
         
         </Card>
+        </Grid>
         )}
         </Box>
         </Grid>

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import OrderItem, Site, Order
+from .models import OrderItem, Site, Order, User
 from .serializers import OrderSerializer
 
 import stripe
@@ -102,3 +102,13 @@ def order_success(request):
     email.send()
 
     return Response(status=status.HTTP_200_OK, data=data)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny,])
+def password_reset(request):
+    print(request.data['email'])
+    if request.data['email'] in User.objects.all():
+        print(request.data['email'])
+    
+    return Response(status=status.HTTP_200_OK)

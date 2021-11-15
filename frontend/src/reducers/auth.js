@@ -42,6 +42,15 @@ export const login = (email, password) => {
     })
   }
 }
+
+export const resetPass = (content) => {
+  return async dispatch => {
+    await AuthService.reset(content)
+    dispatch({
+      type: 'RESET_PASS',
+    })
+  }
+}
   
   
 export const logout = () => (dispatch) => {
@@ -109,6 +118,8 @@ const authReducer = (state=initialState, action) => {
         ...state,
         user: { ...user, access: action.data },
       }
+    case 'RESET_PASS':
+      return state
     default:
       return state
   }

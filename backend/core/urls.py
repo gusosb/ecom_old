@@ -15,4 +15,5 @@ router.register(r'orders', OrderViewSet)
 urlpatterns = [
     path('create-checkout-session/', views.create_checkout_session, name='checkoutsession'),
     path('get-success-session/', views.order_success, name='getsuccess'),
+    path('reset_password/', views.password_reset, name='passwordreset'),
 ] + router.urls

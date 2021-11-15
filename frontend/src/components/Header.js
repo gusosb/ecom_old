@@ -94,8 +94,13 @@ const Header = () => {
         <Grid item xs={2} sx={{ p: 2 }}>
         <img src={content.siteimg} alt='' className="himg" />
         </Grid>
-        <Grid item xs={2} sx={{ justifyContent: 'center' }}>
+        <Grid item xs={2} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
 
+      
+
+
+
+     
         <Paper
       component="form"
       variant="outlined"
@@ -114,6 +119,10 @@ const Header = () => {
       />
 
         </Paper>
+       
+
+
+     
 
         <Popover
         
