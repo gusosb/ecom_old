@@ -16,4 +16,5 @@ urlpatterns = [
     path('create-checkout-session/', views.create_checkout_session, name='checkoutsession'),
     path('get-success-session/', views.order_success, name='getsuccess'),
     path('reset_password/', views.password_reset, name='passwordreset'),
+    path('reset_password_confirm/', views.password_reset_confirm, name='passwordresetconfirm'),
 ] + router.urls

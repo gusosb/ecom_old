@@ -30,12 +30,11 @@ const login = async (email, password) => {
 
 const reset = async (content) => {
   const response = await axios.post(`${baseURL}/reset_password/`, content)
-  //.then((response) => {
-  //  if (response.status === 200) {
-  //    //window.location.href="/passresetrequestsuccess"
-  //    //history.push("/passresetrequestsuccess")
-  //  }
-  //})
+  return response.data
+}
+
+const change = async (content) => {
+  const response = await axios.post(`${baseURL}/reset_password_confirm/`, content)
   return response.data
 }
 
@@ -48,4 +47,5 @@ export default {
   login,
   logout,
   reset,
+  change,
 }

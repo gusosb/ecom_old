@@ -41,11 +41,11 @@ const Login = (props) => {
     e.preventDefault()
     dispatch(login(email, password))
       .then(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn.isLoggedIn) {
           props.history.push("/")
         }
       })
-      .catch(() => {
+      .catch((error) => {
       })
   }
   

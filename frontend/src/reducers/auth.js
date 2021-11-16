@@ -1,4 +1,7 @@
 import AuthService from "../services/auth.service"
+import { history } from '../helpers/history'
+
+
 
 const user = JSON.parse(localStorage.getItem("user"))
 
@@ -49,6 +52,20 @@ export const resetPass = (content) => {
     dispatch({
       type: 'RESET_PASS',
     })
+  }
+}
+
+export const changePass = (content) => {
+  return async dispatch => {
+    try {
+      await AuthService.change(content)
+    } catch (error) {
+      return
+    }
+    dispatch({
+      type: 'CHANGE_SUCCESS'
+    })
+    history.push('/home')
   }
 }
   

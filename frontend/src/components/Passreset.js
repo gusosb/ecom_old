@@ -9,14 +9,18 @@ import TextField from '@mui/material/TextField'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { resetPass } from "../reducers/auth"
 
 
 const Passreset = (props) => {
 
     const dispatch = useDispatch()
-    const [email, setEmail] = useState("")
+
+    const content = useSelector(state => state.content)
+
+
+    const [ email, setEmail ] = useState("")
     const theme = createTheme()
     const onChangeEmail = (e) => {
         setEmail(e.target.value)
@@ -27,6 +31,7 @@ const Passreset = (props) => {
       e.preventDefault()
       const item = {
         email,
+        siteid: content.id,
       }
       dispatch(resetPass(item))
       props.history.push("/passrequestsuccess")
@@ -55,7 +60,7 @@ const Passreset = (props) => {
           alignItems: 'center',
         }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: '#9c27b0' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string , get_template
 from django.core.mail import EmailMessage
+from django import utils
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from stripe.api_resources import payment_method
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -107,8 +109,30 @@ def order_success(request):
 @api_view(['POST'])
 @permission_classes([AllowAny,])
 def password_reset(request):
-    print(request.data['email'])
-    if request.data['email'] in User.objects.all():
-        print(request.data['email'])
+    user = User.objects.get(email=request.data['email'])
+    site = Site.objects.get(id=request.data['siteid'])
+    if user:
+        base64_encoded_id = utils.http.urlsafe_base64_encode(utils.encoding.force_bytes(user.id))
+        token = PasswordResetTokenGenerator().make_token(user)
+        html_message = get_template('passwordreset.html').render({'uidb64': base64_encoded_id, 'token': token, 'site': site})
+        email = EmailMessage('Återställ lösenord', html_message, from_email=site.siteemail, to=[user.email])
+        email.content_subtype = "html"
+        email.send()
+    
+    
     
     return Response(status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([AllowAny,])
+def password_reset_confirm(request):
+    base64_decoded_id = utils.http.urlsafe_base64_decode(request.data['uidb64'])
+    user = User.objects.get(id=base64_decoded_id)
+    
+    if PasswordResetTokenGenerator().check_token(user, request.data['token']) == True:
+        user.set_password(request.data['password'])
+        user.save()
+
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)

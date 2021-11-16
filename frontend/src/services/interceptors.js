@@ -1,6 +1,7 @@
 import axiosInstance from "./api"
 import TokenService from "./token.service"
 import { refreshToken, logout } from "../reducers/auth"
+import { history } from '../helpers/history'
 
 
 let isAlreadyFetchingAccessToken = false
@@ -43,7 +44,7 @@ const setup = (store) => {
             return axiosInstance(originalConfig)
           } catch (_error) {
             dispatch(logout())
-            window.location.href = "/login"
+            //history.push('/login')
             if (_error.response && _error.response.data) {
               return Promise.reject(_error.response.data)
             }
