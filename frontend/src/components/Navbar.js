@@ -116,16 +116,18 @@ const Navbar = () => {
         <Grid item xs={4} sx={{ display:'flex', justifyContent: 'center' }}>
 
         {categories && categories.map(e =>
+        
         <Button
         key={e.id}
         component={Link}
         to={`/kategori/${e.id}`}
-        variant="text" size="large" style={{ color: 'white', height: 50 }}>{e.catName}</Button>
+         size="large" style={{ color: 'white', height: 50, fontWeight: 500 }}>{e.catName}</Button>
           )}
+          
         
         
         
-        </Grid>
+        </Grid> 
 
         <Grid item xs={4}>
 

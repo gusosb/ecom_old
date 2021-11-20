@@ -60,7 +60,8 @@ export const changePass = (content) => {
     try {
       await AuthService.change(content)
     } catch (error) {
-      return
+      history.push('/passerror')
+      return error
     }
     dispatch({
       type: 'CHANGE_SUCCESS'

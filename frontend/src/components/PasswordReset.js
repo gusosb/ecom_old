@@ -52,6 +52,8 @@ const PasswordReset = () => {
             password,
         }
         dispatch(changePass(item))
+        .catch(error =>
+          console.log(error))
     }
 
     

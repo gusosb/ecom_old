@@ -114,7 +114,7 @@ def password_reset(request):
     if user:
         base64_encoded_id = utils.http.urlsafe_base64_encode(utils.encoding.force_bytes(user.id))
         token = PasswordResetTokenGenerator().make_token(user)
-        html_message = get_template('passwordreset.html').render({'uidb64': base64_encoded_id, 'token': token, 'site': site})
+        html_message = get_template('psreset.html').render({'uidb64': base64_encoded_id, 'token': token, 'site': site})
         email = EmailMessage('Återställ lösenord', html_message, from_email=site.siteemail, to=[user.email])
         email.content_subtype = "html"
         email.send()

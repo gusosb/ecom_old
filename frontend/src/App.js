@@ -12,7 +12,9 @@ import Orders from './components/Orders'
 import Passreset from "./components/Passreset"
 import Register from "./components/Register"
 import Login from './components/Login'
+import Passrequestsuccess from "./components/Passrequestsuccess"
 import Header from "./components/Header"
+import Passerror from "./components/Passerror"
 import Navbar from "./components/Navbar"
 import Success from './components/Success'
 import PasswordReset from './components/PasswordReset'
@@ -50,9 +52,10 @@ const App= () => {
     <Route path="/checkout" component={Checkout} />
     <Route path="/register" component={Register} />
     <Route path="/passreset" component={Passreset} />
+    <Route path="/passrequestsuccess" component={Passrequestsuccess} />
+    <Route path="/passerror" component={Passerror} />
     <Route path="/bestallningar" component={Orders} />
     <Route path="/resetpassword/:uidb64/:token" component={PasswordReset} />
-
     <Route exact path="/" component={Home} />
     </Switch>
 
