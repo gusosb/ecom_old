@@ -1,1 +1,1 @@
-npm i react-redux redux react-router-dom redux-thunk redux-devtools-extension @mui/lab @mui/icons-material @mui/material @emotion/react @emotion/styled @material-ui/lab react-swipeable-views
+npm i react-redux redux react-router-dom redux-thunk redux-devtools-extension @mui/lab @mui/icons-material @mui/material @emotion/react @emotion/styled @material-ui/lab react-swipeable-views @material-ui/core
