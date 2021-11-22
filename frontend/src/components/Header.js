@@ -87,12 +87,16 @@ const Header = () => {
 
     return (
         
-        <header className="header1">
-        <Grid container >
-        <Grid item xs={4}>
+        
+        <Grid container sx={{ justifyContent: 'center', display: 'flex' }}>
+        <Grid item xs>
         </Grid>
         <Grid item xs={2} sx={{ p: 2 }}>
+        <Link to='/'>
+        
         <img src={content.siteimg} alt='' className="himg" />
+    
+        </Link>
         </Grid>
         <Grid item xs={2} sx={{ justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
 
@@ -152,7 +156,7 @@ const Header = () => {
         }
         </Grid>
         </Grid>
-        </header>
+        
     )
 } 
 

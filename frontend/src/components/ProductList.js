@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { heartItem, unheartItem } from '../reducers/heartReducer'
 
 import { Link } from "react-router-dom"
-
+import useWindowSize from '../hooks/hooks'
 
 
 const ProductList = ({ category }) => {
@@ -28,6 +28,10 @@ const ProductList = ({ category }) => {
     const removeHeart = (id) => {
         dispatch(unheartItem(id))
     }
+
+    const size = useWindowSize()
+
+
 
 
     return (

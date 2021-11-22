@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { addItem } from '../reducers/cartReducer'
 
+
 import Typography from '@mui/material/Typography'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import Grid from '@mui/material/Grid'
@@ -23,6 +24,8 @@ const Product = () => {
 
     const dispatch = useDispatch()
     const location = useLocation()
+
+
 
  
 
