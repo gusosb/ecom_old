@@ -3,8 +3,10 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { IconButton, CardActionArea } from '@mui/material'
+import Grow from '@mui/material/Grow'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
+
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import { useDispatch, useSelector } from "react-redux"
@@ -43,9 +45,13 @@ const ProductList = ({ category }) => {
      
       justifyContent="center"
       flexDirection="column">
-        {products.map(product => 
+          
+        {products.map((product, i) => 
+        <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+        {...(i > 0 ? { timeout: (400 + (i*50)) } : {})}>
 
         <Grid item>
+        
         
         <Card sx={{  m: 2 }} key={product.id} variant="outlined">
             
@@ -102,8 +108,11 @@ const ProductList = ({ category }) => {
             </CardContent>
         
         </Card>
+        
         </Grid>
+        </Grow>
         )}
+        
         </Box>
         </Grid>
         </Grid>
