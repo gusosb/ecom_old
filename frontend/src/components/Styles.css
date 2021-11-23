@@ -71,3 +71,7 @@
 .himg {
     height: 48px;
 }
+.himg2 {
+    max-height: 50px;
+    padding-top: 17px;
+}

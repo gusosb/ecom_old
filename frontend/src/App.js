@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { useDispatch } from "react-redux"
 import { initContent } from "./reducers/contentReducer"
 import { useEffect } from "react"
+import useWindowSize from "./hooks/hooks"
 
 import Orders from './components/Orders'
 import Passreset from "./components/Passreset"
@@ -22,6 +23,7 @@ import StickyFooter from "./components/StickyFooter"
 import Prod from "./components/Prod"
 import './components/Styles.css'
 import Checkout from "./components/Checkout"
+import HeaderSmall from "./components/HeaderSmall"
 
 
 
@@ -34,6 +36,7 @@ const App= () => {
     dispatch(initContent(1))
   }, [dispatch])
 
+  const size = useWindowSize()
 
   return (
     <>
@@ -41,8 +44,8 @@ const App= () => {
 
     <Router history={history}>
     <div className="container">
-    <Header />
-    <Navbar />
+    {size.width > 430 ? <Header /> : <HeaderSmall />}
+    {size.width > 430 && <Navbar />}
     <Switch>
 
     <Route path="/prod/:catid/:prodid" component={Prod} />
