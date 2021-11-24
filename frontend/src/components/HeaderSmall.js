@@ -134,13 +134,13 @@ const HeaderSmall = () => {
     anchorEl={anchor}
     onClose={() => setOpen(false)}
     anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
+    vertical: 'bottom',
+    horizontal: 'center',
+    }}
+    transformOrigin={{
+    vertical: 'top',
+    horizontal: 'center',
+    }}
     >
     {searchC && searchC[0].length === 0
     ? <Typography sx={{ p: 2 }}>Inga sökresultat hittades...</Typography>
@@ -158,7 +158,27 @@ const HeaderSmall = () => {
     open={menudrawer}
     onClose={toggleDrawer()}
     >
-    detta är drawer
+      <Box>
+      Produkter
+      </Box>
+      <IconButton aria-label="close" sx={{ ml: 1, mt: 1 }} onClick={() => setMenudrawer(false)} >
+      <CloseIcon />
+      </IconButton>
+      
+
+    <Grid container sx={{ display: 'flex', flexDirection: 'column' }}>
+
+
+      
+
+      {content.categories && content.categories.map(e => 
+        <Box component={Link} to={`/kategori/${e.id}`} onClick={() => setMenudrawer(false)}>
+          {e.catName}
+        </Box>
+      )}
+
+      
+    </Grid>
     </Drawer>
 
     <Link to='/'>
