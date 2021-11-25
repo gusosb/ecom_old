@@ -7,7 +7,6 @@ import { removeItem, addItem } from '../reducers/cartReducer'
 
 import './Styles.css'
 import Grid from '@mui/material/Grid'
-import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
@@ -35,23 +34,13 @@ const Checkout = () => {
     const [ area, setArea ] = useState('')
     const [ phone, setPhone ] = useState('')
 
-
-
-
-  
     if (!content) {
       dispatch(initContent())
     }
-
-
   const totalsum = cart.map(e => e.quantity * e.prodPrice).reduce(
     ( previousValue, currentValue ) => previousValue + currentValue,
     0
   )
- 
-    
-    
-
     const handleRemove = (e) => {
       const item = {
         id: e.id,
@@ -72,7 +61,6 @@ const Checkout = () => {
       }
       dispatch(addItem(item))
     }
-
     const handleSubmit = () => {
       const readyCart = {
         siteid: content.id,
@@ -87,12 +75,9 @@ const Checkout = () => {
       dispatch(checkoutSession(readyCart))
     }
 
-
-
     if(session.url) {
         window.location.assign(session.url)
     }
-
 
     const LoggedIn = () => {
       return (
@@ -100,13 +85,11 @@ const Checkout = () => {
         <Box
         display="flex"
         justifyContent="center"
-        sx={{ mt: 5 }}
-        >
+        sx={{ mt: 5 }}>
         {!firstname || !lastname || !adress || !zipcode || !area
         ? <Button type="submit" variant="disabled">Gå till betalning</Button>
         : <Button type="submit" variant="outlined" onClick={handleSubmit}>Gå till betalning</Button>
         }
-        
         </Box>
         </>
       )
@@ -118,15 +101,13 @@ const Checkout = () => {
         <Box
         display="flex"
         justifyContent="center"
-        sx={{ mt: 5 }}
-        >
+        sx={{ mt: 5 }}>
         <Link to="/login">Logga in eller</Link>
         </Box>
         <br />
         <Box
         display="flex"
-        justifyContent="center"
-        >
+        justifyContent="center">
         {!firstname || !lastname || !adress || !zipcode || !area || !phone
         ? <Button type="submit" variant="disabled">betala som gäst</Button>
         : <Button type="submit" variant="outlined" onClick={handleSubmit}>betala som gäst</Button>
@@ -138,262 +119,104 @@ const Checkout = () => {
 
     return (
       <>
-
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
       <Typography variant="h5" display="block" gutterBottom>
       Kassa
       </Typography>
       </Box>
-      <Grid container
-      sx={{
-        
-        '& > :not(style)': {
-        m: 2,
-        
-        },
-        }}>
-
-
+      <Grid container sx={{'& > :not(style)': { m: 2 },}}>
       <Grid item sx={{ flex: 1 }}>
-        
       </Grid>
-
       <Grid item sx={{ width: 600 }}>
-
-      
       <Paper variant="outlined">
       <Grid container sx={{ pb: 3, pr: 3, pl: 3 }}>
-
       {cart && cart.map(product =>
       <>
       <Grid container sx={{ pt: 3 }}>
       <Grid item xs={3}>
-      
       <CardActionArea
-      
       component={Link}
-      to={`/prod/${product.category}/${product.id}`}
-      >
+      to={`/prod/${product.category}/${product.id}`}>
       <CardMedia
       component="img"
       sx={{ maxHeight: 200 }}
       image={product.prodImg}
       alt="no image"
-      variant="outlined"
-      />
+      variant="outlined" />
       </CardActionArea>
-      
       </Grid>
       <Grid item xs={7}>
-      <Box
-      sx={{ ml: 2, display: 'flex', flexDirection: 'row' }}
-      >
+      <Box sx={{ ml: 2, display: 'flex', flexDirection: 'row' }}>
       {product.prodName}
-
-
-      
-      
       </Box>
-      <Box
-      sx={{ ml: 2 }}
-      >
+      <Box sx={{ ml: 2 }}>
       {product.prodPrice},00 kr.
       </Box>
-
-      <Box
-      sx={{ ml: 2 }}
-      >
+      <Box sx={{ ml: 2 }}>
       <Typography display="block" gutterBottom>
       {product.prodDescription}
       </Typography>
-
-
       </Box>
-
-      <Box
-      sx={{ ml: 2 }}
-      >
+      <Box sx={{ ml: 2 }}>
       <Typography display="block" gutterBottom>
       {product.prodValnamn}: {product.prodVal} 
       </Typography>
-
-
       </Box>
-
-
-      <Box
-      >
+      <Box>
       <IconButton sx={{ mr: 1 }} aria-label="remove" size="large" onClick={() => handleRemove(product)} ><RemoveIcon /></IconButton>
-    
       {product.quantity} st
       <IconButton sx={{ ml: 1 }} aria-label="add" size="large" onClick={() => addtoCart(product)} ><AddIcon /></IconButton>
       </Box>
-
-
-      <Box
-      sx={{ ml: 2 }}
-      >
-      
-
+      <Box sx={{ ml: 2 }}>
       <Typography display="block" gutterBottom>
-      Totalsumma: {product.prodPrice * product.quantity + ',00 kr.'}
+      Summa: {product.prodPrice * product.quantity + ',00 kr.'}
       </Typography>
-      
-
-
-
-
       </Box>
-      
-
-      
-
-
-
       </Grid>
       </Grid>
       </>
       )}
-      
       </Grid>
       </Paper>
-      
       </Grid>
-
-
-
-
       <Grid item sx={{ flex: 1 }}>
-
-      <Grid item sx={{ width: 200 }}>
-
-      
-      <Paper variant="outlined">
-        
-      <Grid container sx={{ p: 1 }}>
-        
-
-      
-    
-      <Grid item xs={7}>
-      
-      här1
-      
-      </Grid>
-      
-      <Grid item xs={5}>
-      <Box
-      display="flex"
-      justifyContent="center"
-      >
-      här2
-      
-      
-      
-      </Box>
-      
-     
-      </Grid>
-      
-        
-      
-
-      <Grid item xs={7}>
-      <Divider />
-      
-      Summa
-      
-      </Grid>
-      
-      
-      <Grid item xs={5}>
-      <Divider />
-      
-
-      {totalsum},00 kr
-    
-      
-  
-      </Grid>
-      
-    
-      
-      
-      </Grid>
-      </Paper>
-      
-      </Grid>
-        
       </Grid>
       </Grid>
-      
-
-      
-          
-        
-    
-  
-      
-      
-
-
-      
       <Grid container
       sx={{
       mb: 5,
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
-      '& > :not(style)': {
-      width: 600,
-      },
-      }}>
+      '& > :not(style)': { width: 600 },}}>
       <Paper variant="outlined" sx={{ justifyContent: 'center', display: 'flex' }}>
       <Grid container sx={{ m: 2 }}>
-
-
-      
       <Grid item xs={12}>
       <Typography variant="h5" display="block" gutterBottom>
       Leveransinformation
       </Typography>
-
       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
       <TextField fullWidth label='Namn' value={firstname} onChange={(e) => setFirstname(e.target.value)} />
       <TextField fullWidth label='Efternamn' value={lastname} onChange={(e) => setLastname(e.target.value)} />
       </Box>
-
       <Box sx={{ m: 1 }}>
       <TextField fullWidth label='Adress' value={adress} onChange={(e) => setAdress(e.target.value)} />
       </Box>
-
       <Box sx={{ display: 'flex', flexDirection: 'row', '& > :not(style)': { m: 1 }}}>
       <TextField fullWidth label='Postnummer' value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
       <TextField fullWidth label='Ort' value={area} onChange={(e) => setArea(e.target.value)} />
       </Box>
-
       <Box sx={{ m: 1 }}>
       <TextField fullWidth label='Mobilnummer' value={phone} onChange={(e) => setPhone(e.target.value)} />
       </Box>
-
-
       {auth.isLoggedIn
       ? <LoggedIn />
       : <GuestCheck />
       }
-      
       </Grid>
       </Grid>
       </Paper>
       </Grid>
-      
-
-
-
-
-
-      
-
       </>
     )
 }

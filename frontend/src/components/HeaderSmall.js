@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { logout } from "../reducers/auth"
 import { Link } from 'react-router-dom'
-import useWindowSize from '../hooks/hooks'
 
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -83,11 +82,11 @@ const HeaderSmall = () => {
         <Grid container>
         {items.flatMap(e => 
           <>
-          <Grid item xs={5}>
+          <Grid key={e.id} item xs={5}>
             
           </Grid>
 
-          <Grid item xs={7}>
+          <Grid key={e.id} item xs={7}>
           {e.prodName}
           </Grid>
           </>

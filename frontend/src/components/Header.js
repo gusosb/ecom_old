@@ -4,17 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { logout } from "../reducers/auth"
 import { Link } from 'react-router-dom'
-import useWindowSize from '../hooks/hooks'
 
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import CloseIcon from '@mui/icons-material/Close'
-import Drawer from '@mui/material/Drawer'
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Popover from '@mui/material/Popover'
-import MenuSharpIcon from '@mui/icons-material/MenuSharp'
 import Paper from '@mui/material/Paper'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
@@ -75,12 +70,14 @@ const Header = () => {
         <Grid container>
         {items.flatMap(e => 
           <>
+          <Grid key={e.id} container>
           <Grid item xs={5}>
             
           </Grid>
 
           <Grid item xs={7}>
           {e.prodName}
+          </Grid>
           </Grid>
           </>
           )}

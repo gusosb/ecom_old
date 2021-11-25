@@ -1,7 +1,6 @@
 import axiosInstance from "./api"
 import TokenService from "./token.service"
 import { refreshToken, logout } from "../reducers/auth"
-import { history } from '../helpers/history'
 
 
 let isAlreadyFetchingAccessToken = false

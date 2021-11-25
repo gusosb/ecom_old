@@ -3,8 +3,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useSelector } from 'react-redux'
 import { Link } from "react-router-dom"
-import { styled } from '@mui/material/styles'
-
 
 import FacebookSharpIcon from '@mui/icons-material/FacebookSharp'
 import TwitterIcon from '@mui/icons-material/Twitter'
@@ -13,29 +11,10 @@ import IconButton from '@mui/material/IconButton'
 import Grid from '@mui/material/Grid'
 import './Styles.css'
 
-
-const Copyright= () => {
-  return (
-    <Typography variant="body2" color="text.secondary">
-      {'Copyright © '}
-
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
 const StickyFooter = () => {
 
 
   const content = useSelector(state => state.content)
-
-
-  const Div = styled('div')(({ theme }) => ({
-    ...theme.typography.button,
-    //backgroundColor: theme.palette.background.paper,
-    //padding: theme.spacing(1),
-  }))
 
 
   return (
@@ -89,14 +68,14 @@ const StickyFooter = () => {
         </Grid>
         </Grid>
 
-        <Grid item xs={1} sx={{ flexDirection: 'column', display: 'flex' }}>
+        <Grid item xs={2} sx={{ flexDirection: 'column', display: 'flex' }}>
         
         <Typography component='span'>
         <Box sx={{ fontWeight: 'bold', pb: 1 }}>Produkter</Box>
         </Typography>
 
         {content.categories && content.categories.slice(0, 4).map(e =>
-        <Box sx={{ pt: 1 }}>
+        <Box key={e.id} sx={{ pt: 1 }}>
           <Link to={`/kategori/${e.id}`}>{e.catName}</Link>
           </Box>
           )}

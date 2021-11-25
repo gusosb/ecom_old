@@ -50,10 +50,10 @@ const ProductList = ({ category }) => {
         <Grow in={true} style={{ transformOrigin: '0 0 0' }}
         {...(i > 0 ? { timeout: (400 + (i*50)) } : {})}>
 
-        <Grid item>
+        <Grid item key={product.id}>
         
         
-        <Card sx={{  m: 2 }} key={product.id} variant="outlined">
+        <Card key={product.id} sx={{  m: 2 }} key={product.id} variant="outlined">
             
         <CardActionArea
         component={Link}

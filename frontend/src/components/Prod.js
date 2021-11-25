@@ -40,6 +40,7 @@ const Prod = () => {
     const { catid, prodid } = useParams()
     const cat = categories && categories.find(e => e.id === parseInt(catid))
     const product = cat ? cat.products.find(e => e.id === parseInt(prodid)) : ''
+    const related = product && product.related
   
 
     const [ image, setImage ] = useState(product.prodImg)
@@ -353,7 +354,7 @@ const Prod = () => {
 
       <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
 
-      {product && <Views products={product.related.slice(0, 9)} />}
+      {related[0] && <Views products={related.slice(0, 9)} />}
       
       </Grid>
       
