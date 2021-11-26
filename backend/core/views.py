@@ -135,4 +135,5 @@ def password_reset_confirm(request):
 
         return Response(status=status.HTTP_200_OK)
     else:
+        #reset-code not valid (unauthorized)
         return Response(status=status.HTTP_401_UNAUTHORIZED)

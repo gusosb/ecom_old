@@ -260,30 +260,20 @@ const Prod = () => {
       display="flex"
       justifyContent="center"
       flexDirection="column">
-
-
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
       <Box>
-      
       <img alt='' className={image===product.prodImg ? 'img2 pad1' : 'img pad1'} src={product.prodImg} onMouseEnter={() => setImage(product.prodImg)} />
-
-
       {product.twoImg && 
       <div className="pad">
-        <img alt='' className={image===product.twoImg ? 'img2' : 'img'} src={product.twoImg} onMouseEnter={() => setImage(product.twoImg)} />
-        </div>}
+      <img alt='' className={image===product.twoImg ? 'img2' : 'img'} src={product.twoImg} onMouseEnter={() => setImage(product.twoImg)} />
+      </div>}
       {product.threeImg &&
       <div className="pad">
-        <img alt='' className={image===product.threeImg ? 'img2' : 'img'} src={product.threeImg} onMouseEnter={() => setImage(product.threeImg)} />
-        </div>}
+      <img alt='' className={image===product.threeImg ? 'img2' : 'img'} src={product.threeImg} onMouseEnter={() => setImage(product.threeImg)} />
+      </div>}
       </Box>
-      
       <img alt='' src={image} className="my-class1" />
-      
       </Box>
-
-
-
       <Grid className="tab1">
       <Typography variant="h3" gutterBottom component="div">
       {product.prodName}
@@ -294,12 +284,9 @@ const Prod = () => {
 
       <Typography variant="h6" gutterBottom component="div">
       {product.prodPrice},00 kr. <Typography display="inline" variant="caption">inkl moms</Typography>
-        </Typography>
-
-        
+      </Typography>
       {product.prodVal1 &&
-        
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+      <FormControl variant="standard" sx={{ minWidth: 120, mt: 3 }}>
       <InputLabel id="demo-simple-select-standard-label">{product.prodValnamn}</InputLabel>
       <Select
         labelId="demo-simple-select-standard-label"
@@ -307,28 +294,25 @@ const Prod = () => {
         value={variant}
         defaultValue={variant}
         label=""
-        onChange={(e) => setVariant(e.target.value)}
-      >
-
+        onChange={(e) => setVariant(e.target.value)}>
         <MenuItem value={product.prodVal1}>{product.prodVal1}</MenuItem>
         {product.prodVal2 && <MenuItem value={product.prodVal2}>{product.prodVal2}</MenuItem>}
         {product.prodVal3 && <MenuItem value={product.prodVal3}>{product.prodVal3}</MenuItem>}
       </Select>
       </FormControl>
-
       }
 
       {product.prodQty ?
-      <Box>
+      <Box sx={{ mt: 3 }}>
       <Button variant="contained" color="secondary" disableElevation onClick={() => addtoCart(product)} endIcon={<AddShoppingCartIcon />} >
       Lägg till
       </Button>
       </Box>
-      : 'Saknas kvantitet!'
+      : 'Produkten är slut!'
       }
         
       {product.tabNamn1 &&
-      <Box sx={{ typography: 'body1', width: 450 }}>
+      <Box sx={{ typography: 'body1', width: 450, mt: 4 }}>
       <TabContext value={tabvalue}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <TabList indicatorColor="secondary" textColor="primary" centered onChange={(e, newValue) => setTabvalue(newValue)} aria-label="lab API tabs example">
