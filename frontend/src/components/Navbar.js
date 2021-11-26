@@ -37,7 +37,7 @@ const Navbar = () => {
         <Heart />
         
    
-        <Cart />
+        <Cart color='white' />
 
         </Grid>
         </Grid>

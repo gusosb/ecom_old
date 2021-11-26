@@ -20,13 +20,13 @@ import Typography from '@mui/material/Typography'
 import CardMedia from '@mui/material/CardMedia'
 import { CardActionArea } from '@mui/material'
 
-const Cart = () => {
+const Cart = ({ color }) => {
 
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
     const session = useSelector(state => state.session)
   
-    const [ open, setOpen ] = useState(false)
+    const [ cartopen, setCartOpen ] = useState(false)
   
     const total = cart.map(e => e.quantity).reduce(
       ( previousValue, currentValue ) => previousValue + currentValue,
@@ -56,29 +56,24 @@ const Cart = () => {
     }
   
     useEffect(() => {
-      if (!window.location.href.includes('checkout')) {
-        setOpen(true)
+      if (cart && !window.location.href.includes('checkout')) {
+        setCartOpen(true)
       }
     }, [cart])
     
-
     const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       background: '#f44336',
       right: -4,
       top: 15,
-      border: `0px solid ${theme.palette.background.paper}`,
-      padding: '1 3px',
     },
     }))
-  
-  
-  
+
       const toggleDrawer = () => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
           return
         }
-        setOpen(false)
+        setCartOpen(false)
       }
   
       if(session.url) {
@@ -87,20 +82,19 @@ const Cart = () => {
 
     return (
         <>
-        <IconButton aria-label="showcart" size="large" onClick={() => setOpen(true)}>
+        <IconButton aria-label="showcart" size="large" onClick={() => setCartOpen(true)}>
         <StyledBadge badgeContent={total} color="info" >
-        <ShoppingCartIcon color="white" />
+        <ShoppingCartIcon color={color} />
         </StyledBadge>
         </IconButton>
        {cart[0] &&
         <Drawer
         anchor='right'
-        open={open}
-        onClose={toggleDrawer()}
-        >
+        open={cartopen}
+        onClose={toggleDrawer()}>
 
           <Box>
-          <IconButton aria-label="close" sx={{ ml: 1, mt: 1 }} onClick={() => setOpen(false)} >
+          <IconButton aria-label="close" sx={{ ml: 1, mt: 1 }} onClick={() => setCartOpen(false)} >
           <CloseIcon />
           </IconButton>
           </Box>
@@ -124,7 +118,7 @@ const Cart = () => {
           sx={{ ml: 2, mr: 5 }}
           component={Link}
           to={`/prod/${product.category}/${product.id}`}
-          onClick={() => setOpen(false)}
+          onClick={() => setCartOpen(false)}
           >
           <CardMedia
           component="img"
@@ -211,7 +205,7 @@ const Cart = () => {
         className="ptop"
         >
 
-        <Button onClick={() => setOpen(false)} component={Link} to="/checkout" type="submit" variant="outlined">Gå till Kassan</Button>
+        <Button onClick={() => setCartOpen(false)} component={Link} to="/checkout" type="submit" variant="outlined">Gå till Kassan</Button>
         
         </Box>
         }

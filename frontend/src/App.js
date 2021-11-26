@@ -44,8 +44,8 @@ const App= () => {
 
     <Router history={history}>
     <div className="container">
-    {size.width > 430 ? <Header /> : <HeaderSmall />}
-    {size.width > 430 && <Navbar />}
+    {size.width > 700 ? <Header /> : <HeaderSmall />}
+    {size.width > 700 && <Navbar />}
     <Switch>
 
     <Route path="/prod/:catid/:prodid" component={Prod} />

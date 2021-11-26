@@ -15,7 +15,7 @@ import { heartItem, unheartItem } from '../reducers/heartReducer'
 import { Link } from "react-router-dom"
 
 
-const ProductList = ({ category }) => {
+const ProductListSmall = ({ category }) => {
 
     const products = category.products
 
@@ -42,7 +42,7 @@ const ProductList = ({ category }) => {
         {...(i > 0 ? { timeout: (400 + (i*50)) } : {})}>
 
         <Grid item key={product.id}>
-        <Card key={product.id} sx={{  m: 2 }} key={product.id} variant="outlined">
+        <Card key={product.id} sx={{  m: 2, minWidth: 150 }} key={product.id} variant="outlined">
         <CardActionArea
         component={Link}
         to={`/prod/${product.category}/${product.id}`}>
@@ -55,7 +55,6 @@ const ProductList = ({ category }) => {
         </CardActionArea>
         
             <CardContent sx={{ display: 'flex', flexDirection: 'row', p: 1, "&:last-child": { paddingBottom: 1} }}>
-            <Grid container>
             <Grid item xs>
             <Typography component={'span'} variant="body2" color="text.secondary">
             <Box sx={{ display: 'flex', flexDirection: 'row'}} justifyContent="center"
@@ -73,7 +72,7 @@ const ProductList = ({ category }) => {
             </Typography>
             </Grid>
 
-
+            
             <Grid item xs='auto'>
             
 
@@ -83,7 +82,6 @@ const ProductList = ({ category }) => {
             }
 
            
-            </Grid>
             </Grid>
 
             
@@ -103,4 +101,4 @@ const ProductList = ({ category }) => {
     )
 }
 
-export default ProductList
+export default ProductListSmall
