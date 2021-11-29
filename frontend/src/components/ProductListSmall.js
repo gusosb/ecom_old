@@ -30,7 +30,7 @@ const ProductListSmall = ({ category }) => {
     }
 
     return (
-        <Grid container className="tabb" sx={{ pr: 20, pl: 20 }}>
+        <Grid container className="tabb">
 
         <Grid item xs={12}>
         <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
