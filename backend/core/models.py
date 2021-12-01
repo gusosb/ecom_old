@@ -1,6 +1,6 @@
 from django.db import models
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFill, ResizeToFit
 from django.db.models.deletion import CASCADE
 from django.contrib.auth import get_user_model
 import sys
@@ -42,8 +42,11 @@ class Product(models.Model):
     prodVal3 = models.CharField('Val tre', max_length=150, blank=True, null=True)
     prodImg = models.ImageField('Första produktbilden', upload_to='images/', null=True, blank=True)
     prodImgList = ImageSpecField(source='prodImg', processors=[ResizeToFill(240, 350)], format='webp', options={'quality': 100})
+    prodImgSmall = ImageSpecField(source='prodImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 100})
     twoImg = models.ImageField('Andra produktbilden', upload_to='images/', null=True, blank=True)
+    twoImgSmall = ImageSpecField(source='twoImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 100})
     threeImg = models.ImageField('Tredje produktbilden', upload_to='images/', null=True, blank=True)
+    threeImgSmall = ImageSpecField(source='threeImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 100})
     tabNamn1 = models.CharField('Namn för flik ett', max_length=150, blank=True, null=True)
     tabDesc1 = models.CharField('Flikinnehåll för flik ett', max_length=500, blank=True, null=True)
     tabNamn2 = models.CharField('Namn för flik två', max_length=150, blank=True, null=True)

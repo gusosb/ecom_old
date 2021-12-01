@@ -15,6 +15,9 @@ class RelatedSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     prodImgList = ImageField(read_only=True)
+    prodImgSmall = ImageField(read_only=True)
+    twoImgSmall = ImageField(read_only=True)
+    threeImgSmall = ImageField(read_only=True)
     related = RelatedSerializer(many=True, read_only=True)
 
     class Meta:

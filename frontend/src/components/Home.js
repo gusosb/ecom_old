@@ -26,11 +26,11 @@ const Home = () => {
 
   return (
     <>
-
-    {size.width > 700
+    {/*{size.width > 700
     ? content.categories && <ProductList category={content.categories[0]} />
     : content.categories && <ProductListSmall category={content.categories[0]} />
-    }
+    }*/}
+    {content.categories && <ProductListSmall category={content.categories[0]} />}
 
 
     

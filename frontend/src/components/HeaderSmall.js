@@ -177,7 +177,7 @@ const HeaderSmall = () => {
 
     <Grid container sx={{ display: 'flex', flexDirection: 'column' }}>
       {content.categories && content.categories.map(e => 
-      <Box component={Link} to={`/kategori/${e.id}`} onClick={() => setMenudrawer(false)}>
+      <Box component={Link} key={e.id} to={`/kategori/${e.id}`} onClick={() => setMenudrawer(false)}>
         {e.catName}
       </Box>
       )}

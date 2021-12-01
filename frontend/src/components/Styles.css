@@ -18,7 +18,9 @@
 .img2 {
     width: 150px;
     outline: solid 1px rgba(148, 148, 148, 0.63);
-    
+}
+.outline {
+    outline: solid 1px rgba(148, 148, 148, 0.63);
 }
 .tabb {
     padding-top: 25px;
@@ -39,6 +41,7 @@
 .container {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     min-height: 100vh;
 }
 .cartimg {
