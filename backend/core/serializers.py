@@ -1,4 +1,4 @@
-from os import read
+from os import read, truncate
 from django.db.models import fields
 from django.db.models.fields import related
 from django.utils import tree
@@ -7,11 +7,18 @@ from .models import Category, Order, OrderItem, Product, Site
 from rest_framework import serializers
 
 
+class FilteredProductSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        data = data.filter(is_active=True)
+        return super().to_representation(data)
+
 class RelatedSerializer(serializers.ModelSerializer):
     prodImgList = ImageField(read_only=True)
     class Meta:
+        list_serializer_class = FilteredProductSerializer
         model = Product
-        fields = '__all__'
+        exclude = ['related', 'is_active']
+
 
 class ProductSerializer(serializers.ModelSerializer):
     prodImgList = ImageField(read_only=True)
@@ -21,8 +28,9 @@ class ProductSerializer(serializers.ModelSerializer):
     related = RelatedSerializer(many=True, read_only=True)
 
     class Meta:
+        list_serializer_class = FilteredProductSerializer
         model = Product
-        fields = '__all__'
+        exclude = ['user', 'is_active']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -30,15 +38,16 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = '__all__'
+        exclude = ['site', 'user']
 
+    
 
 class SiteSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Site
-        fields = ('name', 'categories', 'id', 'siteimg', 'footerdesc', 'youtube', 'twitter', 'facebook')
+        exclude = ['stripekey', 'url', 'user']
 
 
 class OrderItemSerializer(serializers.ModelSerializer):

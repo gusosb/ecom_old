@@ -1,15 +1,17 @@
 import { useParams, Link } from "react-router-dom"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../reducers/cartReducer'
 import SwipeableViews from 'react-swipeable-views'
 import { heartItem, unheartItem } from '../reducers/heartReducer'
+import windowSize from '../hooks/hooks'
 
 import { IconButton, CardActionArea } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
+import Paper from '@mui/material/Paper'
 import CircleIcon from '@mui/icons-material/Circle'
 import Card from '@mui/material/Card'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -35,7 +37,7 @@ const ProdSmall = () => {
     const dispatch = useDispatch()
 
     const categories = useSelector(state => state.content.categories)
-    
+    const size = windowSize()
 
     const { catid, prodid } = useParams()
     const cat = categories && categories.find(e => e.id === parseInt(catid))
@@ -46,12 +48,39 @@ const ProdSmall = () => {
     const [ image, setImage ] = useState(product.prodImgSmall)
     const [ variant, setVariant ] = useState(product.prodVal1)
     const [ tabvalue, setTabvalue ] = useState('1')
+    const [ sticky, setSticky ] = useState(true)
+    const ref = useRef(undefined)
     
 
+    const ofstop = ref.current && ref.current.getBoundingClientRect().top
+   
 
     useEffect(() => {
       setImage(product.prodImgSmall)
     }, [product])
+
+
+
+    const handleScroll = () => {
+      console.log(ofstop)
+      const y = size.height + window.pageYOffset
+      console.log(y)
+      if (y < ofstop) {
+        setSticky(true)
+      } else {
+        setSticky(false)
+      }
+    }
+
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll)
+  
+      return () => {
+          window.removeEventListener('scroll', handleScroll)
+      }
+  }, [])
+
+
 
     const removeHeart = (id) => {
       dispatch(unheartItem(id))
@@ -268,25 +297,44 @@ const ProdSmall = () => {
       </Box>
 
       {product.twoImgSmall &&
-      <Grid container sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', p: 5}} spacing={2}>
+      <Grid container sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', pr: 7, pl: 7 }} spacing={2}>
       
       <Grid item xs>
-      <img alt='' className={image===product.prodImgSmall && 'outline'} src={product.prodImgSmall} onClick={() => setImage(product.prodImgSmall)} />
+      <img alt='' className={image===product.prodImgSmall ? 'outline' : undefined} src={product.prodImgSmall} onClick={() => setImage(product.prodImgSmall)} />
       
       </Grid>
       <Grid item xs>
-      <img alt='' className={image===product.twoImgSmall && 'outline'} src={product.twoImgSmall} onClick={() => setImage(product.twoImgSmall)} />
+      <img alt='' className={image===product.twoImgSmall ? 'outline' : undefined} src={product.twoImgSmall} onClick={() => setImage(product.twoImgSmall)} />
       </Grid>
       {product.threeImgSmall &&
       <Grid item xs>
-      <img alt='' className={image===product.threeImgSmall && 'outline'} src={product.threeImgSmall} onClick={() => setImage(product.threeImgSmall)} />
+      <img alt='' className={image===product.threeImgSmall ? 'outline' : undefined} src={product.threeImgSmall} onClick={() => setImage(product.threeImgSmall)} />
       </Grid>}
       </Grid>}
-      </Grid>
 
+
+      
+      {product.prodDescription &&
+      <Typography sx={{ display: 'flex', justifyContent: 'center', mt: 2 }} variant="h5" gutterBottom component="div">
+      {product.prodDescription}
+      </Typography>
+      }
+
+      <Typography ref={ref} variant="h6" gutterBottom component="div">
+      {product.prodPrice},00 kr. <Typography display="inline" variant="caption">inkl moms</Typography>
+      </Typography>
+
+
+      <Paper className={sticky ? 'stickyy' : undefined} elevation={3}>
+        hej
+      </Paper>
+
+
+      
       
 
 
+      </Grid>
       </Grid>
       </>
     )

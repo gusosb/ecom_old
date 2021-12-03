@@ -5,6 +5,12 @@
     object-position: 5px 1%;
     object-fit: cover;
 }
+.stickyy {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
 .pad {
     padding-top: 15px;
     margin-right: 15px;

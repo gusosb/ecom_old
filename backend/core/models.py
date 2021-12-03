@@ -55,9 +55,10 @@ class Product(models.Model):
     tabDesc3 = models.CharField('Flikinnehåll för flik tre', max_length=500, blank=True, null=True)
     artno = models.CharField('Artikelnummer', max_length=150, null=True, blank=True)
     related = models.ManyToManyField('self', blank=True, verbose_name='Relaterade produkter')
-    prodQty = models.PositiveSmallIntegerField('Tillgänglig kvantitet', blank=True, null=True)
+    prodQty = models.PositiveSmallIntegerField('Lagerkvantitet', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=CASCADE, related_name='products', verbose_name='Kategori')
     user = models.ForeignKey(User, on_delete=CASCADE, related_name='produser', verbose_name='Användare')
+    is_active = models.BooleanField('Aktiv', default=True)
 
     def __str__(self):
         return self.prodName
