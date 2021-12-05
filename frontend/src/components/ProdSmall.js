@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../reducers/cartReducer'
 import SwipeableViews from 'react-swipeable-views'
 import { heartItem, unheartItem } from '../reducers/heartReducer'
-import windowSize from '../hooks/hooks'
+import useWindowSize from '../hooks/hooks'
 
 import { IconButton, CardActionArea } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -37,7 +37,6 @@ const ProdSmall = () => {
     const dispatch = useDispatch()
 
     const categories = useSelector(state => state.content.categories)
-    const size = windowSize()
 
     const { catid, prodid } = useParams()
     const cat = categories && categories.find(e => e.id === parseInt(catid))
@@ -52,7 +51,6 @@ const ProdSmall = () => {
     const ref = useRef(undefined)
     
 
-    const ofstop = ref.current && ref.current.getBoundingClientRect().top
    
 
     useEffect(() => {
@@ -62,12 +60,13 @@ const ProdSmall = () => {
 
 
     const handleScroll = () => {
-      console.log(ofstop)
-      const y = size.height + window.pageYOffset
-      console.log(y)
+      
+      const y = window.innerHeight + window.pageYOffset
+      
+      const ofstop = ref.current && ref.current.offsetTop + ref.current.offsetHeight
       if (y < ofstop) {
         setSticky(true)
-      } else {
+      } else if (setSticky && (y > ofstop)) {
         setSticky(false)
       }
     }
@@ -325,8 +324,29 @@ const ProdSmall = () => {
       </Typography>
 
 
-      <Paper className={sticky ? 'stickyy' : undefined} elevation={3}>
-        hej
+      <Paper className={sticky ? 'stickyy' : undefined} elevation={sticky ? 2 : 0} >
+      
+      <Grid container sx={{ pt: 2 }}>
+        <Grid item xs='auto'>
+        {product.prodName}
+        </Grid>
+        <Grid item xs>
+
+        </Grid>
+        <Grid item xs='auto'>
+        {product.prodPrice},00 kr.
+        </Grid>
+      </Grid>
+
+      {product.prodQty ?
+      <Box sx={{ mt: 3 }}>
+      <Button variant="contained" color="secondary" disableElevation onClick={() => addtoCart(product)} endIcon={<AddShoppingCartIcon />} >
+      Lägg till
+      </Button>
+      </Box>
+      : 'Produkten är slut!'
+      }
+
       </Paper>
 
 

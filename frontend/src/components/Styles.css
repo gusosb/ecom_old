@@ -7,9 +7,9 @@
 }
 .stickyy {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    bottom: -1px;
+    left: 0;
+    right: 0;
 }
 .pad {
     padding-top: 15px;
