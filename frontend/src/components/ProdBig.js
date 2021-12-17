@@ -99,7 +99,7 @@ const ProdBig = () => {
       sx={{ maxHeight: 300 }}
       component="img"
       image={product.prodImgList}
-      alt="bild saknas"
+      alt=''
       />
       </CardActionArea>
       <CardContent sx={{ display: 'flex', flexDirection: 'row', p: 1, "&:last-child": { paddingBottom: 1} }}>
@@ -125,16 +125,17 @@ const ProdBig = () => {
     }
 
     const ViewComp = ({ products }) => {
+      
       return (
-        <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
+        
         <div key={products[0].id} style={Object.assign({}, styles.slide)}>
-        <Grid container>
+        <Grid key={'l' + products[0].id} container sx={{ display: 'flex', justifyContent: 'center' }}>
         {products.map(product =>
           <ProductView key={'t' + product.id} product={product} />
         )}
         </Grid>
         </div>
-        </Grid>
+        
       )
     }
 
@@ -155,19 +156,19 @@ const ProdBig = () => {
         }
       }
 
-      const views = [
-      
-      <ViewComp key={'a' + products.slice(0).id} products={products.slice(0, 3)} />,
-      
-      ]
+      const views = []
 
-      if (products.slice(2).length > 1) {
-        views.push(<ViewComp key={'f' + products.slice(3).id} products={products.slice(3, 6)} />,)
-      }
+      //divide array into chunks by 3
+      let prod = products.reduce((all,one,i) => {
+        const ch = Math.floor(i/3); 
+        all[ch] = [].concat((all[ch]||[]),one); 
+        return all
+     }, [])
 
-      if (products.slice(5).length > 1) {
-        views.push(<ViewComp key={'g' + products.slice(6).id} products={products.slice(6, 9)} />,)
-      }
+
+     prod.flatMap(e =>
+      views.push(<ViewComp key={'f' + e[0].id} products={e} />,)
+    )
 
       
 
@@ -179,7 +180,7 @@ const ProdBig = () => {
         </Typography>
         </Grid>
 
-        {products.slice(2).length > 1 &&
+        {prod[1] &&
         <Grid sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box sx={{ flex: 1 }}>
         </Box>
@@ -199,7 +200,7 @@ const ProdBig = () => {
         </SwipeableViews>
         </Grid>
 
-        {products.slice(2).length > 1 &&
+        {prod[1] &&
         <Grid sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box sx={{ flex: 1 }}>
         </Box>
@@ -213,35 +214,17 @@ const ProdBig = () => {
         </Grid>
         }
 
+        {prod[1] &&
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
-        {products.slice(2).length > 1 &&
-        <>
-        <IconButton size="small" aria-label="circle" onClick={() => setIndex(0)}>
-        {index === 0
-        ? <CircleIcon sx={{ height: 15 }} />
-        : <CircleOutlinedIcon sx={{ height: 15 }} />}
-        </IconButton>
-        
-
-        
-        <IconButton size="small" aria-label="circle" onClick={() => setIndex(1)}>
-        {index === 1
-        ? <CircleIcon sx={{ height: 15 }} />
-        : <CircleOutlinedIcon sx={{ height: 15 }} />}
-        </IconButton>
-        </> 
-        }
-
-
-        {products.slice(5).length > 1 &&
-        <IconButton size="small" aria-label="circle" onClick={() => setIndex(2)}>
-        {index === 2
-        ? <CircleIcon sx={{ height: 15 }} />
-        : <CircleOutlinedIcon sx={{ height: 15 }} />}
-        </IconButton>
-        }
-
+          {prod.flatMap((e, i) =>
+          <IconButton key={i} size="small" aria-label="circle" onClick={() => setIndex(i)}>
+          {index === i
+          ? <CircleIcon sx={{ height: 15 }} />
+          : <CircleOutlinedIcon sx={{ height: 15 }} />}
+          </IconButton>
+          )}
         </Grid>
+        }
 
         </>
       )
@@ -292,10 +275,10 @@ const ProdBig = () => {
         labelId="demo-simple-select-standard-label"
         id="demo-simple-select-standard"
         value={variant}
-        defaultValue={variant}
+        defaultValue={product.prodVal1}
         label=""
         onChange={(e) => setVariant(e.target.value)}>
-        <MenuItem value={product.prodVal1}>{product.prodVal1}</MenuItem>
+        <MenuItem value={product.prodVal1 ?? ''}>{product.prodVal1}</MenuItem>
         {product.prodVal2 && <MenuItem value={product.prodVal2}>{product.prodVal2}</MenuItem>}
         {product.prodVal3 && <MenuItem value={product.prodVal3}>{product.prodVal3}</MenuItem>}
       </Select>
@@ -336,7 +319,7 @@ const ProdBig = () => {
       
       </Grid>
 
-      {related != '' && 
+      {related !== '' && 
       <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
 
       <Views products={related} />

@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { IconButton, CardActionArea } from '@mui/material'
 import Grow from '@mui/material/Grow'
+import useWindowSize from '../hooks/hooks'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 
@@ -18,6 +19,8 @@ import { Link } from "react-router-dom"
 const ProductListSmall = ({ category }) => {
 
     const products = category.products
+
+    const size = useWindowSize()
 
     const dispatch = useDispatch()
     const heart = useSelector(state => state.heart)
@@ -38,20 +41,19 @@ const ProductListSmall = ({ category }) => {
         flexDirection="column">
           
         {products.map((product, i) => 
-        <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+        <Grow key={product.id} in={true} style={{ transformOrigin: '0 0 0' }}
         {...(i > 0 ? { timeout: (400 + (i*50)) } : {})}>
 
         <Grid item key={product.id}>
-        <Card key={product.id} sx={{  m: 2, minWidth: 150 }} key={product.id} variant="outlined">
+        <Card key={product.id} sx={{  m: '5px', mb: '10px', minWidth: 140, maxWidth: size.width < 378 ? 146 : size.width < 516 ? 160 : undefined }} variant="outlined">
         <CardActionArea
         component={Link}
         to={`/prod/${product.category}/${product.id}`}>
         <CardMedia
-        sx={{ maxHeight: 350 }}
         component="img"
         height="140"
         image={product.prodImgList}
-        alt="bild saknas" />
+        alt="" />
         </CardActionArea>
         
             <CardContent sx={{ display: 'flex', flexDirection: 'row', p: 1, "&:last-child": { paddingBottom: 1} }}>

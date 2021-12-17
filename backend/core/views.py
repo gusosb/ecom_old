@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string , get_template
 from django.core.mail import EmailMessage
 from django import utils
+from django.core.files.base import ContentFile, File
+import os
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from stripe.api_resources import payment_method
 from rest_framework.decorators import api_view, permission_classes
@@ -9,8 +11,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import OrderItem, Site, Order, User
+from .models import OrderItem, Product, Site, Order, User
 from .serializers import OrderSerializer
+import csv
+from django.conf import settings
+from django.http import HttpResponse, response, FileResponse
 
 import stripe
 
@@ -137,3 +142,41 @@ def password_reset_confirm(request):
     else:
         #reset-code not valid (unauthorized)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny, ])
+def generate_price_index(request):
+    site = Site.objects.get(id=request.data['siteid'])
+    prods = Product.objects.filter(user=site.user)
+
+
+    
+
+    path = os.path.join(settings.MEDIA_ROOT, str(site) + '.csv')
+    #f = open(path, "w+b")
+    #f.truncate()
+    with open(path, 'w') as f:
+        f.truncate()
+
+        writer = csv.writer(f)
+        writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
+        writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+
+
+    if not site.file:
+        site.file=path
+        site.save()
+    
+
+    #response = HttpResponse(file, content_type='text/csv')
+    #response['Content-Disposition'] = 'attachment; filename=file.csv'
+
+    #response = HttpResponse(
+    #    content_type='text/txt',
+    #    headers={'Content-Disposition': 'attachment; filename="somefilename.txt"'},
+    #)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="export.csv"'
+
+    return response

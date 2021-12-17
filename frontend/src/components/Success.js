@@ -28,7 +28,7 @@ const Success = () => {
 
     return (
         <>
-            <Grid container sx={{ display: 'flex', flexDirection: 'row', mt: 6, mb: 4 }} 
+            <Grid container sx={{ display: 'flex', flexDirection: 'row', mt: 6, mb: 4, p: 2 }} 
             
             justifyContent="center"
             >

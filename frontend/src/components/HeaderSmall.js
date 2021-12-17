@@ -6,7 +6,7 @@ import { logout } from "../reducers/auth"
 import { Link } from 'react-router-dom'
 import Cart from './Cart'
 
-import { styled } from '@mui/material/styles'
+
 import Box from '@mui/material/Box'
 import CloseIcon from '@mui/icons-material/Close'
 import Drawer from '@mui/material/Drawer'
@@ -168,18 +168,17 @@ const HeaderSmall = () => {
     anchor='left'
     open={menudrawer}
     onClose={toggleDrawer()}>
-    <Box>
-    Produkter
-    </Box>
+    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
     <IconButton aria-label="close" sx={{ ml: 1, mt: 1 }} onClick={() => setMenudrawer(false)} >
     <CloseIcon />
     </IconButton>
+    </Box>
 
     <Grid container sx={{ display: 'flex', flexDirection: 'column' }}>
       {content.categories && content.categories.map(e => 
-      <Box component={Link} key={e.id} to={`/kategori/${e.id}`} onClick={() => setMenudrawer(false)}>
+      <Typography variant="h6" sx={{ pl: 2, pr: 2, pb: 1 }} component={Link} key={e.id} to={`/kategori/${e.id}`} onClick={() => setMenudrawer(false)}>
         {e.catName}
-      </Box>
+      </Typography>
       )}
     </Grid>
     </Drawer>

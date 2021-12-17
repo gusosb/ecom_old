@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields.files import FileField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill, ResizeToFit
 from django.db.models.deletion import CASCADE
@@ -20,6 +21,7 @@ class Site(models.Model):
     stripekey = models.CharField(max_length=150, blank=True, null=True)
     url = models.CharField(max_length=100, blank=True, null=True)
     siteemail = models.CharField('from_email', max_length=200, null=True, blank=True)
+    file = models.FileField(upload_to='uploads/', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -41,12 +43,12 @@ class Product(models.Model):
     prodVal2 = models.CharField('Val två', max_length=150, blank=True, null=True)
     prodVal3 = models.CharField('Val tre', max_length=150, blank=True, null=True)
     prodImg = models.ImageField('Första produktbilden', upload_to='images/', null=True, blank=True)
-    prodImgList = ImageSpecField(source='prodImg', processors=[ResizeToFill(240, 350)], format='webp', options={'quality': 100})
-    prodImgSmall = ImageSpecField(source='prodImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 100})
+    prodImgList = ImageSpecField(source='prodImg', processors=[ResizeToFill(240, 350)], format='webp', options={'quality': 90})
+    prodImgSmall = ImageSpecField(source='prodImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 90})
     twoImg = models.ImageField('Andra produktbilden', upload_to='images/', null=True, blank=True)
-    twoImgSmall = ImageSpecField(source='twoImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 100})
+    twoImgSmall = ImageSpecField(source='twoImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 90})
     threeImg = models.ImageField('Tredje produktbilden', upload_to='images/', null=True, blank=True)
-    threeImgSmall = ImageSpecField(source='threeImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 100})
+    threeImgSmall = ImageSpecField(source='threeImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 90})
     tabNamn1 = models.CharField('Namn för flik ett', max_length=150, blank=True, null=True)
     tabDesc1 = models.CharField('Flikinnehåll för flik ett', max_length=500, blank=True, null=True)
     tabNamn2 = models.CharField('Namn för flik två', max_length=150, blank=True, null=True)
@@ -57,6 +59,7 @@ class Product(models.Model):
     related = models.ManyToManyField('self', blank=True, verbose_name='Relaterade produkter')
     prodQty = models.PositiveSmallIntegerField('Lagerkvantitet', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=CASCADE, related_name='products', verbose_name='Kategori')
+    taxconversion = models.FloatField(default=0.80)
     user = models.ForeignKey(User, on_delete=CASCADE, related_name='produser', verbose_name='Användare')
     is_active = models.BooleanField('Aktiv', default=True)
 
@@ -73,6 +76,7 @@ class Order(models.Model):
     cuzip = models.CharField('Postkod', max_length=6)
     cuarea = models.CharField('Ort', max_length=50)
     cuphone = models.CharField('Mobilnummer', max_length=20)
+    total = models.CharField('Totalsumma', max_length=25)
     class stat(models.IntegerChoices):
         FR = 1, 'Mottagen'
         SN = 2, 'Skickad'

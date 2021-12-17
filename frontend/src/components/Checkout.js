@@ -9,6 +9,7 @@ import './Styles.css'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
+import ListItem from '@mui/material/ListItem'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -124,16 +125,20 @@ const Checkout = () => {
       Kassa
       </Typography>
       </Box>
-      <Grid container sx={{'& > :not(style)': { m: 2 },}}>
-      <Grid item sx={{ flex: 1 }}>
-      </Grid>
-      <Grid item sx={{ width: 600 }}>
-      <Paper variant="outlined">
+      
+      <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
+
+       
+
+
+   
+      <Paper sx={{ m: 2 }} variant="outlined">
       <Grid container sx={{ pb: 3, pr: 3, pl: 3 }}>
-      {cart && cart.map(product =>
+      {cart && cart.map((product, i, {length}) =>
       <>
       <Grid container sx={{ pt: 3 }}>
-      <Grid item xs={3}>
+
+      <Grid item xs='auto'>
       <CardActionArea
       component={Link}
       to={`/prod/${product.category}/${product.id}`}>
@@ -141,16 +146,17 @@ const Checkout = () => {
       component="img"
       sx={{ maxHeight: 200 }}
       image={product.prodImg}
-      alt="no image"
+      alt=""
       variant="outlined" />
       </CardActionArea>
       </Grid>
-      <Grid item xs={7}>
-      <Box sx={{ ml: 2, display: 'flex', flexDirection: 'row' }}>
+
+      <Grid item xs>
+      <Box sx={{ ml: 2 }}>
       {product.prodName}
       </Box>
       <Box sx={{ ml: 2 }}>
-      {product.prodPrice},00 kr.
+      Pris: {product.prodPrice},00 kr.
       </Box>
       <Box sx={{ ml: 2 }}>
       <Typography display="block" gutterBottom>
@@ -173,22 +179,28 @@ const Checkout = () => {
       </Typography>
       </Box>
       </Grid>
+
       </Grid>
+      {i + 1 !== length && <ListItem divider />}
       </>
       )}
+      <Box container sx={{ mt: 2, fontWeight: 600 }}>
+      Totalsumma: {totalsum},00 kr.
+      </Box>
+
+      
       </Grid>
       </Paper>
-      </Grid>
-      <Grid item sx={{ flex: 1 }}>
-      </Grid>
+     
+     
+
+ 
+    
+    
+  
       </Grid>
       <Grid container
-      sx={{
-      mb: 5,
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      '& > :not(style)': { width: 600 },}}>
+      sx={{ display: 'flex', justifyContent: 'center', '& > :not(style)': { m: 2 },}}>
       <Paper variant="outlined" sx={{ justifyContent: 'center', display: 'flex' }}>
       <Grid container sx={{ m: 2 }}>
       <Grid item xs={12}>

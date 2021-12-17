@@ -1,6 +1,7 @@
 import { history } from "./helpers/history"
+import { Suspense, lazy } from 'react';
 import Home from './components/Home'
-import Category from './components/Category'
+
 import { Router, Switch, Route } from "react-router-dom"
 import "tailwindcss/dist/base.css"
 import CssBaseline from '@mui/material/CssBaseline'
@@ -9,23 +10,24 @@ import { initContent } from "./reducers/contentReducer"
 import { useEffect } from "react"
 import useWindowSize from "./hooks/hooks"
 
-import Orders from './components/Orders'
-import Passreset from "./components/Passreset"
-import Register from "./components/Register"
-import Login from './components/Login'
-import Passrequestsuccess from "./components/Passrequestsuccess"
 import Header from "./components/Header"
-import Passerror from "./components/Passerror"
 import Navbar from "./components/Navbar"
-import Success from './components/Success'
-import PasswordReset from './components/PasswordReset'
 import StickyFooter from "./components/StickyFooter"
-import Prod from "./components/Prod"
 import './components/Styles.css'
-import Checkout from "./components/Checkout"
 import HeaderSmall from "./components/HeaderSmall"
 
-
+const Orders = lazy(() => import('./components/Orders'))
+const Passreset = lazy(() => import('./components/Passreset'))
+const Register = lazy(() => import('./components/Register'))
+const Login = lazy(() => import('./components/Login'))
+const Passrequestsuccess = lazy(() => import('./components/Passrequestsuccess'))
+const Passerror = lazy(() => import('./components/Passerror'))
+const Success = lazy(() => import('./components/Success'))
+const PasswordReset = lazy(() => import('./components/PasswordReset'))
+const Prod = lazy(() => import('./components/Prod'))
+const Checkout = lazy(() => import('./components/Checkout'))
+const Category = lazy(() => import('./components/Category'))
+const PriceFile = lazy(() => import('./components/Pricefile'))
 
 
 const App= () => {
@@ -38,16 +40,20 @@ const App= () => {
 
   const size = useWindowSize()
 
-  return (
+  const IndexFileContainer = () => (
+    <Route exact path="/indexpricefile" component={PriceFile} />
+  )
+
+  const DefaultContainer = () => (
     <>
     <CssBaseline />
-
-    <Router history={history}>
     <div className="container">
     {size.width > 700 ? <Header /> : <HeaderSmall />}
     {size.width > 700 && <Navbar />}
+    
     <Switch>
 
+    
     <Route path="/prod/:catid/:prodid" component={Prod} />
     <Route path="/kategori/:catid" component={Category} />
     <Route path="/success" component={Success} />
@@ -60,13 +66,25 @@ const App= () => {
     <Route path="/bestallningar" component={Orders} />
     <Route path="/resetpassword/:uidb64/:token" component={PasswordReset} />
     <Route exact path="/" component={Home} />
+    
     </Switch>
+    
+   
 
      <StickyFooter />
-
      </div>
-     
-     
+     </>
+  )
+
+  return (
+    <>
+    <Router history={history}>
+    <Suspense fallback={<>Loading...</>}>
+      <Switch>
+      <Route exact path="/indexpricefile" component={IndexFileContainer}/>
+      <Route component={DefaultContainer}/>
+      </Switch>
+      </Suspense>
     </Router>
     </>
   )

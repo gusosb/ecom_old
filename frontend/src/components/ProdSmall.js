@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../reducers/cartReducer'
 import SwipeableViews from 'react-swipeable-views'
 import { heartItem, unheartItem } from '../reducers/heartReducer'
-import useWindowSize from '../hooks/hooks'
 
 import { IconButton, CardActionArea } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -14,8 +13,6 @@ import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined'
 import Paper from '@mui/material/Paper'
 import CircleIcon from '@mui/icons-material/Circle'
 import Card from '@mui/material/Card'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
@@ -49,12 +46,17 @@ const ProdSmall = () => {
     const [ tabvalue, setTabvalue ] = useState('1')
     const [ sticky, setSticky ] = useState(true)
     const ref = useRef(undefined)
+    const ref2 = useRef(undefined)
+
+
     
 
    
 
     useEffect(() => {
       setImage(product.prodImgSmall)
+ 
+      //setVariant(product.prodVal1)
     }, [product])
 
 
@@ -63,7 +65,7 @@ const ProdSmall = () => {
       
       const y = window.innerHeight + window.pageYOffset
       
-      const ofstop = ref.current && ref.current.offsetTop + ref.current.offsetHeight
+      const ofstop = ref.current && ref.current.offsetTop + ref.current.offsetHeight + ref2.current.offsetHeight
       if (y < ofstop) {
         setSticky(true)
       } else if (setSticky && (y > ofstop)) {
@@ -78,6 +80,10 @@ const ProdSmall = () => {
           window.removeEventListener('scroll', handleScroll)
       }
   }, [])
+
+  const handleSelect = e => {
+    setVariant(e.target.value)
+  }
 
 
 
@@ -118,7 +124,7 @@ const ProdSmall = () => {
     const ProductView = ({ product }) => {
       const heart = useSelector(state => state.heart)
       return (
-      <Card key={'2' + product.id} sx={{ maxWidth: 345, m: 2, border: 0 }} elevation={0}>
+      <Card key={'2' + product.id} sx={{ maxWidth: 345, m: '4px', mb: 0, border: 0 }} elevation={0}>
       <CardActionArea
       component={Link}
       to={`/prod/${product.category}/${product.id}`}
@@ -127,10 +133,10 @@ const ProdSmall = () => {
       sx={{ maxHeight: 300 }}
       component="img"
       image={product.prodImgList}
-      alt="bild saknas"
+      alt=""
       />
       </CardActionArea>
-      <CardContent sx={{ display: 'flex', flexDirection: 'row', p: 1, "&:last-child": { paddingBottom: 1} }}>
+      <CardContent sx={{ display: 'flex', flexDirection: 'row', p: '15px', pt: '6px', "&:last-child": { paddingBottom: 0} }}>
       <Grid item xs={10}>
       <Typography component={'span'} variant="body2" color="text.secondary">
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
@@ -154,15 +160,15 @@ const ProdSmall = () => {
 
     const ViewComp = ({ products }) => {
       return (
-        <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
         <div key={products[0].id} style={Object.assign({}, styles.slide)}>
-        <Grid container>
+        <Grid key={'l' + products[0].id} container> 
         {products.map(product =>
-          <ProductView key={'t' + product.id} product={product} />
+        <Grid item key={'p' + product.id} xs={6}>
+        <ProductView key={'t' + product.id} product={product} />
+        </Grid>
         )}
         </Grid>
         </div>
-        </Grid>
       )
     }
 
@@ -172,105 +178,44 @@ const ProdSmall = () => {
       const handleChangeIndex = index => {
         setIndex(index)
       }
-      const handleNext = () => {
-        if (index < (views.length - 1)) {
-          setIndex(index + 1)
-        }
-      }
-      const handleBack = () => {
-        if (index > 0) {
-          setIndex(index - 1)
-        }
-      }
 
-      const views = [
-      
-      <ViewComp key={'a' + products.slice(0).id} products={products.slice(0, 3)} />,
-      
-      ]
+      //divide array into chunks by 2
+      let prod = products.reduce((all,one,i) => {
+        const ch = Math.floor(i/2); 
+        all[ch] = [].concat((all[ch]||[]),one); 
+        return all
+     }, [])
 
-      if (products.slice(2).length > 1) {
-        views.push(<ViewComp key={'f' + products.slice(3).id} products={products.slice(3, 6)} />,)
-      }
+      const views = []
 
-      if (products.slice(5).length > 1) {
-        views.push(<ViewComp key={'g' + products.slice(6).id} products={products.slice(6, 9)} />,)
-      }
-
+      prod.flatMap(e => 
+        views.push(<ViewComp key={'f' + e[0].id} products={e} />,)
+      )
       
 
       return (
         <>
-        <Grid container sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
+        <Grid container sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
         <Typography variant="h6" gutterBottom component="div">
         Andra köpte även
         </Typography>
         </Grid>
 
-        {products.slice(2).length > 1 &&
-        <Grid sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ flex: 1 }}>
-        </Box>
-        <Box>
-        <IconButton aria-label="next" onClick={handleBack} >
-       <ArrowBackIcon />
-        </IconButton>
-        </Box>  
-        <Box sx={{ flex: 1 }}>
-        </Box>
-        </Grid>
-        }
-
-        <Grid sx={{ maxWidth: 900 }}>
         <SwipeableViews enableMouseEvents index={index} onChangeIndex={handleChangeIndex} disableLazyLoading >
         {views}
         </SwipeableViews>
-        </Grid>
-
-        {products.slice(2).length > 1 &&
-        <Grid sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ flex: 1 }}>
-        </Box>
-        <Box>
-        <IconButton aria-label="next" onClick={handleNext} >
-       <ArrowForwardIcon />
-        </IconButton>
-        </Box>
-        <Box sx={{ flex: 1 }}>
-        </Box>
-        </Grid>
-        }
-
+        
+        {prod[1] &&
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
-        {products.slice(2).length > 1 &&
-        <>
-        <IconButton size="small" aria-label="circle" onClick={() => setIndex(0)}>
-        {index === 0
-        ? <CircleIcon sx={{ height: 15 }} />
-        : <CircleOutlinedIcon sx={{ height: 15 }} />}
-        </IconButton>
-        
-
-        
-        <IconButton size="small" aria-label="circle" onClick={() => setIndex(1)}>
-        {index === 1
-        ? <CircleIcon sx={{ height: 15 }} />
-        : <CircleOutlinedIcon sx={{ height: 15 }} />}
-        </IconButton>
-        </> 
-        }
-
-
-        {products.slice(5).length > 1 &&
-        <IconButton size="small" aria-label="circle" onClick={() => setIndex(2)}>
-        {index === 2
-        ? <CircleIcon sx={{ height: 15 }} />
-        : <CircleOutlinedIcon sx={{ height: 15 }} />}
-        </IconButton>
-        }
-
+          {prod.flatMap((e, i) =>
+          <IconButton key={i} size="small" aria-label="circle" onClick={() => setIndex(i)}>
+          {index === i
+          ? <CircleIcon sx={{ height: 15 }} />
+          : <CircleOutlinedIcon sx={{ height: 15 }} />}
+          </IconButton>
+          )}
         </Grid>
-
+        }
         </>
       )
     }
@@ -314,45 +259,100 @@ const ProdSmall = () => {
 
       
       {product.prodDescription &&
-      <Typography sx={{ display: 'flex', justifyContent: 'center', mt: 2 }} variant="h5" gutterBottom component="div">
+      <Typography ref={ref} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }} variant="h5" gutterBottom component="div">
       {product.prodDescription}
       </Typography>
       }
 
-      <Typography ref={ref} variant="h6" gutterBottom component="div">
-      {product.prodPrice},00 kr. <Typography display="inline" variant="caption">inkl moms</Typography>
-      </Typography>
 
 
-      <Paper className={sticky ? 'stickyy' : undefined} elevation={sticky ? 2 : 0} >
+
+      <Paper ref={ref2} sx={{ backgroundColor: '#fff', boxShadow: sticky ? '0px -2px 4px -4px rgba(0,0,0,0.7)' : 'none' }} className={sticky ? 'stickyy' : undefined} >
       
-      <Grid container sx={{ pt: 2 }}>
-        <Grid item xs='auto'>
+      <Grid container sx={{ pt: 2, pr: 2, pl: 2 }}>
+        
+        <Grid item xs='auto' sx={{ pl: 1 }}>
         {product.prodName}
         </Grid>
         <Grid item xs>
 
         </Grid>
-        <Grid item xs='auto'>
-        {product.prodPrice},00 kr.
+        <Grid item xs='auto' sx={{ pr: 1 }}>
+        {product.prodPrice},00 kr. <Typography display="inline" variant="caption">inkl moms</Typography>
         </Grid>
+        
+
+      <Grid container sx={{ pb: 2, pt: 2 }} spacing={2}>
+          
+      
+      <Grid item xs>
+      {product.prodVal1 &&
+      <FormControl fullWidth>
+      <InputLabel id="tabs1">{product.prodValnamn}</InputLabel>
+      <Select
+        labelId="demo-simple-select-standard-label"
+        id="demo-simple-select-standard"
+        value={variant}
+        defaultValue={product.prodVal1}
+        label="variant"
+        onChange={handleSelect}>
+        <MenuItem value={product.prodVal1}>{product.prodVal1}</MenuItem>
+        {product.prodVal2 && <MenuItem value={product.prodVal2}>{product.prodVal2}</MenuItem>}
+        {product.prodVal3 && <MenuItem value={product.prodVal3}>{product.prodVal3}</MenuItem>}
+      </Select>
+      </FormControl>
+      }
       </Grid>
 
+      
       {product.prodQty ?
-      <Box sx={{ mt: 3 }}>
-      <Button variant="contained" color="secondary" disableElevation onClick={() => addtoCart(product)} endIcon={<AddShoppingCartIcon />} >
+      <Grid item xs >
+      
+      <Button sx={{ height: '100%' }} fullWidth variant="contained" color="secondary" disableElevation onClick={() => addtoCart(product)} endIcon={<AddShoppingCartIcon />} >
       Lägg till
       </Button>
-      </Box>
+      
+      </Grid>
       : 'Produkten är slut!'
       }
-
+      </Grid>
+      </Grid>
       </Paper>
 
-
+      
+      {product.tabNamn1 &&
+      
+     
+      <Box sx={{ typography: 'body1', mt: 4, pr: 1, pl: 1 }}>
+      <TabContext value={tabvalue}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        
+         
+      <TabList variant="fullWidth" indicatorColor="secondary" textColor="primary" centered onChange={(e, newValue) => setTabvalue(newValue)} aria-label="tabs">
+      <Tab label={product.tabNamn1} value='1' />
+      {product.tabNamn2 && <Tab label={product.tabNamn2} value='2' />}
+      {product.tabNamn3 && <Tab label={product.tabNamn3} value='3' />}
+      </TabList>
       
       
+      </Box>
 
+      <TabPanel sx={{ p: 2 }}  value="1">{product.tabDesc1}</TabPanel>
+      {product.tabNamn2 && <TabPanel sx={{ p: 2 }} value="2">{product.tabDesc2}</TabPanel>}
+      {product.tabNamn3 && <TabPanel sx={{ p: 2 }} value="3">{product.tabDesc3}</TabPanel>}
+      </TabContext>
+      </Box>
+      
+     
+      }
+
+      {related !== '' && 
+      
+
+      <Views products={related} />
+      
+    
+      }
 
       </Grid>
       </Grid>

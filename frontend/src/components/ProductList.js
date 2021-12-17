@@ -42,7 +42,7 @@ const ProductList = ({ category }) => {
         {...(i > 0 ? { timeout: (400 + (i*50)) } : {})}>
 
         <Grid item key={product.id}>
-        <Card key={product.id} sx={{  m: 2 }} key={product.id} variant="outlined">
+        <Card key={product.id} sx={{  m: 2 }} variant="outlined">
         <CardActionArea
         component={Link}
         to={`/prod/${product.category}/${product.id}`}>
@@ -51,7 +51,7 @@ const ProductList = ({ category }) => {
         component="img"
         height="140"
         image={product.prodImgList}
-        alt="bild saknas" />
+        alt='' />
         </CardActionArea>
         
             <CardContent sx={{ display: 'flex', flexDirection: 'row', p: 1, "&:last-child": { paddingBottom: 1} }}>
