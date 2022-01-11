@@ -35,7 +35,7 @@ const App= () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(initContent(1))
+    dispatch(initContent())
   }, [dispatch])
 
   const size = useWindowSize()

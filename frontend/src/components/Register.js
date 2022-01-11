@@ -192,7 +192,7 @@ const Register = (props) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Registrera
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
