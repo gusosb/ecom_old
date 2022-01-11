@@ -1,12 +1,9 @@
 from django.db import models
-from django.db.models.fields.files import FileField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill, ResizeToFit
 from django.db.models.deletion import CASCADE
 from django.contrib.auth import get_user_model
-import sys
-from PIL import Image
-from accounts.models import NewUser
+
 
 User = get_user_model()
 
@@ -17,11 +14,12 @@ class Site(models.Model):
     youtube = models.CharField(max_length=400, null=True, blank=True)
     twitter = models.CharField(max_length=400, null=True, blank=True)
     facebook = models.CharField(max_length=400, null=True, blank=True)
-    siteimg = models.FileField(upload_to='images/', null=True, blank=True)
+    siteimg = models.FileField('Logotyp', upload_to='images/', null=True, blank=True)
     stripekey = models.CharField(max_length=150, blank=True, null=True)
     url = models.CharField(max_length=100, blank=True, null=True)
     siteemail = models.CharField('from_email', max_length=200, null=True, blank=True)
-    file = models.FileField(upload_to='uploads/', blank=True, null=True)
+    file = models.FileField(upload_to='files/', blank=True, null=True)
+    checkoutgoods = models.ManyToManyField('Product', blank=True, verbose_name='Merförsäljning i kassan')
 
     def __str__(self):
         return self.name
@@ -42,8 +40,9 @@ class Product(models.Model):
     prodVal1 = models.CharField('Val ett', max_length=150, blank=True, null=True)
     prodVal2 = models.CharField('Val två', max_length=150, blank=True, null=True)
     prodVal3 = models.CharField('Val tre', max_length=150, blank=True, null=True)
-    prodImg = models.ImageField('Första produktbilden', upload_to='images/', null=True, blank=True)
+    prodImg = models.ImageField('Primära produktbilden', upload_to='images/', null=True, blank=True)
     prodImgList = ImageSpecField(source='prodImg', processors=[ResizeToFill(240, 350)], format='webp', options={'quality': 90})
+    prodImg435 = ImageSpecField(source='prodImg', processors=[ResizeToFill(320, 455)], format='webp', options={'quality': 90})
     prodImgSmall = ImageSpecField(source='prodImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 90})
     twoImg = models.ImageField('Andra produktbilden', upload_to='images/', null=True, blank=True)
     twoImgSmall = ImageSpecField(source='twoImg', processors=[ResizeToFill(652, 978)], format='webp', options={'quality': 90})
@@ -59,9 +58,16 @@ class Product(models.Model):
     related = models.ManyToManyField('self', blank=True, verbose_name='Relaterade produkter')
     prodQty = models.PositiveSmallIntegerField('Lagerkvantitet', blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=CASCADE, related_name='products', verbose_name='Kategori')
-    taxconversion = models.FloatField(default=0.80)
+    taxrate = models.FloatField('Moms', default=0.25)
     user = models.ForeignKey(User, on_delete=CASCADE, related_name='produser', verbose_name='Användare')
     is_active = models.BooleanField('Aktiv', default=True)
+    class state(models.IntegerChoices):
+        NY = 1, 'Nyskick'
+        DE = 2, 'Demo'
+        BE = 3, 'Begagnad'
+        DL = 4, 'Nedladdning'
+    condition = models.PositiveSmallIntegerField(choices=state.choices, default=1)
+    brand = models.CharField('Varumärke/tillverkare', max_length=150)
 
     def __str__(self):
         return self.prodName
@@ -85,6 +91,12 @@ class Order(models.Model):
     is_paid = models.BooleanField('Betald genom Checkout', default=False)
     sessionid = models.CharField(max_length=250, unique=True, blank=True, null=True)
     created_at = models.DateField('Skapad', auto_now_add=True)
+    trackingid = models.CharField(max_length=150, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.trackingid:
+            pass
+        super().save(*args, **kwargs)
 
 
 class OrderItem(models.Model):

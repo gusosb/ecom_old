@@ -35,24 +35,25 @@ const ProductListSmall = ({ category }) => {
     return (
         <Grid container className="tabb">
 
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ ml: '12px', mr: '12px' }}>
         <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
         justifyContent="center"
         flexDirection="column">
           
+          <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
         {products.map((product, i) => 
         <Grow key={product.id} in={true} style={{ transformOrigin: '0 0 0' }}
         {...(i > 0 ? { timeout: (400 + (i*50)) } : {})}>
 
-        <Grid item key={product.id}>
-        <Card key={product.id} sx={{  m: '5px', mb: '10px', minWidth: 140, maxWidth: size.width < 378 ? 146 : size.width < 516 ? 160 : undefined }} variant="outlined">
+        <Grid item xs={size.width < 469 ? 6 : size.width < 900 ? 4 : size.width > 1200 ? 2 : 3} key={product.id}>
+        <Card key={product.id} sx={{  minWidth: 146 }} variant="outlined">
         <CardActionArea
         component={Link}
         to={`/prod/${product.category}/${product.id}`}>
         <CardMedia
         component="img"
         height="140"
-        image={product.prodImgList}
+        image={product.prodImg435}
         alt="" />
         </CardActionArea>
         
@@ -95,6 +96,7 @@ const ProductListSmall = ({ category }) => {
         </Grid>
         </Grow>
         )}
+        </Grid>
         
         </Box>
         </Grid>

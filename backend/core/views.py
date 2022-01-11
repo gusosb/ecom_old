@@ -1,21 +1,19 @@
-from django.shortcuts import redirect, render
-from django.template.loader import render_to_string , get_template
+from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django import utils
-from django.core.files.base import ContentFile, File
+from django.core.files.base import File
 import os
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from stripe.api_resources import payment_method
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import OrderItem, Product, Site, Order, User
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, SiteFileSerializer
 import csv
 from django.conf import settings
-from django.http import HttpResponse, response, FileResponse
+from django.http import HttpResponse, response, FileResponse, HttpRequest
 
 import stripe
 
@@ -76,6 +74,7 @@ def create_checkout_session(request):
     order.cuzip=request.data['zipcode']
     order.cuarea=request.data['area']
     order.cuphone=request.data['phone']
+    order.total=request.data['totalsum']
     order.sessionid=session['id']
     order.save()
 
@@ -145,38 +144,28 @@ def password_reset_confirm(request):
 
 
 @api_view(['POST'])
-@permission_classes([AllowAny, ])
+@permission_classes([AllowAny,])
 def generate_price_index(request):
     site = Site.objects.get(id=request.data['siteid'])
-    prods = Product.objects.filter(user=site.user)
+    prods = Product.objects.filter(user=site.user, is_active=True)
+    surl = request.build_absolute_uri('/')[:-1]
+    path = os.path.join(settings.MEDIA_ROOT, str(site) + '.txt')
 
+    with open(path, 'a+') as f:
+        f.truncate(0)
 
-    
+        writer = csv.writer(f, lineterminator='\n')
+        writer.writerow(['Produkt-ID', 'Kategori', 'Varumärke/tillverkare', 'URL', 'Pris', 'Skick', 'Bildlänk'])
+        for item in prods:
+            writer.writerow([str(item.id), item.category, item.brand, item.prodName, site.url + '/prod/' + str(item.category.id) + '/' + str(item.id), item.get_condition_display(), surl + item.prodImg.url])
 
-    path = os.path.join(settings.MEDIA_ROOT, str(site) + '.csv')
-    #f = open(path, "w+b")
-    #f.truncate()
-    with open(path, 'w') as f:
-        f.truncate()
-
-        writer = csv.writer(f)
-        writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-        writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
-
-
-    if not site.file:
-        site.file=path
+        site.file = File(f, name=os.path.basename(f.name))
         site.save()
-    
 
-    #response = HttpResponse(file, content_type='text/csv')
-    #response['Content-Disposition'] = 'attachment; filename=file.csv'
+    serializers = SiteFileSerializer(site, context={'request': request})
 
-    #response = HttpResponse(
-    #    content_type='text/txt',
-    #    headers={'Content-Disposition': 'attachment; filename="somefilename.txt"'},
-    #)
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="export.csv"'
+    data = [{
+        'site': serializers.data,
+    }]
 
-    return response
+    return Response(status=status.HTTP_200_OK, data=data)

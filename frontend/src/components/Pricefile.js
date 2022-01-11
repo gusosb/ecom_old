@@ -13,7 +13,8 @@ const PriceFile = () => {
     const getPriceFile = async (content) => {
 
       const response = await axios.post(`${baseURL}/generate_price_index/`, content)
-      console.log(response)
+      
+      window.location.href = response.data[0].site.file
       return response.data
     }
 
@@ -25,14 +26,7 @@ const PriceFile = () => {
         const sid = {
           siteid: content.id,
         }
-     
         const res = getPriceFile(sid)
-        console.log(res)
-    
-
-        
-
-
       }
 
     }, [content])

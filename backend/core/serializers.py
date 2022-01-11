@@ -23,6 +23,7 @@ class RelatedSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     prodImgList = ImageField(read_only=True)
     prodImgSmall = ImageField(read_only=True)
+    prodImg435 = ImageField(read_only=True)
     twoImgSmall = ImageField(read_only=True)
     threeImgSmall = ImageField(read_only=True)
     related = RelatedSerializer(many=True, read_only=True)
@@ -30,7 +31,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         list_serializer_class = FilteredProductSerializer
         model = Product
-        exclude = ['user', 'is_active']
+        exclude = ['user', 'is_active', 'condition', 'brand']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -47,7 +48,14 @@ class SiteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Site
-        exclude = ['stripekey', 'url', 'user']
+        exclude = ['stripekey', 'url', 'user', 'file']
+
+
+class SiteFileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Site
+        fields = ['file']
 
 
 class OrderItemSerializer(serializers.ModelSerializer):

@@ -48,8 +48,8 @@ const App= () => {
     <>
     <CssBaseline />
     <div className="container">
-    {size.width > 700 ? <Header /> : <HeaderSmall />}
-    {size.width > 700 && <Navbar />}
+    {size.width > 900 ? <Header /> : <HeaderSmall />}
+    {size.width > 900 && <Navbar />}
     
     <Switch>
 

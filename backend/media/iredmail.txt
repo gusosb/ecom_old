@@ -1,0 +1,36 @@
+
+*************************************************************************
+* iRedMail-1.4.2 installation and configuration complete.
+*************************************************************************
+
+< Question > Would you like to use firewall rules provided by iRedMail?
+< Question > File: /etc/nftables.conf, with SSHD ports: 22. [Y|n]y
+[ INFO ] Copy firewall sample rules.
+< Question > Restart firewall now (with ssh ports: 22)? [y|N]y
+[ INFO ] Restarting firewall ...
+[ INFO ] Updating ClamAV database (freshclam), please wait ...
+********************************************************************
+* URLs of installed web applications:
+*
+* - Roundcube webmail: https://mail.kanindev.se/mail/
+* - netdata (monitor): https://mail.kanindev.se/netdata/
+*
+* - Web admin panel (iRedAdmin): https://mail.kanindev.se/iredadmin/
+*
+* You can login to above links with below credential:
+*
+* - Username: postmaster@kanindev.se
+* - Password: Ostarn1337!
+*
+*
+********************************************************************
+* Congratulations, mail server setup completed successfully. Please
+* read below file for more information:
+*
+*   - /home/ubuntu/iRedMail-1.4.2/iRedMail.tips
+*
+* And it's sent to your mail account postmaster@kanindev.se.
+*
+********************* WARNING **************************************
+*
+* Please reboot your system to enable all mail services.

@@ -1,0 +1,5 @@
+Produkt-ID,Varumärke/tillverkare,URL,Pris,Skick,Bildlänk
+3,1,Testprodukt 2,http://localhost:3000/prod/1/3,Nyskick,images/2byxa1_axbElQ5_Kq7AjtS.jfif
+4,1,Testprodukt 3,http://localhost:3000/prod/1/4,Nyskick,images/2byxa1_axbElQ5_KNnBj08.jfif
+5,1,Testprodukt 4,http://localhost:3000/prod/1/5,Nyskick,images/2byxa1_axbElQ5_L7iVZMp.jfif
+6,1,Testprodukt 5,http://localhost:3000/prod/1/6,Nyskick,images/2byxa1_axbElQ5_hAp937Z.jfif

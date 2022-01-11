@@ -72,6 +72,7 @@ const Checkout = () => {
         zipcode,
         area,
         phone,
+        totalsum,
       }
       dispatch(checkoutSession(readyCart))
     }

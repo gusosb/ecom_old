@@ -6,7 +6,7 @@ const Prod = () => {
   const size = useWindowSize()
   return (
     <>
-    {size.width > 700 ? <ProdBig /> : <ProdSmall />}
+    {size.width > 900 ? <ProdBig /> : <ProdSmall />}
       
     </>
   )

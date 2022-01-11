@@ -46,7 +46,8 @@ admin.site.register(Category, CategoryAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('prodName', 'artno', 'prodQty', 'is_active', 'id')
-    readonly_fields = ['user', 'prodImgList', 'prodImgSmall']
+    readonly_fields = ['user',]
+    exclude = ('prodImgSmall', 'prodImgList', )
     save_as = True
     
 
