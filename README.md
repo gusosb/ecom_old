@@ -23,8 +23,8 @@ class SiteViewSet(viewsets.ReadOnlyModelViewSet):
 
 ```Python
 class ProductSerializer(serializers.ModelSerializer):
-    # ...
     related = RelatedSerializer(many=True, read_only=True)
+    # ...
 
 class CategorySerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
