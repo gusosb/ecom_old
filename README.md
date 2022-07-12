@@ -1,4 +1,4 @@
-## Basic ecommerce site using Django Rest Framework, React (Hooks), Redux, Axios, Material UI
+## Basic ecommerce site using Django Rest Framework, React (Hooks), Redux, Axios, Material UI, integrated with Stripe Checkout
 
 https://demo.kanindev.se/
 
