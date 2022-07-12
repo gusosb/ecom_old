@@ -2,6 +2,8 @@
 
 https://demo.kanindev.se/
 
+Stripe integration is testable, add an item to the cart and go to checkout, fill in order information and pay as guest, you can pay with card number 4242 4242 4242 4242.
+
 
 /ecom/backend/core/ViewSets.py
 
