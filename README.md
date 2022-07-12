@@ -97,3 +97,43 @@ const contentReducer = (state=[], action) => {
       }
 }
 ```
+
+
+Initiating the payment checkout session
+
+/ecom/backend/core/views.py
+
+```Python
+import stripe
+
+@api_view(['POST'])
+@permission_classes([AllowAny,])
+def create_checkout_session(request):
+    site = Site.objects.get(id=request.data['siteid'])
+    stripe.api_key = site.stripekey
+
+    cartitems = []
+
+    order = Order.objects.create(site=site)
+    
+    data = request.data['cart']
+    for item in data:
+    # ...
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=cartitems,
+        mode='payment',
+        success_url=site.url + '/success?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=site.url + '/cancel',
+    )
+
+    if request.user.id != None:
+        order.customeruser=request.user
+        order.customeremail=request.user.email
+        
+    # ...
+    order.save()
+
+    return Response(status=status.HTTP_200_OK, data=session)
+```
