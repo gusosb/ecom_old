@@ -99,7 +99,7 @@ const contentReducer = (state=[], action) => {
 ```
 
 
-Initiating the Strpie payment checkout session and then routing the customer to the Stripe Checkout.
+Initiating the Stripe payment checkout session and then routing the customer to the Stripe Checkout.
 
 /ecom/backend/core/views.py
 
