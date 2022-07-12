@@ -64,7 +64,7 @@ class OrderItem(models.Model):
 
 /ecom/frontend/src/services/content.js
 
-Fetching content of the site
+Fetching content of the site.
 
 ```JavaScript
 const initContent = async (id) => {
@@ -75,7 +75,7 @@ const initContent = async (id) => {
 
 /ecom/frontend/src/reducers/contentReducer.js
 
-Putting that content in the Redux store
+Putting that content in the Redux store.
 
 ```JavaScript
 export const initContent = () => {
@@ -99,7 +99,7 @@ const contentReducer = (state=[], action) => {
 ```
 
 
-Initiating the payment checkout session
+Initiating the Strpie payment checkout session and then routing the customer to the Stripe Checkout.
 
 /ecom/backend/core/views.py
 
@@ -136,4 +136,37 @@ def create_checkout_session(request):
     order.save()
 
     return Response(status=status.HTTP_200_OK, data=session)
+```
+
+
+If payment is completed customer is routed to the get-success-session page, where we make a new call to the Stripe api verifying that payment has gone through and setting the order as paid.
+
+/ecom/backend/core/views.py
+
+```Python
+@api_view(['POST'])
+@permission_classes([AllowAny,])
+def order_success(request):
+    site = Site.objects.get(id=request.data['siteid'])
+    stripe.api_key = site.stripekey
+    session = stripe.checkout.Session.retrieve(request.data['sessionid'])
+    order = Order.objects.get(sessionid=request.data['sessionid'])
+    if order.customeremail == None:
+        order.customeremail=session.customer_details['email']
+    order.is_paid=True
+    order.save()
+
+    serializers = OrderSerializer(order)
+
+    data = [{
+        'session': session,
+        'order': serializers.data,
+    }]
+
+    html_message = get_template('ordermessage.html').render({'order': order, 'site': site})
+    email = EmailMessage('Orderbekräftelse # ' + str(order.id), html_message, from_email=site.siteemail, to=[order.customeremail])
+    email.content_subtype = "html"
+    email.send()
+
+    return Response(status=status.HTTP_200_OK, data=data)
 ```
