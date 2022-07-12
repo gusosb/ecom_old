@@ -23,31 +23,16 @@ class SiteViewSet(viewsets.ReadOnlyModelViewSet):
 
 ```Python
 class ProductSerializer(serializers.ModelSerializer):
-    prodImgList = ImageField(read_only=True)
-    prodImgSmall = ImageField(read_only=True)
-    prodImg435 = ImageField(read_only=True)
-    twoImgSmall = ImageField(read_only=True)
-    threeImgSmall = ImageField(read_only=True)
+    # ...
     related = RelatedSerializer(many=True, read_only=True)
-
-    class Meta:
-        list_serializer_class = FilteredProductSerializer
-        model = Product
-        exclude = ['user', 'is_active', 'condition', 'brand']
 
 class CategorySerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Category
-        exclude = ['site', 'user']
+    # ...
 
 class SiteSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Site
-        exclude = ['stripekey', 'url', 'user', 'file']
+    # ...
 ```
 
 
