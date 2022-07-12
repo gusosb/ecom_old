@@ -88,7 +88,7 @@ const initContent = async (id) => {
 }
 ```
 
-/ecom/frontend/src/services/content.js
+/ecom/frontend/src/reducers/contentReducer.js
 
 Putting that content in the Redux store
 
