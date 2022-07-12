@@ -1,4 +1,4 @@
-##Basic ecommerce site using Django Rest Framework, React (Hooks) + Redux, Material UI
+## Basic ecommerce site using Django Rest Framework, React (Hooks), Redux, Axios, Material UI
 
 https://demo.kanindev.se/
 
@@ -73,4 +73,42 @@ class Order(models.Model):
 class OrderItem(models.Model):
     # ...
     order = models.ForeignKey(Order, on_delete=CASCADE, related_name='orderitem')
+```
+
+
+
+/ecom/frontend/src/services/content.js
+
+Fetching content of the site
+
+```JavaScript
+const initContent = async (id) => {
+    const response = await axios.get(`${baseURL}/content/${id}/`)
+    return response.data
+}
+```
+
+/ecom/frontend/src/services/content.js
+
+Putting that content in the Redux store
+
+```JavaScript
+export const initContent = () => {
+    return async dispatch => {
+      const content = await contentService.initContent(1)
+      dispatch({
+        type: 'INIT_CONT',
+        data: content,
+      })
+    }
+}
+
+const contentReducer = (state=[], action) => {
+    switch(action.type) {
+        case 'INIT_CONT':
+          return action.data
+        default:
+          return state
+      }
+}
 ```
